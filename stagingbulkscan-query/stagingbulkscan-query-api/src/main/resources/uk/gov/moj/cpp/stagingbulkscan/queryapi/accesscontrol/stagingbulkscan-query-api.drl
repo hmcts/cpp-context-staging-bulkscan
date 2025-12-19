@@ -1,0 +1,61 @@
+package uk.gov.moj.cpp.stagingbulkscan.queryapi.accesscontrol;
+
+import uk.gov.moj.cpp.accesscontrol.drools.Outcome;
+import uk.gov.moj.cpp.accesscontrol.drools.Action;
+import java.util.Arrays;
+
+global uk.gov.moj.cpp.accesscontrol.common.providers.UserAndGroupProvider userAndGroupProvider;
+
+rule "Query - API - stagingbulkscan.get-all-documents-by-status"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-all-documents-by-status");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"Court Administrators", "Crown Court Admin", "Legal Advisers", "Court Clerks", "Court Associate", "Listing Officers", "System Users"));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - API - stagingbulkscan.get-scan-document"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-scan-document");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"Court Administrators", "Crown Court Admin", "Legal Advisers", "Court Clerks", "Court Associate", "Listing Officers"));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - API - stagingbulkscan.get-scan-document-by-id"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-scan-document-by-id");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"System Users"));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - API - stagingbulkscan.get-scan-envelope-document-by-ids"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-scan-envelope-document-by-ids");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"System Users"));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - API - stagingbulkscan.get-thumbnail-content"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-thumbnail-content");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"Court Administrators", "Crown Court Admin", "Legal Advisers", "Court Clerks", "Court Associate", "Listing Officers"));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - API - stagingbulkscan.get-scan-document-status"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-scan-document-status");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"Court Administrators", "Crown Court Admin", "Legal Advisers", "Court Clerks", "Court Associate", "Listing Officers"));
+  then
+    $outcome.setSuccess(true);
+end

@@ -1,0 +1,21 @@
+{
+  "scanEnvelopeId": "726b6391-7bc2-445a-8a0c-9bcfd963702e",
+  "scanDocumentId" : "ec998ef3-4775-4166-9ad8-f5eeba78ded1",
+  "id": "f06f6539-2a7c-4bc8-bca3-f1b17ebcfa47",
+  "title":"Dr",
+  "firstName": "David",
+  "lastName": "SMITH",
+  "dateOfBirth": "1980-07-15",
+  "gender": "Male",
+  "email": "email@email.com",
+  "address": {
+    "address1": "14 Shaftesbury Road",
+    "address2": "London",
+    "address3": "England",
+    "address4": "UK",
+    "address5": "Greater London",
+    "postcode": "W1T 1JY"
+  },
+  "contactNumber": "07123456789",
+  "nationalInsuranceNumber": "QQ 12 34 56 C"
+}

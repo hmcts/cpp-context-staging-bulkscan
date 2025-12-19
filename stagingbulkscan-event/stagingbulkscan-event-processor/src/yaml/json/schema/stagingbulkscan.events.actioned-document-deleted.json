@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.actioned-document-deleted.json",
+  "type": "object",
+  "properties": {
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "zipFileName": {
+      "type": "string"
+    },
+    "documentFileName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "scanEnvelopeId",
+    "scanDocumentId",
+    "zipFileName",
+    "documentFileName"
+  ]
+}

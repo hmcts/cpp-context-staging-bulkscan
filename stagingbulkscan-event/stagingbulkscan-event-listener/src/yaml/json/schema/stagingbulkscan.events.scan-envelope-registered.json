@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.scan-envelope-registered.json",
+  "type": "object",
+  "properties": {
+      "scanEnvelope": {
+        "$ref": "http://justice.gov.uk/stagingbulkscan/domain/scan-envelope.json"
+      }
+  },
+  "required": [
+    "scanEnvelope"
+  ],
+  "additionalProperties": false
+}

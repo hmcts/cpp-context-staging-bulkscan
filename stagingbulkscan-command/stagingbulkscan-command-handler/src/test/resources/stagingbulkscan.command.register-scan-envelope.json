@@ -1,0 +1,29 @@
+{
+  "scanEnvelopeId": "fab947a3-c50c-4dbb-accf-b2758b1d2d6a",
+  "zipFileName": "1836104010001_27-11-2019-11-52-09.zip",
+  "associatedScanDocuments": [
+    {
+      "scanDocumentId": "fab947a3-c51c-4dbb-accf-b2758b1d2d6d",
+      "fileName": "18361040100010001.pdf",
+      "caseUrn": "12295672",
+      "prosecutorId": "AAAJJ11",
+      "prosecutorName": "TFL",
+      "documentControlNumber": "18361040100010001",
+      "vendorReceivedDate": "2019-09-28T08:00:00.000Z",
+      "documentName": "Form SJPN",
+      "scanningDate": "2019-09-28T10:46:03.123Z",
+      "nextAction": "destroy",
+      "nextActionDate": "2019-12-27T10:46:03.123Z",
+      "notes": "Sample PDF file",
+      "status": "PENDING",
+      "statusUpdatedDate": "2019-12-12T09:27:15Z"
+    }
+  ],
+  "extractedDate": "2019-09-28T11:03:00.000Z",
+  "envelopeClassification": "supplementary_evidence",
+  "vendorPOBox": "1959",
+  "jurisdiction": "Crime",
+  "vendorOpeningDate": "2019-09-27T10:46:03.123Z",
+  "zipFileCreatedDate": "2019-09-28T10:46:03.123Z",
+  "notes": "Sample Zip "
+}

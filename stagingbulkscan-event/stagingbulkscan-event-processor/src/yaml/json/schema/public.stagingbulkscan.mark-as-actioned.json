@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/public.stagingbulkscan.mark-as-actioned.json",
+  "type": "object",
+  "properties": {
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    }
+  },
+  "required": [
+    "scanEnvelopeId",
+    "scanDocumentId"
+  ]
+}

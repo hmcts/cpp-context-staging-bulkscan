@@ -1,0 +1,46 @@
+subscriptions_descriptor:
+  spec_version: 1.0.0
+  service: stagingbulkscan
+  service_component: EVENT_PROCESSOR
+  subscriptions:
+    - name: event processor subscription
+      events:
+        - name: stagingbulkscan.events.actioned-document-deleted
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.actioned-document-deleted.json
+        - name: stagingbulkscan.events.defendant-details-update-requested
+          schema_uri: http://justice.gov.uk/stagingbulkscan/domain/defendant-details-update-requested.json
+        - name: stagingbulkscan.events.defendant-details-updated
+          schema_uri: http://justice.gov.uk/stagingbulkscan/domain/defendant.json
+        - name: stagingbulkscan.events.defendant-financial-means-update-requested
+          schema_uri: http://justice.gov.uk/stagingbulkscan/domain/defendant-financial-means-update-requested.json
+        - name: stagingbulkscan.events.defendant-financial-means-updated
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/events/stagingbulkscan.events.defendant-financial-means-updated.json
+        - name: stagingbulkscan.events.mark-as-actioned
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.mark-as-actioned.json
+        - name: stagingbulkscan.events.plea-details-updated
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.plea-details-updated.json
+        - name: stagingbulkscan.events.document-auto-actioned-with-follow-up
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-auto-actioned-with-follow-up.json
+        - name: stagingbulkscan.events.document-attached-with-follow-up
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-attached-with-follow-up.json
+        - name: stagingbulkscan.events.scan-document-expired
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.document-expired.json
+        - name: stagingbulkscan.events.scan-document-rejected
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.document-rejected.json
+        # Staging Bulkscan Registered
+        - name: stagingbulkscan.events.scan-envelope-registered
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.scan-envelope-registered.json
+        - name: stagingbulkscan.events.document-next-step-decided
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-next-step-decided.json
+      event_source_name: stagingbulkscan
+    - name: public events
+      events:
+        - name: public.progression.court-document-added
+          schema_uri: http://justice.gov.uk/progression/events/public.progression.court-document-added.json
+        - name: public.prosecutioncasefile.bulkscan-material-followup
+          schema_uri: http://cpp.moj.gov.uk/stagingbulkscan/domain/event/bulkscan-material-followup.json
+        - name: public.prosecutioncasefile.material-rejected
+          schema_uri: http://moj.gov.uk/cps/prosecutioncasefile/domain/event/processor/public-material-rejected.json
+        - name: public.sjp.case-document-added
+          schema_uri: http://justice.gov.uk/sjp/events/public.sjp.case-document-added.json
+      event_source_name: public

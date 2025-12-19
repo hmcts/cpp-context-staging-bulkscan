@@ -1,0 +1,15 @@
+{
+  "scanEnvelopeId": "fab947a3-c50c-4dbb-accf-b2758b1d2d6a",
+  "zipFileName": "1836104010001_27-11-2019-11-52-09.zip",
+  "associatedScanDocuments": [
+    {
+      "scanDocumentId": "fab947a3-c51c-4dbb-accf-b2758b1d2d6d",
+      "vendorReceivedDate": "2019-09-28T08:00:00.000Z",
+      "documentName": "SJON",
+      "fileName": "18361040100010001.pdf",
+      "status": "PENDING",
+      "statusUpdatedDate": "2019-12-12T09:27:15Z"
+    }
+  ],
+  "extractedDate": "2019-09-28T11:03:00.000Z"
+}

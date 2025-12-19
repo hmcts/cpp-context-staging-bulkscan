@@ -1,0 +1,36 @@
+#%RAML 0.8
+title: Staging Bulkscan API
+baseUri:  http://localhost:8080/stagingbulkscan-command-api/command/api/rest/stagingbulkscan
+
+/scan-envelope:
+    post:
+      description: |
+        ...
+        (mapping):
+            requestType: application/vnd.stagingbulkscan.register-scan-envelope+json
+            name: stagingbulkscan.register-scan-envelope
+        ...
+      body:
+        application/vnd.stagingbulkscan.register-scan-envelope+json:
+            example: !include json/stagingbulkscan.register-scan-envelope.json
+            schema: !include json/schema/stagingbulkscan.register-scan-envelope.json
+      responses:
+            202:
+                description: OK
+
+
+/scan-envelope/{scanEnvelopeId}:
+    post:
+      description: |
+        ...
+        (mapping):
+            requestType: application/vnd.stagingbulkscan.mark-as-action+json
+            name: stagingbulkscan.mark-as-action
+        ...
+      body:
+        application/vnd.stagingbulkscan.mark-as-action+json:
+            example: !include json/stagingbulkscan.mark-as-action.json
+            schema: !include json/schema/stagingbulkscan.mark-as-action.json
+      responses:
+            202:
+                description: OK

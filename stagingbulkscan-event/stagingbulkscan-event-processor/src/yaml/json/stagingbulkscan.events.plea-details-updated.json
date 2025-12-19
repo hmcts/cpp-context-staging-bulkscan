@@ -1,0 +1,23 @@
+{
+  "caseId": "a20b8792-8ff0-487e-bfba-73ee77807214",
+  "defendantCourtOptions": {
+    "welshHearing": false,
+    "interpreter": {
+      "language": "German",
+      "needed": true
+    }
+  },
+
+  "pleas": [
+    {
+      "offenceId" :  "d10b8792-8ff0-487e-bfba-73ee77807214",
+      "defendantId" :  "fecaea8b-c0ed-4c6f-9124-18b079b8ae5f",
+      "pleaType" :  "GUILTY"
+    },
+    {
+      "offenceId" :  "d2b09b66-088e-4b1f-a1e5-6fc67a4e3dc1",
+      "defendantId" :  "fecaea8b-c0ed-4c6f-9124-18b079b8ae5f",
+      "pleaType" :  "NOT_GUILTY"
+    }
+  ]
+}

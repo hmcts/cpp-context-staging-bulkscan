@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/sjp/events/public.sjp.case-document-added.json",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "description": "case document id"
+    },
+    "materialId": {
+      "type": "string"
+    },
+    "documentType" : {
+      "type": "string"
+    }
+  },
+  "required": [
+    "caseId",
+    "id",
+    "materialId"
+  ]
+}

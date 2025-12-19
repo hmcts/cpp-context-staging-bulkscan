@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/plea-type.json",
+  "enum": [
+    "GUILTY",
+    "BOTH",
+    "NOT_GUILTY"
+  ]
+}

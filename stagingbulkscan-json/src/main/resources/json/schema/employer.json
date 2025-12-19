@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/employer.json",
+  "type": "object",
+  "properties": {
+    "employeeReference": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "address": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/address.json"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/command/stagingbulkscan.get-thumbnail-content.json",
+  "type": "object",
+  "properties": {
+    "id" : {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "content"
+  ]
+}
