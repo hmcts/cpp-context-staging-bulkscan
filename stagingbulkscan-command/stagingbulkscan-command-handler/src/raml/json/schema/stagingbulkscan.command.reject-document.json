@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/command/stagingbulkscan.command.reject-document.json",
+  "type": "object",
+  "properties": {
+    "scanEnvelopeId" : {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "scanDocumentId" : {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "http://cpp.moj.gov.uk/stagingbulkscan/json/schemas/problem.json"
+      }
+    }
+  },
+  "required": [
+    "scanEnvelopeId",
+    "scanDocumentId"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "groups": [
+    {
+      "groupId": "1e2f843e-d639-40b3-8611-8015f3a18958",
+      "groupName": "Legal Advisers"
+    },
+    {
+      "groupId": "5b6f843e-d639-40b3-8611-8015f3a34759",
+      "groupName": "Court Administrators"
+    },
+    {
+      "groupId": "1e2f843e-d639-40b3-8611-8015f3a18958",
+      "groupName": "System Users"
+    },
+    {
+      "groupId": "ff2fcd92-0e13-4e5f-8b61-2e3ddabebe39",
+      "groupName": "Online Plea System Users"
+    },
+    {
+      "groupId": "5b6f843e-d639-40b3-8611-8015f3a34758",
+      "groupName": "Charging Lawyers"
+    },
+    {
+      "groupId": "5f4543e6-7212-11e7-8cf7-a6006ad3dba0",
+      "groupName": "CMS"
+    },
+    {
+      "groupId": "7f4543e6-7212-11e7-8cf7-a6006ad3dba0",
+      "groupName": "Court Clerks"
+    },
+    {
+      "groupId": "2f4543e6-7212-11e7-8cf7-a6006ad3dba0",
+      "groupName": "Listing Officers"
+    },
+    {
+      "groupId": "5f4143e6-9212-14e7-6cf7-a6106ad3dba3",
+      "groupName": "TFL Prosecutors"
+    },
+    {
+      "groupId": "f2838a27-dde8-4aa7-85a3-65a2a924b30e",
+      "groupName": "TVL Prosecutors"
+    },
+    {
+      "groupId": "c2a4953d-efdc-4d5b-9927-a328123bffee",
+      "groupName": "SJP Prosecutors"
+    },
+    {
+      "groupId": "4eb4cf00-5a91-4c13-a3df-00a8541173ed",
+      "groupName": "Support Users"
+    }
+  ]
+}

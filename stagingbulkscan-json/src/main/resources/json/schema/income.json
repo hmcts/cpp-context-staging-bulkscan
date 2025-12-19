@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/income.json",
+  "type": "object",
+  "properties": {
+    "frequency": {
+      "enum": [
+        "WEEKLY",
+        "MONTHLY",
+        "FORTNIGHTLY",
+        "YEARLY"
+      ]
+    },
+    "amount": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": false
+}

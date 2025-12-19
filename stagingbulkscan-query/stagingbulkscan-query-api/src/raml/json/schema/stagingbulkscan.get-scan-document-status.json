@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "id": "http://justice.gov.uk/staging/bulkscan/json/schemas/get-scan-document-status.json",
+  "properties": {
+    "scanDocumentStatuses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/scanDocument"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "scanDocumentStatuses"
+  ],
+  "definitions": {
+    "scanDocument": {
+      "type": "object",
+      "properties": {
+        "scanEnvelopeId": {
+          "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+        },
+        "documentFileName": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "statusCode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "scanEnvelopeId",
+        "documentFileName",
+        "status",
+        "statusCode"
+      ]
+    }
+  }
+}

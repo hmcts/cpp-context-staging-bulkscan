@@ -1,0 +1,26 @@
+{
+  "caseId": "${caseId}",
+  "defendantId": "${defendantId}",
+  "income": {
+    "amount": 100.1,
+    "frequency": "MONTHLY"
+  },
+  "benefits": {
+    "claimed": true,
+    "type": "free text describing benefits type"
+  },
+  "employmentStatus": "EMPLOYED",
+  "employer": {
+    "employeeReference": "12345",
+    "name": "McDonald's",
+    "phone": "020 7998 9300",
+    "address": {
+      "address1": "14 Tottenham Court Road",
+      "address2": "London",
+      "address3": "England",
+      "address4": "UK",
+      "address5": "Greater London",
+      "postcode": "W1T 1JY"
+    }
+  }
+}

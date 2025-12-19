@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/staging/bulkscan/json/schemas/get-scan-document.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "documentFileName": {
+      "type": "string"
+    },
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "content": {
+      "type": "string"
+    },
+    "thumbnails": {
+      "type": "array",
+      "items": {
+        "$ref": "http://justice.gov.uk/staging/bulkscan/json/schemas/thumbnails.json"
+      }
+    },
+    "status": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/document-status.json"
+    }
+  },
+  "required": [
+    "id",
+    "scanEnvelopeId",
+    "documentFileName",
+    "content",
+    "status"
+  ]
+}

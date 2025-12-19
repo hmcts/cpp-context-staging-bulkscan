@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/document-status.json",
+  "enum": [
+    "PENDING",
+    "FOLLOW_UP",
+    "AUTO_ACTIONED",
+    "MANUALLY_ACTIONED"
+  ]
+}

@@ -1,0 +1,33 @@
+subscriptions_descriptor:
+  spec_version: 1.0.0
+  service: stagingbulkscan
+  service_component: EVENT_LISTENER
+  subscriptions:
+    - name: event listener subscription
+      events:
+        # Staging Bulkscan delete actioned document after limit
+        - name: stagingbulkscan.events.actioned-document-deleted
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.actioned-document-deleted.json
+        # Staging Bulkscan document auto actioned
+        - name: stagingbulkscan.events.document-auto-actioned
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-auto-actioned.json
+        # Staging Bulkscan document auto actioned with follow up
+        - name: stagingbulkscan.events.document-auto-actioned-with-follow-up
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-auto-actioned-with-follow-up.json
+        # Staging Bulkscan document mark as actioned
+        - name: stagingbulkscan.events.mark-as-actioned
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.mark-as-actioned.json
+        # Expire Scan document so it appears as followup
+        - name: stagingbulkscan.events.scan-document-expired
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.document-expired.json
+        # Reject Scan document so it appears as followup
+        - name: stagingbulkscan.events.scan-document-rejected
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.document-rejected.json
+        # Staging Bulkscan Registered
+        - name: stagingbulkscan.events.scan-envelope-registered
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.scan-envelope-registered.json
+        # Staging Bulkscan document auto actioned with follow up
+        - name: stagingbulkscan.events.document-attached-with-follow-up
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-attached-with-follow-up.json
+      event_source_name: stagingbulkscan
+

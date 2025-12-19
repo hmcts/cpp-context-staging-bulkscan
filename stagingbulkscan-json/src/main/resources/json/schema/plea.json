@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/plea.json",
+  "type": "object",
+  "properties": {
+    "offences": {
+      "type": "array",
+      "items": {
+        "$ref": "http://justice.gov.uk/stagingbulkscan/domain/offence.json"
+      }
+    },
+    "interpreter": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/interpreter.json"
+    },
+    "disabilityNeeds": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/disability-needs.json"
+    },
+    "welshHearing": {
+      "type": "boolean"
+    },
+    "wishToComeToCourt": {
+      "type": "boolean"
+    },
+    "detailsCorrect": {
+      "type": "boolean"
+    },
+    "contactNumber": {
+      "type": "string"
+    },
+    "emailAddress": {
+      "type": "string"
+    },
+    "drivingLicenceNumber": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "offences"
+  ],
+  "additionalProperties": false
+}

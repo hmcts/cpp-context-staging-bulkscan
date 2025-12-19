@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/defendant.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "email": {
+      "type": "string"
+    },
+    "caseId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "title": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/title.json"
+    },
+    "firstName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "lastName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "dateOfBirth": {
+      "type": "string"
+    },
+    "gender": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/gender.json"
+    },
+    "address": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/address.json"
+    },
+    "contactDetails": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/contact-details.json"
+    },
+    "nationalInsuranceNumber": {
+      "type": "string"
+    },
+    "driverNumber": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/dvlaDriverLicence"
+    }
+  },
+  "required": [
+    "scanDocumentId",
+    "scanEnvelopeId"
+  ],
+  "additionalProperties": false
+}

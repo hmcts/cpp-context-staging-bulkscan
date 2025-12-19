@@ -1,0 +1,58 @@
+--
+resource_descriptor:
+  spec_version: '1.0.0'
+  version: '${project.version}'
+
+  resources:
+    - name: java:/app/stagingbulkscan-service/DS.eventstore
+      type: xa-datasource
+      setup:
+        - type: liquibase
+          maven:
+            groupId: uk.gov.justice.services
+            artifactId: event-repository-liquibase
+            type: jar
+            version: '${cpp.framework.version}'
+        - type: liquibase
+          maven:
+            groupId: uk.gov.justice.services
+            artifactId: aggregate-snapshot-repository-liquibase
+            type: jar
+            version: '${project.version}'
+
+    - name: java:/DS.stagingbulkscan
+      type: xa-datasource
+      setup:
+        - type: liquibase
+          maven:
+            groupId: uk.gov.justice.services
+            artifactId: event-buffer-liquibase
+            type: jar
+            version: '${cpp.framework.version}'
+        - type: liquibase
+          maven:
+            groupId: uk.gov.moj.cpp.staging.bulkscan
+            artifactId: stagingbulkscan-viewstore-liquibase
+            type: jar
+            version: '${project.version}'
+
+
+    - name: stagingbulkscan.handler.command
+      type: queue
+    - name: stagingbulkscan.event
+      type: topic
+    - name: public.event
+      type: topic
+
+  services:
+    # stagingbulkscan provides these service mappings
+    - name: 'stagingbulkscan-service'
+      id: 'stagingbulkscan_service'
+      target: '/stagingbulkscan-service'
+      map:
+        - '/stagingbulkscan-command-api'
+        - '/stagingbulkscan-command-handler'
+        - '/stagingbulkscan-event-listener'
+        - '/stagingbulkscan-event-processor'
+        - '/stagingbulkscan-query-view'
+      matcher: '/stagingbulkscan-[^/]+'

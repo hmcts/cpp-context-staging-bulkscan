@@ -1,0 +1,27 @@
+package uk.gov.moj.cpp.bulkscan.azure.event;
+
+import java.util.Date;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class EventGridSchema {
+
+    private final Date eventTime;
+    private final Map<String, Object> data;
+
+    @JsonCreator
+    public EventGridSchema(@JsonProperty("eventTime") final Date eventTime, @JsonProperty("data") final Map<String, Object> data) {
+        this.eventTime = eventTime;
+        this.data = data;
+    }
+
+    public Date getEventTime() {
+        return eventTime;
+    }
+
+    public Map<String, Object> getData() {
+        return data;
+    }
+}

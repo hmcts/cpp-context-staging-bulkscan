@@ -1,0 +1,10 @@
+event_sources:
+  - name: stagingbulkscan
+    is_default: true
+    location:
+      jms_uri:  jms:topic:stagingbulkscan.event
+      rest_uri: http://localhost:8080/stagingbulkscan-service/event-source-api/rest
+      data_source: java:/app/stagingbulkscan-service/DS.eventstore
+  - name: public
+    location:
+      jms_uri:  jms:topic:public.event

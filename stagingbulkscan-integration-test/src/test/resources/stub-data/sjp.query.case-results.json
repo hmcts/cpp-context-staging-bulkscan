@@ -1,0 +1,113 @@
+{
+  "caseId": "${caseId}",
+  "accountDivisionCode": 1111,
+  "enforcingCourtCode": 2222,
+  "caseDecisions": [
+    {
+      "sjpSessionId": "a3c09490-9158-481d-9a59-7db30b5b486a",
+      "resultedOn": "2020-05-18T15:10:23.490Z[UTC]",
+      "offences": [
+        {
+          "id": "${offenceId_1}",
+          "verdict": "${verdict_2}",
+          "results": [
+            {
+              "resultDefinitionId": "969f150c-cd05-46b0-9dd9-30891efcc766",
+              "prompts": [
+                {
+                  "promptDefinitionId": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "value": "10"
+                }
+              ]
+            },
+            {
+              "resultDefinitionId": "29e02fa1-42ce-4eec-914e-e62508397a16",
+              "prompts": [
+                {
+                  "promptDefinitionId": "e263de82-47ca-433a-bb41-cad2e1c5bb72",
+                  "value": "Not Requested"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "${offenceId_2}",
+          "verdict": "${verdict_2}",
+          "results": [
+            {
+              "resultDefinitionId": "969f150c-cd05-46b0-9dd9-30891efcc766",
+              "prompts": [
+                {
+                  "promptDefinitionId": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "value": "10"
+                }
+              ]
+            },
+            {
+              "resultDefinitionId": "29e02fa1-42ce-4eec-914e-e62508397a16",
+              "prompts": [
+                {
+                  "promptDefinitionId": "e263de82-47ca-433a-bb41-cad2e1c5bb72",
+                  "value": "Not Requested"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "results": [
+            {
+              "resultDefinitionId": "76d43772-0660-4a33-b5c6-8f8ccaf6b4e3",
+              "prompts": [
+                {
+                  "promptDefinitionId": "db261fd9-c6bb-4e10-b93f-9fd98418f7b0",
+                  "value": "120"
+                }
+              ]
+            },
+            {
+              "resultDefinitionId": "9ea0d845-5096-44f6-9ce0-8ae801141eac",
+              "prompts": [
+                {
+                  "promptDefinitionId": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
+                  "value": "Make payments as ordered"
+                },
+                {
+                  "promptDefinitionId": "369b6e22-4678-4b04-9fe9-5bb53bed5067",
+                  "value": "No information from defendant"
+                }
+              ]
+            },
+            {
+              "resultDefinitionId": "e866cd11-6073-4fdf-a229-51c9d694e1d0",
+              "prompts": [
+                {
+                  "promptDefinitionId": "629a971e-9d7a-4526-838d-0a4cb922b5cb",
+                  "value": "32"
+                }
+              ]
+            },
+            {
+              "resultDefinitionId": "6d76b10c-64c4-11e8-adc0-fa7ae01bbebc",
+              "prompts": [
+                {
+                  "promptDefinitionId": "1393acda-7a35-4d65-859d-6298e1470cf1",
+                  "value": "20"
+                },
+                {
+                  "promptDefinitionId": "f2a61e80-c13e-4f44-8e91-8ce23e85596b",
+                  "value": "monthly"
+                },
+                {
+                  "promptDefinitionId": "e091af2e-43d0-495d-b3b0-432010358a45",
+                  "value": "17 Jun 2020"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

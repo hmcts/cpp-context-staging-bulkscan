@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/contact-details.json",
+  "type": "object",
+  "properties": {
+    "home": {
+      "type": "string"
+    },
+    "mobile": {
+      "type": "string"
+    },
+    "business": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "email2": {
+      "type": "string",
+      "format": "email"
+    }
+  },
+  "additionalProperties": false
+}

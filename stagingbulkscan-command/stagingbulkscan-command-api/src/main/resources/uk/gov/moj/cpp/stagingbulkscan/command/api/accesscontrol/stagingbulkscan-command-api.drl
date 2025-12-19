@@ -1,0 +1,25 @@
+package uk.gov.moj.cpp.stagingbulkscan.command.api.accesscontrol;
+
+import uk.gov.moj.cpp.accesscontrol.drools.Outcome;
+import uk.gov.moj.cpp.accesscontrol.drools.Action;
+import java.util.Arrays;
+
+global uk.gov.moj.cpp.accesscontrol.common.providers.UserAndGroupProvider userAndGroupProvider;
+
+rule "Command - API - Action - stagingbulkscan.register-scan-envelope"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.register-scan-envelope");
+   eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, "System Users"));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Command - API - Action - stagingbulkscan.mark-as-action"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.mark-as-action");
+   eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, "Court Administrators", "Crown Court Admin","System Users"));
+  then
+    $outcome.setSuccess(true);
+end

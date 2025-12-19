@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.document-next-step-decided.json",
+  "type": "object",
+  "properties": {
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "isSjp": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "scanEnvelopeId",
+    "scanDocumentId",
+    "isSjp"
+  ]
+}

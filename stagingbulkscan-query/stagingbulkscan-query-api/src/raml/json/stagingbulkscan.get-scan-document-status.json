@@ -1,0 +1,16 @@
+{
+  "scanDocumentStatuses": [
+    {
+      "scanEnvelopeId": "ba1d8b97-2bfb-4e64-9da3-1a9e2af5ce56",
+      "status": "MANUALLY_ACTIONED",
+      "statusCode": "CASE_NOT_FOUND",
+      "documentFileName": "21172040100030001.pdf"
+    },
+    {
+    "scanEnvelopeId": "ca1d8b97-2bfb-4e64-9da3-1a9e2af5ce56",
+    "status": "MANUALLY",
+    "statusCode": "DEFENDANT_DETAILS_UPDATED",
+    "documentFileName": "21132040100030001.pdf"
+    }
+  ]
+}
