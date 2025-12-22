@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/scan-envelope.json",
+  "type": "object",
+  "properties": {
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "envelopeClassification": {
+      "type": "string"
+    },
+    "vendorPOBox": {
+      "type": "string"
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "vendorOpeningDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "zipFileCreatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "zipFileName": {
+      "type": "string"
+    },
+    "extractedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "associatedScanDocuments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "http://justice.gov.uk/stagingbulkscan/domain/scan-document.json"
+      }
+    }
+  },
+  "required": [
+    "scanEnvelopeId",
+    "zipFileName",
+    "associatedScanDocuments",
+    "extractedDate"
+  ],
+  "additionalProperties": false
+}

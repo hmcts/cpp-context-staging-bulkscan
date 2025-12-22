@@ -1,0 +1,25 @@
+{
+  "id": "186cf0f3-99c0-4e7b-96db-db4d5b61677ab",
+  "title": "Mr",
+  "firstName": "John",
+  "lastName": "Smith",
+  "dateOfBirth": "1965-12-27",
+  "gender": "Male",
+  "email": "jsmith@sjp.com",
+  "caseId": "086cf0f3-99c0-4e7b-96db-db4d5b61677a",
+  "nationalInsuranceNumber": "QQ 12 34 56 C",
+  "drivingLicenseNumber": "RAMI858081R98GW",
+  "address": {
+    "address1": "Flat 1",
+    "address2": " Armageddon House",
+    "address3": "Giggleswick",
+    "address4": "Merton",
+    "address5": "Greater London",
+    "postcode": "L32 1AB"
+  },
+  "contactDetails": {
+    "home": "020 7219 5206",
+    "mobile": "020 7219 5207",
+    "email": "email@email.com"
+  }
+}

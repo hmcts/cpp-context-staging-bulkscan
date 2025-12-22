@@ -1,0 +1,21 @@
+{
+  "defendantCourtOptions": {
+    "welshHearing": true,
+    "interpreter": {
+      "language": "welsh",
+      "needed": true
+    }
+  },
+  "pleas": [
+    {
+      "defendantId": "${defendantId}",
+      "offenceId": "${offenceId}",
+      "pleaType": "GUILTY_REQUEST_HEARING"
+    },
+    {
+      "defendantId": "${defendantId}",
+      "offenceId": "${offenceId_1}",
+      "pleaType": "NOT_GUILTY"
+    }
+  ]
+}

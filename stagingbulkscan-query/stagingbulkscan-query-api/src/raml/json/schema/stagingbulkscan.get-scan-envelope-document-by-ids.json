@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/staging/bulkscan/json/schemas/get-scan-envelope-document-by-ids.json",
+  "type": "object",
+  "$ref": "http://justice.gov.uk/stagingbulkscan/domain/scan-envelope-document.json"
+}

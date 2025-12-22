@@ -1,0 +1,89 @@
+{
+  "id": "${caseId}",
+  "urn": "${caseUrn}",
+  "defendant": {
+    "id": "${defendantId}",
+    "offences": [
+      {
+        "id": "${offenceId}",
+        "offenceCode": "PS90010",
+        "offenceSequenceNumber": 1,
+        "wording": "On 02/07/2015 At Threadneedle Street EC2 Being a passenger on a Public service Vehicle operated on behalf of London Bus Services Limited being used for the carriage of passengers at separate fares where the vehicle was being operated by a Driver without a Conductor did not as directed by the Driver an Inspector or a Notice displayed on the vehicle pay the fare for the journey in accordance with the direction ",
+        "wordingWelsh": "Welsh wording: On 02/07/2015 At Threadneedle Street EC2 Being a passenger on a Public service Vehicle operated on behalf of London Bus Services Limited being used for the carriage of passengers at separate fares where the vehicle was being operated by a Driver without a Conductor did not as directed by the Driver an Inspector or a Notice displayed on the vehicle pay the fare for the journey in accordance with the direction ",
+        "cjsCode": "PS90010",
+        "sequenceNumber": 1,
+        "startDate": "2017-12-29",
+        "chargeDate": "2018-01-03",
+        "compensation": 10,
+        "prosecutionFacts": "An incident took place at GREEN PARK station whereby you were spoken to by a member of London Underground staff regarding your train journey and the associated fare.The facts of this incidents are now being considered and I must advise you that legal proceedings may be initiated against you regarding this matter in accordance with the LU prosecution policy",
+        "plea": "GUILTY",
+        "title": "Possess a television set with intent to install / use without a licence",
+        "hasFinalDecision": false
+      }
+    ],
+    "caseId": "${caseId}",
+    "interpreter": {
+      "needed": false
+    },
+    "disabilityNeeds": {
+      "disabilityNeeds": "wheel chair access required",
+      "needed": true
+    },
+    "numPreviousConvictions": 2,
+    "personalDetails": {
+      "firstName": "John",
+      "lastName": "Smith",
+      "gender": "Male",
+      "email": "test@test.com",
+      "address": {
+        "address1": "Flat 1",
+        "address2": " Armageddon House",
+        "address3": "Giggleswick",
+        "address4": "Merton",
+        "address5": "Greater London",
+        "postcode": "L32 1AB"
+      },
+      "contactDetails": {
+        "home": "020 7219 5206",
+        "mobile": "020 7219 5207",
+        "email": "test@test.com"
+      },
+      "nationalInsuranceNumber": "AB123456C"
+    }
+  },
+  "dateTimeCreated": "2018-02-02T12:51:58.742Z",
+  "caseDocuments": [
+    {
+      "id": "7bde207f-ce57-49e5-b961-7577831171fb",
+      "materialId": "7bde207f-ce57-49e5-b961-7577831171fb",
+      "documentType": "SJPN",
+      "documentNumber": 1,
+      "addedAt": "2018-08-26T14:55:47.631Z"
+    }
+  ],
+  "caseDecisions": [
+    {
+      "id":"32bcbaa6-ff56-40cb-8a71-408feb5077cc",
+      "session":{
+        "sessionId":"88dc450d-7d5c-4770-85fc-2c7126bc08c0",
+        "legalAdviserUserId":"a085e359-6069-4694-8820-7810e7dfe762",
+        "courtHouseCode":"B23HS00",
+        "courtHouseName":"Leamington Spa Magistrates' Court",
+        "localJusticeAreaNationalCourtCode":"2905",
+        "magistrate":"re",
+        "startedAt":"2019-06-04T14:34:54.164Z",
+        "sessionType":"MAGISTRATE"
+      },
+      "savedAt":"2019-06-04T14:35:28.906Z"
+    }
+  ],
+  "prosecutingAuthority": "TFL",
+  "completed": false,
+  "assigned": false,
+  "costs": 20,
+  "postingDate": "2018-01-05",
+  "adjournedTo": "2020-01-01",
+  "enterpriseId": "FNHMNHBQNV7L",
+  "status": "NO_PLEA_RECEIVED_READY_FOR_DECISION",
+  "listedInCriminalCourts": true
+}

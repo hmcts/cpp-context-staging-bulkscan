@@ -1,0 +1,32 @@
+{
+  "delivery_date": "2019-11-27T10:46:03.123Z",
+  "zip_file_name": "1836104010001_27-11-2019-11-52-09.zip",
+  "po_box": "1959",
+  "jurisdiction": "Crime",
+  "scannable_items": [
+    {
+      "case_number": "TVL12295672",
+      "prosecutor_ID": null,
+      "document_name": "Single Justice Procedure Notice - Plea (Multiple)",
+      "document_control_number": "AC12",
+      "file_name": "18361040100010001.pdf",
+      "ocr_data": null
+    },
+    {
+      "case_number": "",
+      "prosecutor_ID": "",
+      "document_name": "SJPMC100",
+      "file_name": "18361040100010002.pdf",
+      "asn": "some_asn_number",
+      "ocr_data": ""
+    },
+    {
+      "case_number": "TVL56477346",
+      "prosecutor_ID": " ",
+      "document_name": "SJPMC100",
+      "file_name": "18361040100010003.pdf",
+      "asn": "some_asn_number",
+      "ocr_data": " "
+    }
+  ]
+}

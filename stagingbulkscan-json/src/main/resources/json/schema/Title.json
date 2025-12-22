@@ -1,0 +1,5 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/title.json",
+  "enum": ["Mr", "Mrs", "Ms", "Miss", "Co"]
+}

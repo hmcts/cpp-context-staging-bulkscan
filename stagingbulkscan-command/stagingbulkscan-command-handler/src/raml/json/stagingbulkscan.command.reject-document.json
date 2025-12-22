@@ -1,0 +1,15 @@
+{
+  "scanEnvelopeId": "726b6391-7bc2-445a-8a0c-9bcfd963702e",
+  "scanDocumentId" : "ec998ef3-4775-4166-9ad8-f5eeba78ded1",
+  "errors": [
+    {
+      "code": "INVALID_FILE_TYPE",
+      "values": [
+        {
+          "key": "fileType",
+          "value": "application/incorrect"
+        }
+      ]
+    }
+  ]
+}

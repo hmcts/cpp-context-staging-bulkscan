@@ -1,0 +1,111 @@
+#%RAML 0.8
+title: Staging Bulkscan Query API
+baseUri: http://localhost:8080/stagingbulkscan-query-api/query/api/rest/stagingbulkscan
+protocols: [ HTTP, HTTPS ]
+
+/scan-documents/{status}:
+  uriParameters:
+      status:
+        description: document status
+        type: string
+  get:
+      description: |
+        ...
+        (mapping):
+            responseType: application/vnd.stagingbulkscan.get-all-documents-by-status+json
+            name: stagingbulkscan.get-all-documents-by-status
+        ...
+      responses:
+            200:
+                description: OK
+                body:
+                  application/vnd.stagingbulkscan.get-all-documents-by-status+json:
+                    example: !include json/stagingbulkscan.get-all-documents-by-status.json
+                    schema:  !include  json/schema/stagingbulkscan.get-all-documents-by-status.json
+
+/scan-envelope/{scanEnvelopeId}/scan-documents/{scanDocumentId}:
+  uriParameters:
+        scanEnvelopeId:
+          description: envelope ID
+          type: string
+        scanDocumentId:
+          description: ID of document to get
+          type: string
+  get:
+      description: |
+        ...
+        (mapping):
+            responseType: application/vnd.stagingbulkscan.get-scan-document+json
+            name: stagingbulkscan.get-scan-document
+        (mapping):
+            responseType: application/vnd.stagingbulkscan.get-scan-document-by-id+json
+            name: stagingbulkscan.get-scan-document-by-id
+        (mapping):
+            responseType: application/vnd.stagingbulkscan.get-scan-envelope-document-by-ids+json
+            name: stagingbulkscan.get-scan-envelope-document-by-ids
+        ...
+      responses:
+            200:
+                description: OK
+                body:
+                  application/vnd.stagingbulkscan.get-scan-document+json:
+                    example:  !include json/stagingbulkscan.get-scan-document.json
+                    schema:  !include  json/schema/stagingbulkscan.get-scan-document.json
+                  application/vnd.stagingbulkscan.get-scan-document-by-id+json:
+                    example:  !include json/stagingbulkscan.get-scan-document-by-id.json
+                    schema:  !include  json/schema/stagingbulkscan.get-scan-document-by-id.json
+                  application/vnd.stagingbulkscan.get-scan-envelope-document-by-ids+json:
+                    example:  !include json/stagingbulkscan.get-scan-envelope-document-by-ids.json
+                    schema:  !include  json/schema/stagingbulkscan.get-scan-envelope-document-by-ids.json
+
+/scan-envelope/{scanEnvelopeId}/image/{scanDocumentId}:
+  uriParameters:
+        scanEnvelopeId:
+          description: envelope ID
+          type: string
+        scanDocumentId:
+          description: ID of thumbnail to get the document
+          type: string
+  get:
+      description: |
+        ...
+        (mapping):
+            responseType: application/vnd.stagingbulkscan.get-thumbnail-content+json
+            name: stagingbulkscan.get-thumbnail-content
+        ...
+      responses:
+            200:
+                description: OK
+                body:
+                  application/vnd.stagingbulkscan.get-thumbnail-content+json:
+                    example: !include json/stagingbulkscan.get-thumbnail-content.json
+                    schema: !include json/schema/stagingbulkscan.get-thumbnail-content.json
+
+/scan-document:
+  get:
+    description: |
+      Returns  status of all scan documents based on case urn or case pti urn
+      ...
+      (mapping):
+        responseType: application/vnd.referencedata.query.scan-document-status+json
+        name: stagingbulkscan.get-scan-document-status
+      ...
+    queryParameters:
+      caseUrn:
+         description: case context
+         type: string
+         example: case reference
+         required: false
+      casePtiUrn:
+         description: case context
+         type: string
+         example: case reference
+         required: false
+
+    responses:
+       200:
+         description: OK
+         body:
+           application/vnd.referencedata.query.scan-document-status+json:
+              schema: !include json/stagingbulkscan.get-scan-document-status.json
+              example: !include json/schema/stagingbulkscan.get-scan-document-status.json

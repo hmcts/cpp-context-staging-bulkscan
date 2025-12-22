@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/stagingbulkscan.events.plea-details-updated.json",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "defendantCourtOptions": {
+      "interpreter": {
+        "$ref": "http://justice.gov.uk/stagingbulkscan/domain/interpreter.json"
+      },
+      "welshHearing": {
+        "type": "boolean"
+      }
+    },
+    "defendantPleas": {
+      "type": "array",
+      "items": {
+        "id": "http://justice.gov.uk/stagingbulkscan/domain/sjp/command/plea.json",
+        "type": "object",
+        "properties": {
+          "defendantId": {
+            "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+          },
+          "offenceId": {
+            "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+          },
+          "pleaType": {
+            "$ref": "http://justice.gov.uk/stagingbulkscan/domain/plea-type.json"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "caseId",
+    "defendantCourtOptions",
+    "defendantPleas"
+  ]
+}

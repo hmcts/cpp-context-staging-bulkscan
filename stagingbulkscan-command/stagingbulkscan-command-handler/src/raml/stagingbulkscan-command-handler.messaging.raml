@@ -1,0 +1,45 @@
+#%RAML 0.8
+title: Stagin Bulkscan Command handler
+baseUri:  message://command/handler/message/stagingbulkscan
+
+/stagingbulkscan.handler.command:
+  post:
+      body:
+# Register Envelope Command
+        application/vnd.stagingbulkscan.command.register-scan-envelope+json:
+            example: !include json/stagingbulkscan.command.register-scan-envelope.json
+            schema:  !include json/schema/stagingbulkscan.command.register-scan-envelope.json
+# Mark as action Command
+        application/vnd.stagingbulkscan.command.mark-as-action+json:
+            example: !include json/stagingbulkscan.command.mark-as-action.json
+            schema:  !include json/schema/stagingbulkscan.command.mark-as-action.json
+# Auto action document Command
+        application/vnd.stagingbulkscan.command.auto-action-scan-document+json:
+            example: !include json/stagingbulkscan.command.auto-action-scan-document.json
+            schema:  !include json/schema/stagingbulkscan.command.auto-action-scan-document.json
+# Delete Actioned Documents after certain days Command
+        application/vnd.stagingbulkscan.command.delete-actioned-document+json:
+            example: !include json/stagingbulkscan.command.delete-actioned-document.json
+            schema:  !include json/schema/stagingbulkscan.command.delete-actioned-document.json
+# Reject the document, so that it will appear as follow up in the ui.
+        application/vnd.stagingbulkscan.command.reject-document+json:
+            example: !include json/stagingbulkscan.command.reject-document.json
+            schema:  !include json/schema/stagingbulkscan.command.reject-document.json
+        application/vnd.stagingbulkscan.command.expire-document+json:
+            example: !include json/stagingbulkscan.command.expire-document.json
+            schema:  !include json/schema/stagingbulkscan.command.expire-document.json
+# Update defendant details once successfully attached to an SJP case Command
+        application/vnd.stagingbulkscan.command.update-defendant-additional-details+json:
+            example: !include json/stagingbulkscan.command.update-defendant-details.json
+            schema:  !include json/schema/stagingbulkscan.command.update-defendant-details.json
+# Update defendant financial means once document is successfully attached to an SJP case
+        application/vnd.stagingbulkscan.command.update-defendant-financial-means+json:
+            example: !include json/stagingbulkscan.command.update-defendant-financial-means.json
+            schema:  !include json/schema/stagingbulkscan.command.update-defendant-financial-means.json
+# Raise document Followup command
+        application/vnd.stagingbulkscan.command.raise-document-follow-up+json:
+            example: !include json/stagingbulkscan.command.raise-document-follow-up.json
+            schema:  !include json/schema/stagingbulkscan.command.raise-document-follow-up.json
+        application/vnd.stagingbulkscan.command.decide-document-next-step+json:
+            example: !include json/stagingbulkscan.command.decide-document-next-step.json
+            schema:  !include json/schema/stagingbulkscan.command.decide-document-next-step.json

@@ -1,0 +1,47 @@
+{
+  "defendantId": "50770ba9-37ea-4713-8cab-fe5bf1202716",
+  "income": {
+    "amount": 100.1,
+    "frequency": "MONTHLY"
+  },
+  "benefits": {
+    "claimed": true,
+    "type": "free text describing benefits type"
+  },
+  "employmentStatus": "EMPLOYED",
+  "nationalInsuranceNumber": "AE123456C",
+  "employer": {
+    "employeeReference": "12345",
+    "name": "McDonald's",
+    "address": {
+      "address1": "14 Tottenham Court Road",
+      "postcode": "W1T 1JY"
+    }
+  },
+  "sjpAllFinancialMeans": {
+    "caseId": "8a2b4656-f2b8-4cdd-abb4-46376db24bbf",
+    "defendantId": "50770ba9-37ea-4713-8cab-fe5bf1202716",
+    "income": {
+      "amount": 100.1,
+      "frequency": "MONTHLY"
+    },
+    "benefits": {
+      "claimed": true,
+      "type": "free text describing benefits type"
+    },
+    "employmentStatus": "EMPLOYED",
+    "employer": {
+      "employeeReference": "12345",
+      "name": "McDonald's",
+      "address": {
+        "address1": "14 Tottenham Court Road",
+        "address2": "London",
+        "address3": "England",
+        "address4": "UK",
+        "address5": "Greater London",
+        "postcode": "W1T 1JY"
+      }
+    }
+  }
+}
+

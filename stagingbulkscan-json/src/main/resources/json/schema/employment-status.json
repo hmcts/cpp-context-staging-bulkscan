@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/employment-status.json",
+  "enum": [
+    "EMPLOYED",
+    "SELF_EMPLOYED",
+    "UNEMPLOYED",
+    "OTHER"
+  ]
+}

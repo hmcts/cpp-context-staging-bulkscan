@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/event/stagingbulkscan.events.scan-document-expired.json",
+  "type": "object",
+  "properties": {
+    "scanEnvelopeId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "expiredDate": {
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "scanEnvelopeId",
+    "scanDocumentId",
+    "expiredDate"
+  ],
+  "additionalProperties": false
+}

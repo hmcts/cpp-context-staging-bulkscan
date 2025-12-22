@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/events/stagingbulkscan.events.defendant-financial-means-updated.json",
+  "type": "object",
+  "properties": {
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "income": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/income.json"
+    },
+    "benefits": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/benefits.json"
+    },
+    "employment": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/employment.json"
+    },
+    "employer": {
+      "$ref":"http://justice.gov.uk/stagingbulkscan/domain/employer.json"
+    },
+    "nationalInsuranceNumber": {
+      "type": "string"
+    },
+    "sjpAllFinancialMeans": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/all-financial-means.json"
+    }
+  },
+  "required": [
+    "scanDocumentId",
+    "sjpAllFinancialMeans"
+  ]
+}

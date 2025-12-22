@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/document-financial-means.json",
+  "type": "object",
+  "properties": {
+    "averageIncome": {
+      "type": "string"
+    },
+    "frequencyWeekly": {
+      "type": "boolean"
+    },
+    "frequencyFortnightly": {
+      "type": "boolean"
+    },
+    "frequencyMonthly": {
+      "type": "boolean"
+    },
+    "frequencyYearly": {
+      "type": "boolean"
+    },
+    "noIncome": {
+      "type": "boolean"
+    },
+    "employed": {
+      "type": "boolean"
+    },
+    "selfEmployed": {
+      "type": "boolean"
+    },
+    "unemployed": {
+      "type": "boolean"
+    },
+    "otherEmploymentStatus": {
+      "type": "boolean"
+    },
+    "niNumber": {
+      "type": "string"
+    },
+    "nameOfOrganization": {
+      "type": "string"
+    },
+    "payrollNumber": {
+      "type": "string"
+    },
+    "employerAddressLine1": {
+      "type": "string"
+    },
+    "employerAddressLine2": {
+      "type": "string"
+    },
+    "employerAddressLine3": {
+      "type": "string"
+    },
+    "employerAddressCity": {
+      "type": "string"
+    },
+    "employerAddressPostCode": {
+      "type": "string"
+    },
+    "claimBenefits": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

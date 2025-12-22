@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation = "http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="1" author="Staging-Bulkscan" logicalFilePath="001-create-envelope-and-document-table.xml">
+        <createTable tableName="scan_envelope">
+            <column name="id" type="UUID"/>
+            <column name="zip_file_name" type="VARCHAR(50)"/>
+            <column name="extracted_date" type="DATETIME"/>
+            <column name="notes" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="pk_scan_envelope" tableName="scan_envelope"/>
+
+        <createTable tableName="scan_document">
+            <column name="id" type="UUID"/>
+            <column name="scan_envelope_id" type="UUID"/>
+            <column name="document_file_name" type="VARCHAR(50)"/>
+            <column name="vendor_received_date" type="DATETIME"/>
+            <column name="case_urn" type="VARCHAR(11)"/>
+            <column name="case_pti_urn" type="VARCHAR(15)"/>
+            <column name="prosecutor_authority_id" type="VARCHAR(8)"/>
+            <column name="prosecutor_authority_code" type="VARCHAR(6)"/>
+            <column name="document_type" type="VARCHAR(50)"/>
+            <column name="document_subtype" type="VARCHAR(50)"/>
+            <column name="notes" type="VARCHAR(255)"/>
+            <column name="actioned" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actioned_date" type="DATETIME"/>
+            <column name="actioned_by" type="UUID"/>
+        </createTable>
+
+        <addPrimaryKey columnNames="id,scan_envelope_id" constraintName="pk_scan_document" tableName="scan_document"/>
+        <addForeignKeyConstraint  constraintName="fk_scan_envelope_to_scan_document_id"
+                                  baseTableName="scan_document"
+                                  baseColumnNames="scan_envelope_id"
+                                  referencedTableName="scan_envelope"
+                                  referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

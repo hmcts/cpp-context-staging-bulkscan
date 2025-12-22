@@ -1,0 +1,16 @@
+{
+  "id": "54004d64-a12c-45eb-9d82-e49b3a12ee0f",
+  "scanEnvelopeId": "726b6391-7bc2-445a-8a0c-9bcfd963702e",
+  "documentFileName": "18361040100010001.pdf",
+  "vendorReceivedDate": "2019-12-25T10:46:03.123Z",
+  "caseUrn": "12295672",
+  "casePTIUrn": "",
+  "prosecutorAuthorityId": "AAAJJ11",
+  "prosecutorAuthorityCode": "TFL",
+  "documentName": "Form SJPN",
+  "notes": null,
+  "status": "MANUALLY_ACTIONED",
+  "actionedBy": "c17afa21-3584-4685-ad20-9644bb65acf8",
+  "statusUpdatedDate": "2019-12-28T11:01:03.456Z",
+  "statusCode": null
+}

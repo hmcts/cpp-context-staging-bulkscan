@@ -1,0 +1,17 @@
+{
+  "_metadata": {
+    "name": "prosecutioncasefile.events.material-rejected"
+  },
+  "caseId": "a4391788-f829-4514-a344-61f1d5d9690c",
+  "errors": [
+    {
+      "code": "INVALID_FILE_TYPE",
+      "values": [
+        {
+          "key": "fileType",
+          "value": "application/incorrect"
+        }
+      ]
+    }
+  ]
+}

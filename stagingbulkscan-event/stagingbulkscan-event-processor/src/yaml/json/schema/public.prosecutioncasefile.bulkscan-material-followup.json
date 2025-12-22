@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://cpp.moj.gov.uk/stagingbulkscan/domain/event/bulkscan-material-followup.json",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "material": {
+      "$ref": "http://cpp.moj.gov.uk/stagingbulkscan/json/schemas/material.json"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "http://cpp.moj.gov.uk/stagingbulkscan/json/schemas/problem.json"
+      }
+    }
+  },
+  "required": [
+    "caseId",
+    "material"
+  ]
+}

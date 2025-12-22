@@ -1,0 +1,50 @@
+{
+  "scanEnvelopeId": "${scanEnvelopeId}",
+  "zipFileName": "TEST.zip",
+  "associatedScanDocuments": [
+    {
+      "scanDocumentId": "${scanDocumentId}",
+      "fileName": "${documentFileName}",
+      "caseUrn": "12295672",
+      "prosecutorAuthorityId": "AAAJJ11",
+      "documentControlNumber": "ABCDEFGHI",
+      "documentName": "SJPMC100",
+      "scanningDate": "${dateTime}",
+      "manualIntervention": "No",
+      "nextAction": "ABCDEF",
+      "nextActionDate": "${dateTime}",
+      "vendorReceivedDate": "${dateTime}",
+      "notes": "ABCDEFGHIJK",
+      "status": "PENDING",
+      "statusUpdatedDate": "${dateTime}",
+      "mc100s": {
+        "employed": true,
+        "niNumber": "AE123456C",
+        "noIncome": false,
+        "unemployed": false,
+        "selfEmployed": false,
+        "averageIncome": "4556",
+        "payrollNumber": "88989",
+        "claimBenefits": true,
+        "frequencyWeekly": false,
+        "frequencyYearly": false,
+        "frequencyMonthly": true,
+        "nameOfOrganization": "abc",
+        "employerAddressCity": "london",
+        "employerAddressLine1": "100",
+        "employerAddressLine2": "wellesley grove",
+        "employerAddressLine3": "croyon",
+        "frequencyFortnightly": false,
+        "otherEmploymentStatus": false,
+        "employerAddressPostCode": "W1T 1JY"
+      }
+    }
+  ],
+  "extractedDate": "${dateTime}",
+  "envelopeClassification": "ABCDEFGHIJ",
+  "vendorPOBox": "1953",
+  "jurisdiction": "ABCDEFGHIJ",
+  "vendorOpeningDate": "${dateTime}",
+  "zipFileCreatedDate": "${dateTime}",
+  "notes": "TEST NOTES"
+}

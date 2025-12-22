@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/scan-document.json",
+  "type": "object",
+  "properties": {
+    "scanDocumentId": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "caseUrn": {
+      "type": "string"
+    },
+    "casePTIUrn": {
+      "type": "string"
+    },
+    "prosecutorAuthorityId": {
+      "type": "string",
+      "maxLength": 8
+    },
+    "prosecutorAuthorityCode": {
+      "type": "string"
+    },
+    "documentControlNumber": {
+      "type": "string"
+    },
+    "documentName": {
+      "type": "string"
+    },
+    "scanningDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "manualIntervention": {
+      "type": "string"
+    },
+    "nextAction": {
+      "type": "string"
+    },
+    "nextActionDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "fileName": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "vendorReceivedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/document-status.json"
+    },
+    "statusUpdatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actionedBy": {
+      "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "deletedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mc100s": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/document-financial-means.json"
+    },
+    "asn": {
+      "type": "string"
+    },
+    "plea": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/plea.json"
+    }
+  },
+  "required": [
+    "scanDocumentId",
+    "fileName",
+    "status"
+  ],
+  "additionalProperties": false
+}

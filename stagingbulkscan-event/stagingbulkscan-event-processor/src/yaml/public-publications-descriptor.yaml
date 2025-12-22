@@ -1,0 +1,24 @@
+subscriptions_descriptor:
+  spec_version: 1.0.0
+  service: stagingbulkscan
+  service_component: EVENT_PROCESSOR
+  subscriptions:
+    - name: public event processor publications
+      events:
+        - name: public.stagingbulkscan.mark-as-actioned
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/public.stagingbulkscan.mark-as-actioned.json
+        - name: public.stagingbulkscan.document-marked-for-follow-up
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/events/document-marked-for-follow-up.json
+        - name: public.stagingbulkscan.scan-envelope-registered
+          schema_uri: http://justice.gov.uk/json/schemas/stagingbulkscan/public.stagingbulkscan.scan-envelope-registered.json
+      event_source_name: public
+
+
+
+
+
+
+
+
+
+

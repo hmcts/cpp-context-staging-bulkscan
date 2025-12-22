@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/stagingbulkscan/domain/employment.json",
+  "type": "object",
+  "properties": {
+    "status": {
+      "$ref": "http://justice.gov.uk/stagingbulkscan/domain/employment-status.json"
+    },
+    "details": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

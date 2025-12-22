@@ -1,0 +1,48 @@
+{
+  "scanEnvelopeId": "${scanEnvelopeId}",
+  "zipFileName": "TEST.zip",
+  "associatedScanDocuments": [
+    {
+      "scanDocumentId": "${scanDocumentId}",
+      "fileName": "${documentFileName}",
+      "caseUrn": "12295672",
+      "casePTIUrn": "ABCDE",
+      "prosecutorAuthorityId": "SJPN",
+      "documentControlNumber": "ABCDEFGHI",
+      "documentName": "Single Justice Procedure Notice - Plea (Single)",
+      "scanningDate": "${dateTime}",
+      "manualIntervention": "No",
+      "nextAction": "ABCDEF",
+      "nextActionDate": "${dateTime}",
+      "vendorReceivedDate": "${dateTime}",
+      "notes": "ABCDEFGHIJK",
+      "status": "PENDING",
+      "statusUpdatedDate": "${dateTime}",
+      "plea": {
+        "offences": [
+          {
+            "title": "Possess a television set with intent to install / use without a licence",
+            "pleaValue": "GUILTY"
+          }
+        ],
+        "interpreter": {
+          "needed": true,
+          "language": "welsh"
+        },
+        "welshHearing": true,
+        "detailsCorrect": true,
+        "emailAddress": "jsmith@email.com",
+        "detailsCorrect": true,
+        "contactNumber": "07901111111",
+        "wishToComeToCourt": ${wishToComeToCourt}
+      }
+    }
+  ],
+  "extractedDate": "2019-10-12T09:27:12Z",
+  "envelopeClassification": "ABCDEFGHIJ",
+  "vendorPOBox": "1953",
+  "jurisdiction": "ABCDEFGHIJ",
+  "vendorOpeningDate": "2019-09-12T09:27:12Z",
+  "zipFileCreatedDate": "2019-08-12T09:27:12Z",
+  "notes": "TEST NOTES"
+}

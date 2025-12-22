@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/stagingbulkscan/events/document-marked-for-follow-up.json",
+  "type": "object",
+  "properties": {
+    "document": {
+      "type": "object",
+      "properties": {
+        "actionedBy": {
+          "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+        },
+        "casePTIUrn": {
+          "type": "string"
+        },
+        "caseUrn": {
+          "type": "string"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "deletedDate": {
+          "type": "string"
+        },
+        "documentFileName": {
+          "type": "string"
+        },
+        "documentName": {
+          "type": "string"
+        },
+        "extractedDate": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "prosecutorAuthorityCode": {
+          "type": "string"
+        },
+        "prosecutorAuthorityId": {
+          "type": "string"
+        },
+        "scanEnvelopeId": {
+          "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/uuid"
+        },
+        "status": {
+          "type": "string"
+        },
+        "statusCode": {
+          "type": "string"
+        },
+        "statusUpdatedDate": {
+          "type": "string"
+        },
+        "vendorReceivedDate": {
+          "type": "string"
+        },
+        "zipFileName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "scanEnvelopeId",
+        "zipFileName"
+      ]
+    }
+  },
+  "required": [
+    "document"
+  ],
+  "additionalProperties": true
+}

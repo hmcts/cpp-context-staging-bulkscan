@@ -1,0 +1,29 @@
+{
+  "scanEnvelopeId": "fab947a3-c50c-4dbb-accf-b2758b1d2d6a",
+  "vendorReceivedDate": "2019-11-12T09:27:12Z",
+  "zipFileName": "TEST.zip",
+  "documents": [
+    {
+      "scanDocumentId": "fab947a3-c51c-4dbb-accf-b2758b1d2d6d",
+      "fileName": "ABC.pdf",
+      "caseUrn": "ABCDEFGH",
+      "casePTIUrn": "ABCDE",
+      "prosecutorId": "SJPN",
+      "prosecutorName": "TVL",
+      "documentControlNumber": "ABCDEFGHI",
+      "documentName": "ABCDEFGHIJ",
+      "scanningDate": "2019-11-12T09:27:12Z",
+      "manualIntervention": null,
+      "nextAction": "ABCDEF",
+      "nextActionDate": "ABCDEFGHIJKLMNOPQRSTU",
+      "notes": "ABCDEFGHIJK"
+    }
+  ],
+  "extractedDate": "2019-10-12T09:27:12Z",
+  "envelopeClassification": "ABCDEFGHIJ",
+  "vendorPOBox": "1953",
+  "jurisdiction": "ABCDEFGHIJ",
+  "vendorOpeningDate": "2019-09-12T09:27:12Z",
+  "zipFileCreatedDate": "2019-08-12T09:27:12Z",
+  "notes": "TEST NOTES"
+}

@@ -1,0 +1,22 @@
+{
+  "document": {
+    "actionedBy": "62d77353-4706-49fd-b7ee-1ac4ad5e9061",
+    "casePTIUrn": "casePTIUrn",
+    "caseUrn": "caseUrn",
+    "deleted": false,
+    "deletedDate": "2020-04-01T13:45:44.982Z",
+    "documentFileName": "documentFileName",
+    "documentName": "documentName",
+    "extractedDate": "2020-04-01T13:45:44.984Z",
+    "id": "c5b3d01c-9ded-4492-9f9b-4dd35503915b",
+    "notes": "notes",
+    "prosecutorAuthorityCode": "authorityCode",
+    "prosecutorAuthorityId": "authorityId",
+    "scanEnvelopeId": "0364f3b2-77c3-49ac-8cd5-f5c42ac16eab",
+    "status": "AUTO_ACTIONED",
+    "statusCode": "DEFENDANT_DETAILS_UPDATED",
+    "statusUpdatedDate": "2020-04-01T13:45:44.985Z",
+    "vendorReceivedDate": "2020-04-01T13:45:44.985Z",
+    "zipFileName": "zipFileName"
+  }
+}
