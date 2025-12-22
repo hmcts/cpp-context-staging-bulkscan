@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export CONNECTION_STRING="DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=DUMMY;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
-export CONTAINER_STORAGE="sasteccmbulkscaninbox"
-export BLOB_NAME="bs-ste-scans-received"
+export CONNECTION_STRING="DefaultEndpointsProtocol=http;AccountName=DUMMY;AccountKey=DUMMY;BlobEndpoint=http://127.0.0.1:10000/DUMMY;"
+export CONTAINER_STORAGE="DUMMY"
+export BLOB_NAME="DUMMY"
 
 echo "Uploading file to blob container ${CONTAINER}"
 
