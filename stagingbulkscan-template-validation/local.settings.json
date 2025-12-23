@@ -1,0 +1,25 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsDashboard": "DefaultEndpointsProtocol=http;AccountName=DUMMYACCTNAME;AccountKey=DUMMYACCTKEY;BlobEndpoint=http://127.0.0.1:10000/DUMMYACCTNAME;QueueEndpoint=http://127.0.0.1:10001/DUMMYACCTNAME;",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=http;AccountName=DUMMYACCTNAME;AccountKey=DUMMYACCTKEY;BlobEndpoint=http://127.0.0.1:10000/DUMMYACCTNAME;QueueEndpoint=http://127.0.0.1:10001/DUMMYACCTNAME;",
+    "storage-inbox": "DefaultEndpointsProtocol=http;AccountName=DUMMYACCTNAME;AccountKey=DUMMYACCTKEY;BlobEndpoint=http://127.0.0.1:10000/DUMMYACCTNAME;QueueEndpoint=http://127.0.0.1:10001/DUMMYACCTNAME;",
+    "storage-scanmgr": "DefaultEndpointsProtocol=http;AccountName=DUMMYACCTNAME;AccountKey=DUMMYACCTKEY;BlobEndpoint=http://127.0.0.1:10000/DUMMYACCTNAME;QueueEndpoint=http://127.0.0.1:10001/DUMMYACCTNAME;",
+    "storage-failed": "DefaultEndpointsProtocol=http;AccountName=DUMMYACCTNAME;AccountKey=DUMMYACCTKEY;BlobEndpoint=http://127.0.0.1:10000/DUMMYACCTNAME;QueueEndpoint=http://127.0.0.1:10001/DUMMYACCTNAME;",
+    "environment": "ste",
+    "register_envelope_api_url": "http://localhost:8080/stagingbulkscan-command-api/command/api/rest/stagingbulkscan/scan-envelope",
+    "register_envelope_content_type": "application/vnd.stagingbulkscan.register-scan-envelope+json",
+    "attach_document_to_case_urn_url": "http://localhost:8080/stagingprosecutors-command-api/command/api/rest/stagingprosecutors/v2/prosecutions/%s/materials/%s",
+    "attach_document_to_case_pti_urn_url": "http://localhost:8080/stagingprosecutors-command-api/command/api/rest/stagingprosecutors/v2/prosecutions/%s/materials",
+    "BS-CPPUID": "DUMMY-CPPUID-0000-0000-0000-000000000000",
+    "staging-prosecutor-user": "DUMMY-USER-0000-0000-0000-000000000000",
+    "FUNCTIONS_WORKER_RUNTIME": "java",
+    "JAVA_VERSION": "17",
+    "reference_data_query_api_pti_urn_url": "http://localhost:8080/referencedata-query-api/query/api/rest/referencedata/prosecutor",
+    "reference_data_query_api_prosecutor_url": "http://localhost:8080/referencedata-query-api/query/api/rest/referencedata/prosecutors",
+    "notification_email_api_url": "http://localhost:8080/notificationnotify-command-api/command/api/rest/notificationnotify/notifications/%s",
+    "notification_email_template_id": "DUMMY-TMPID-0000-0000-0000-000000000000",
+    "ams_email_address": "cp-nonlive-bulkscan-emails@HMCTS.NET",
+    "notification-notify-system-user": "DUMMY-SYSU-0000-0000-0000-000000000000"
+  }
+}

@@ -10,7 +10,7 @@
 
     <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
     <artifactId>stagingbulkscan-parent</artifactId>
-    <version>17.103.41-SNAPSHOT</version>
+    <version>17.103.41-CIMD-1576-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>StagingBulkScan Context - Parent Module</name>
@@ -45,6 +45,7 @@
         <module>stagingbulkscan-testharness</module>
         <module>stagingbulkscan-event-sources</module>
         <module>stagingbulkscan-healthchecks</module>
+        <module>stagingbulkscan-template-validation</module>
     </modules>
 
     <dependencyManagement>
