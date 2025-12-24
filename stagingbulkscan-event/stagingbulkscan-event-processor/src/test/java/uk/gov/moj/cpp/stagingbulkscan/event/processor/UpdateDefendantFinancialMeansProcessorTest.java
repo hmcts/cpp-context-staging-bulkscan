@@ -151,32 +151,6 @@ public class UpdateDefendantFinancialMeansProcessorTest {
     }
 
     @Test
-    public void test() throws JsonProcessingException {
-        final ScanEnvelopeDocument envelopeDocument = new ScanEnvelopeDocument.Builder()
-                .withActionedBy(UUID.randomUUID())
-                .withCasePTIUrn("casePTIUrn")
-                .withCaseUrn("caseUrn")
-                .withDeleted(Boolean.FALSE)
-                .withDeletedDate(ZonedDateTime.now(ZoneOffset.UTC))
-                .withDocumentFileName("documentFileName")
-                .withDocumentName("documentName")
-                .withExtractedDate(ZonedDateTime.now(ZoneOffset.UTC))
-                .withId(UUID.randomUUID())
-                .withNotes("notes")
-                .withProsecutorAuthorityCode("authorityCode")
-                .withProsecutorAuthorityId("authorityId")
-                .withScanEnvelopeId(UUID.randomUUID())
-                .withStatus(DocumentStatus.AUTO_ACTIONED)
-                .withStatusCode(StatusCode.DEFENDANT_DETAILS_UPDATED)
-                .withStatusUpdatedDate(ZonedDateTime.now(ZoneOffset.UTC))
-                .withVendorReceivedDate(ZonedDateTime.now(ZoneOffset.UTC))
-                .withZipFileName("zipFileName")
-                .build();
-
-        System.out.println(new ObjectMapperProducer().objectMapper().writeValueAsString(envelopeDocument));
-    }
-
-    @Test
     public void shouldHandleSjpFinancialMeansUpdatedCommandWithSjpIncome() {
         final UUID scanDocumentId = UUID.randomUUID();
         final UUID caseId = UUID.randomUUID();
