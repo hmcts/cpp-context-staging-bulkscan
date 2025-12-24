@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingbulkscan-parent</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>17.103.41-CIMD-1576-SNAPSHOT</version>
+        <version>17.103.42-CIMD-1576-SNAPSHOT</version>
     </parent>
     <artifactId>stagingbulkscan-azure-functions</artifactId>
     <packaging>jar</packaging>
