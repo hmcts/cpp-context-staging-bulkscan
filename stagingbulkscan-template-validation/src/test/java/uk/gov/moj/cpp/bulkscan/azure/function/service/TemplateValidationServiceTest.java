@@ -32,17 +32,17 @@ class TemplateValidationServiceTest {
     @Test
     @DisplayName("Should return BAD_REQUEST when request body is empty")
     void testValidateTemplateWithEmptyBody() throws IOException {
-       final String result = templateValidationService.validateTemplate(Optional.empty());
+        final String result = templateValidationService.validateTemplate(Optional.empty());
 
-       assertEquals(result, "Please send document content in the request body.");
+        assertEquals("Please send document content in the request body.", result);
     }
 
     @Test
     @DisplayName("Should return BAD_REQUEST when request body is null")
     void testValidateTemplateWithNullBody() throws IOException {
-       final String result = templateValidationService.validateTemplate(Optional.ofNullable(null));
+        final String result = templateValidationService.validateTemplate(Optional.ofNullable(null));
 
-        assertEquals(result, "Please send document content in the request body.");
+        assertEquals("Please send document content in the request body.", result);
     }
 
     @Test
@@ -59,7 +59,7 @@ class TemplateValidationServiceTest {
             mockedHelper.when(() -> TemplateValidationHelper.validateDocument(documentContent))
                     .thenReturn(validResult);
 
-            final String result  = templateValidationService.validateTemplate(Optional.of(documentContent));
+            final String result = templateValidationService.validateTemplate(Optional.of(documentContent));
 
             assertTrue(result.contains("Document validated successfully") &&
                     result.contains("Document type: ENGLISH") &&
@@ -95,7 +95,7 @@ class TemplateValidationServiceTest {
 
     @Test
     @DisplayName("Should handle IOException from validation helper")
-    void testValidateTemplateWithIOException(){
+    void testValidateTemplateWithIOException() {
         byte[] documentContent = "problematic document content".getBytes();
 
         try (MockedStatic<TemplateValidationHelper> mockedHelper = mockStatic(TemplateValidationHelper.class)) {

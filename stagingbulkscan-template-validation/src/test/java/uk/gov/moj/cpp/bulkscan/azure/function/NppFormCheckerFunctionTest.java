@@ -15,10 +15,10 @@ import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.moj.cpp.bulkscan.azure.function.helper.NotificationEmailHelper;
 import uk.gov.moj.cpp.bulkscan.azure.function.model.DecryptedNppForm;
-import uk.gov.moj.cpp.bulkscan.azure.function.service.Aes256CbcService;
-import uk.gov.moj.cpp.bulkscan.azure.function.service.TemplateValidationService;
 import uk.gov.moj.cpp.bulkscan.azure.function.model.EncryptedAttachment;
 import uk.gov.moj.cpp.bulkscan.azure.function.model.EncryptedNppForm;
+import uk.gov.moj.cpp.bulkscan.azure.function.service.Aes256CbcService;
+import uk.gov.moj.cpp.bulkscan.azure.function.service.TemplateValidationService;
 
 import java.util.Map;
 import java.util.Optional;
@@ -102,8 +102,8 @@ public class NppFormCheckerFunctionTest {
         functionToTest.setTemplateValidationService(templateValidationService);
         functionToTest.setNotificationEmailHelper(notificationEmailHelper);
 
-        final HttpResponseMessage httpResponseMessage = functionToTest.checkNppForm(request, context);
-        assertEquals(httpResponseMessage.getStatus(), HttpStatus.OK);
+        final HttpResponseMessage actualResponse = functionToTest.checkNppForm(request, context);
+        assertEquals(HttpStatus.OK, actualResponse.getStatus());
         verify(notificationEmailHelper, times(1)).sendFormCheckerResultEmail(anyString(), anyString(), anyString(), anyString(), any());
     }
 
@@ -116,11 +116,11 @@ public class NppFormCheckerFunctionTest {
         final DecryptedNppForm decryptedNppForm = functionToTest.getDecryptedNppForm(encryptedNppForm.getToken(),
                 "{ \"kty\":\"oct\", \"k\":\"CxhKdPjF9jqlPdQB_9lAmQ\" }");
         final EncryptedAttachment encryptedAttachment = decryptedNppForm.getAttachments().get(0);
-        assertEquals(encryptedAttachment.getUrl(), "url");
-        assertEquals(encryptedAttachment.getEncryption_key(), "YmB1H9DbauIBTvznD1CPa3quNpkFhtsrTN+NOzlprBg=");
-        assertEquals(encryptedAttachment.getEncryption_iv(), "hT2fgmfrS9Si9LdGGZjUFw==");
-        assertEquals(encryptedAttachment.getMimetype(), "application/pdf");
-        assertEquals(encryptedAttachment.getFilename(), "sample.pdf");
+        assertEquals("url", encryptedAttachment.getUrl());
+        assertEquals("YmB1H9DbauIBTvznD1CPa3quNpkFhtsrTN+NOzlprBg=", encryptedAttachment.getEncryption_key());
+        assertEquals("hT2fgmfrS9Si9LdGGZjUFw==", encryptedAttachment.getEncryption_iv());
+        assertEquals("application/pdf", encryptedAttachment.getMimetype());
+        assertEquals("sample.pdf", encryptedAttachment.getFilename());
     }
 
     private JsonObject getFileContentAsJson(final String path, final Map<String, Object> namedPlaceholders) {

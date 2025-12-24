@@ -16,7 +16,11 @@ public class TemplateValidationService {
 
         final byte[] documentContent = request.orElse(null);
 
-        LOGGER.info("Received document " + (documentContent == null ? "as null" : "with size: " + documentContent.length + " bytes"));
+        if (documentContent == null) {
+            LOGGER.info("Received document as null");
+        } else {
+            LOGGER.info("Received document with size: {} bytes", documentContent.length);
+        }
 
         if (documentContent == null || documentContent.length == 0) {
             return "Please send document content in the request body.";

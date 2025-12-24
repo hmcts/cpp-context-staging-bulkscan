@@ -28,7 +28,11 @@ public class TemplateValidationProcessor {
 
         final byte[] documentContent = request.getBody().orElse(null);
 
-        LOGGER.info("Received document " + (documentContent == null ? "as null" : "with size: " + documentContent.length + " bytes"));
+        if (documentContent == null) {
+            LOGGER.info("Received document as null");
+        } else {
+            LOGGER.info("Received document with size: {} bytes", documentContent.length);
+        }
 
         if (documentContent == null || documentContent.length == 0) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)

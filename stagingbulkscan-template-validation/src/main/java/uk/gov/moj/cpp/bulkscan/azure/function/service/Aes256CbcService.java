@@ -11,7 +11,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-@SuppressWarnings("java:S5542")
+@SuppressWarnings({"java:S5542", "java:S112"})
 public class Aes256CbcService {
 
     public byte[] downloadAndDecryptAes256Cbc(

@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+@SuppressWarnings("java:S115")
 public class TemplateValidationHelper {
 
     public static final int COVER_SECTION_PAGES_TO_VALIDATE = 2;

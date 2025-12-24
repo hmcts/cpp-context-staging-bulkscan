@@ -60,9 +60,6 @@ public class PageContentTest {
 
         PageContent pageContent = new PageContent(1, pageText);
 
-        // Verify that the original strings can be modified without affecting the PageContent
-        pageText = "Modified text";
-
         assertEquals("Original text", pageContent.getText());
     }
 

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("java:S5976")
 public class TemplateValidationHelperUtilityMethodsTest {
 
     @Nested
