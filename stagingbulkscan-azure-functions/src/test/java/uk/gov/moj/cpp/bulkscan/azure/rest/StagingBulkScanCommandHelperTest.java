@@ -13,7 +13,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -62,7 +62,7 @@ public class StagingBulkScanCommandHelperTest {
         logger = mock(Logger.class);
         context = mock(ExecutionContext.class);
         referenceDataQueryHelper = mock(ReferenceDataQueryHelper.class);
-        when(referenceDataQueryHelper.getProsecutorsByOuCode(any(String.class))).thenReturn(Json.createObjectBuilder().add("shortName", "TVL").build());
+        when(referenceDataQueryHelper.getProsecutorsByOuCode(any(String.class))).thenReturn(JsonObjects.createObjectBuilder().add("shortName", "TVL").build());
         when(context.getLogger()).thenReturn(logger);
         stagingBulkScanCommandHelper = new CustomStagingBulkScanCommandHelper(context, referenceDataQueryHelper);
     }
@@ -76,7 +76,7 @@ public class StagingBulkScanCommandHelperTest {
     public void registerScanEnvelopeCorrectly() {
         providerJsonInputStream = StagingBulkScanCommandHelperTest.class.getResourceAsStream("/scanProviderPayload.json");
         givenAllMocksAreInitialised();
-        stagingBulkScanCommandHelper.registerEnvelope(Json.createReader(providerJsonInputStream).readObject());
+        stagingBulkScanCommandHelper.registerEnvelope(JsonObjects.createReader(providerJsonInputStream).readObject());
         verify(builder).post(captor.capture());
         final ProviderPayload providerPayload = captor.getValue().getEntity();
         assertThat(providerPayload.getVendorPOBox(), Is.<String>is("1959"));
@@ -95,7 +95,7 @@ public class StagingBulkScanCommandHelperTest {
     public void registerScanEnvelopeCorrectlyWithStatusSetToFollowup() {
         providerJsonInputStream = StagingBulkScanCommandHelperTest.class.getResourceAsStream("/scanProviderPayloadWithNoCaseUrn.json");
         givenAllMocksAreInitialised();
-        stagingBulkScanCommandHelper.registerEnvelope(Json.createReader(providerJsonInputStream).readObject());
+        stagingBulkScanCommandHelper.registerEnvelope(JsonObjects.createReader(providerJsonInputStream).readObject());
         verify(builder).post(captor.capture());
         final ProviderPayload captorValue = captor.getValue().getEntity();
         assertThat(captorValue.getAssociatedScanDocuments().size(), Is.is(1));
@@ -106,7 +106,7 @@ public class StagingBulkScanCommandHelperTest {
     public void registerScanEnvelopeCorrectlyWithNullAndBlankValues() {
         providerJsonInputStream = StagingBulkScanCommandHelperTest.class.getResourceAsStream("/scanProviderPayloadWithEmptyValues.json");
         givenAllMocksAreInitialised();
-        stagingBulkScanCommandHelper.registerEnvelope(Json.createReader(providerJsonInputStream).readObject());
+        stagingBulkScanCommandHelper.registerEnvelope(JsonObjects.createReader(providerJsonInputStream).readObject());
         verify(builder).post(captor.capture());
         final ProviderPayload providerPayload = captor.getValue().getEntity();
         assertThat(providerPayload.getVendorPOBox(), Is.<String>is("1959"));
@@ -129,7 +129,7 @@ public class StagingBulkScanCommandHelperTest {
     public void registerScanEnvelopeWithNullAndBlankValuesForDocumentName() {
         providerJsonInputStream = StagingBulkScanCommandHelperTest.class.getResourceAsStream("/scanProviderDocumentPayloadWithEmptyValues.json");
         givenAllMocksAreInitialised();
-        stagingBulkScanCommandHelper.registerEnvelope(Json.createReader(providerJsonInputStream).readObject());
+        stagingBulkScanCommandHelper.registerEnvelope(JsonObjects.createReader(providerJsonInputStream).readObject());
         verify(builder).post(captor.capture());
         final ProviderPayload providerPayload = captor.getValue().getEntity();
         assertThat(providerPayload.getVendorPOBox(), Is.<String>is("1959"));

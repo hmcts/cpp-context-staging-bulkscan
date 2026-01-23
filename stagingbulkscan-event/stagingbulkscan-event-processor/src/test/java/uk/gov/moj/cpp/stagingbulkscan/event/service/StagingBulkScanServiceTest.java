@@ -17,7 +17,7 @@ import uk.gov.justice.services.test.utils.core.enveloper.EnveloperFactory;
 
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.hamcrest.CoreMatchers;
@@ -43,7 +43,7 @@ public class StagingBulkScanServiceTest {
     public void shouldGetScanDocumentById() {
         final UUID scanDocumentId = UUID.randomUUID();
         final UUID scanEnvelopeId = UUID.randomUUID();
-        final JsonObject scanDocument = Json.createObjectBuilder()
+        final JsonObject scanDocument = JsonObjects.createObjectBuilder()
                 .add("status", "PENDING")
                 .add("caseUrn", "12345")
                 .add("statusCode", DEFENDANT_DETAILS_UPDATED.toString())
@@ -51,7 +51,7 @@ public class StagingBulkScanServiceTest {
         final Envelope responseEnvelope = envelopeFrom(
                 metadataWithRandomUUID("stagingbulkscan.get-scan-document-by-id"),
                 scanDocument);
-        final JsonObject payload = Json.createObjectBuilder()
+        final JsonObject payload = JsonObjects.createObjectBuilder()
                 .add("scanEnvelopeId", scanEnvelopeId.toString())
                 .add("scanDocumentId", scanDocumentId.toString())
                 .build();

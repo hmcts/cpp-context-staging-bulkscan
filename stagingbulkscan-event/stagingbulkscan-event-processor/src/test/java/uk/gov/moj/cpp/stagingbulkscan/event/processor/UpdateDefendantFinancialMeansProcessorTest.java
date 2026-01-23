@@ -42,7 +42,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -94,11 +94,11 @@ public class UpdateDefendantFinancialMeansProcessorTest {
         final DefendantFinancialMeansUpdateRequested defendantFinancialMeansUpdateRequested = new DefendantFinancialMeansUpdateRequested(scanEnvelopeId, scanDocumentId, caseUrn);
         final JsonEnvelope event = envelopeFrom(metadataWithRandomUUID(DefendantFinancialMeansUpdateRequested.EVENT_NAME),
                 this.objectToJsonObjectConverter.convert(defendantFinancialMeansUpdateRequested));
-        final JsonObject sjpCaseJson = Json.createObjectBuilder().add("id", caseId.toString())
+        final JsonObject sjpCaseJson = JsonObjects.createObjectBuilder().add("id", caseId.toString())
                 .add("scanEnvelopeId", scanEnvelopeId.toString())
                 .add("scanDocumentId", scanDocumentId.toString())
-                .add("defendant", Json.createObjectBuilder().add("id", defendantId.toString())
-                        .add("personalDetails", Json.createObjectBuilder().build())
+                .add("defendant", JsonObjects.createObjectBuilder().add("id", defendantId.toString())
+                        .add("personalDetails", JsonObjects.createObjectBuilder().build())
                 ).build();
         when(sjpService.getCaseDetails(caseUrn, event)).thenReturn(sjpCaseJson);
         final FinancialMeans.Builder fiBuilder = new FinancialMeans.Builder();

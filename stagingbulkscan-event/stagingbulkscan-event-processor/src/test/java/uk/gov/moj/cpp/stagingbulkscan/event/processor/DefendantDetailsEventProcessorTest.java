@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -146,7 +146,7 @@ public class DefendantDetailsEventProcessorTest {
         final JsonEnvelope event = envelopeFrom(metadataWithRandomUUID(DEFENDANT_PLEA_DETAILS_UPDATED_EVENT),
                 this.objectToJsonObjectConverter.convert(pleaDetailsUpdated));
 
-        final JsonObject fakePayload = Json.createObjectBuilder().add("caseId", caseId.toString()).build();
+        final JsonObject fakePayload = JsonObjects.createObjectBuilder().add("caseId", caseId.toString()).build();
 
         when(sjpService.updateDefendantPlea(event)).thenReturn(fakePayload);
 

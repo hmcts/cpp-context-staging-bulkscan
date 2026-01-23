@@ -11,7 +11,7 @@ import static uk.gov.moj.cpp.bulkscan.azure.rest.DocumentMapper.getDocumentMappe
 
 import java.io.InputStream;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -60,7 +60,7 @@ public class StagingProsecutorCommandHelperTest {
         when(webTarget.request()).thenReturn(builder);
         final StagingProsecutorCommandHelper stagingProsecutorCommandHelper = new CustomStagingProsecutorCommandHelper();
         when(client.target(stagingProsecutorCommandHelper.getStagingProsecutorMaterialUploadUrlWithCaseUrn("TVL1234556", "GA0001"))).thenReturn(webTarget);
-        final JsonObject jsonObject = Json.createObjectBuilder().add("document_name", getDocumentMapper().getSinglePlea())
+        final JsonObject jsonObject = JsonObjects.createObjectBuilder().add("document_name", getDocumentMapper().getSinglePlea())
                 .add("file_name", "abcd.pdf")
                 .add("asn", "defendantId1")
                 .add("case_urn", "TVL1234556")
@@ -89,7 +89,7 @@ public class StagingProsecutorCommandHelperTest {
         when(webTarget.request()).thenReturn(builder);
         final StagingProsecutorCommandHelper stagingProsecutorCommandHelper = new CustomStagingProsecutorCommandHelper();
         when(client.target(stagingProsecutorCommandHelper.getStagingProsecutorMaterialUploadUrlWithPtiUrn("pti-urn123456789"))).thenReturn(webTarget);
-        final JsonObject jsonObject = Json.createObjectBuilder().add("document_name", getDocumentMapper().getSinglePlea())
+        final JsonObject jsonObject = JsonObjects.createObjectBuilder().add("document_name", getDocumentMapper().getSinglePlea())
                 .add("file_name", "abcd.pdf")
                 .add("asn", "defendantId1")
                 .add("case_ptiurn", "example-of-pti-urn")
