@@ -232,7 +232,8 @@ public class TemplateValidationHelper {
 
             if ((Language.English.equals(language)
                     && (contains(pageText, SJP_NOTI.concat(".").concat(MULT_ENG)) || contains(pageText, SJP_NOTI.concat(".").concat(ENG))))
-                    || (Language.Welsh.equals(language) && contains(pageText, SJP_NOTI.concat(".").concat(MULT_WEL)))) {
+                    || (Language.Welsh.equals(language)
+                        && (contains(pageText, SJP_NOTI.concat(".").concat(MULT_WEL)) || contains(pageText, SJP_NOTI.concat(".").concat(WEL))))) {
                 return i;
             }
         }
@@ -246,7 +247,8 @@ public class TemplateValidationHelper {
 
             if ((Language.English.equals(language)
                     && (contains(pageText, SJP_PLEA.concat(".").concat(MULT_ENG)) || contains(pageText, SJP_PLEA.concat(".").concat(ENG))))
-                    || (Language.Welsh.equals(language) && contains(pageText, SJP_PLEA.concat(".").concat(MULT_WEL)))) {
+                    || (Language.Welsh.equals(language)
+                        && (contains(pageText, SJP_PLEA.concat(".").concat(MULT_WEL)) || contains(pageText, SJP_PLEA.concat(".").concat(WEL))))) {
                 return i;
             }
         }
@@ -260,7 +262,8 @@ public class TemplateValidationHelper {
 
             if ((Language.English.equals(language)
                     && (contains(pageText, SJP_MC100.concat(".").concat(MULT_ENG)) || contains(pageText, SJP_MC100.concat(".").concat(ENG))))
-                    || (Language.Welsh.equals(language) && contains(pageText, SJP_MC100.concat(".").concat(MULT_WEL)))) {
+                    || (Language.Welsh.equals(language)
+                        && (contains(pageText, SJP_MC100.concat(".").concat(MULT_WEL)) || contains(pageText, SJP_MC100.concat(".").concat(WEL))))) {
                 return i;
             }
         }
