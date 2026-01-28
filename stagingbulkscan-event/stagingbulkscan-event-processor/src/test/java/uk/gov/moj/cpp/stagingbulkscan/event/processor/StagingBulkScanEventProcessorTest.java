@@ -33,7 +33,7 @@ import java.io.File;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -126,7 +126,7 @@ public class StagingBulkScanEventProcessorTest {
 
         final ScanDocumentFollowedUp scanDocumentFollowedUp = new ScanDocumentFollowedUp(SCAN_ENVELOPE_ID, DOCUMENT_ID, ACTIONED_BY, STATUS_UPDATED_DATE);
 
-        final JsonObject scanDocument = Json.createObjectBuilder()
+        final JsonObject scanDocument = JsonObjects.createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("scanEnvelopeId", SCAN_ENVELOPE_ID.toString())
                 .add("scanDocumentId", DOCUMENT_ID.toString())
@@ -153,7 +153,7 @@ public class StagingBulkScanEventProcessorTest {
 
         final ScanDocumentFollowedUp scanDocumentFollowedUp = new ScanDocumentFollowedUp(SCAN_ENVELOPE_ID, DOCUMENT_ID, ACTIONED_BY, STATUS_UPDATED_DATE);
 
-        final JsonObject scanDocument = Json.createObjectBuilder()
+        final JsonObject scanDocument = JsonObjects.createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("scanEnvelopeId", SCAN_ENVELOPE_ID.toString())
                 .add("scanDocumentId", DOCUMENT_ID.toString())

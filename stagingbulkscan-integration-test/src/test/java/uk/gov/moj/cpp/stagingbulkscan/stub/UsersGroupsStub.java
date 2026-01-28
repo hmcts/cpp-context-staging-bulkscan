@@ -14,7 +14,7 @@ import static uk.gov.moj.cpp.stagingbulkscan.utils.WiremockTestHelper.waitForStu
 
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
@@ -34,7 +34,7 @@ public class UsersGroupsStub {
     }
 
     public static JsonObject stubForUserDetails(final UUID userId, final String firstName, final String lastName, final String prosecutingAuthority) {
-        final JsonObjectBuilder userDetailsBuilder = Json.createObjectBuilder()
+        final JsonObjectBuilder userDetailsBuilder = JsonObjects.createObjectBuilder()
                 .add("userId", userId.toString())
                 .add("firstName", firstName)
                 .add("lastName", lastName)

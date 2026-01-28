@@ -2,7 +2,7 @@ package uk.gov.moj.cpp.stagingbulkscan.utils;
 
 import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.moj.cpp.stagingbulkscan.it.BaseIntegrationTest.USER_ID_CROWN_COURT_USER;
 import static uk.gov.moj.cpp.stagingbulkscan.it.BaseIntegrationTest.USER_ID_SYSTEM_USER;

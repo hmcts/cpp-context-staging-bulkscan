@@ -2,8 +2,8 @@ package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
 import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createArrayBuilder;
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.never;
@@ -38,7 +38,7 @@ import uk.gov.moj.cpp.json.schemas.prosecutioncasefile.events.MaterialRejected;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -111,7 +111,7 @@ public class CaseDocumentUploadedEventProcessorTest {
                         .add("scanDocumentId", SCAN_DOCUMENT_ID.toString())
                         .build());
 
-        final JsonObject caseDetails = Json.createObjectBuilder()
+        final JsonObject caseDetails = JsonObjects.createObjectBuilder()
                 .add("status", "PENDING")
                 .add("completed", false)
                 .build();
@@ -193,7 +193,7 @@ public class CaseDocumentUploadedEventProcessorTest {
                         .add("scanDocumentId", SCAN_DOCUMENT_ID.toString())
                         .build());
 
-        final JsonObject caseDetails = Json.createObjectBuilder()
+        final JsonObject caseDetails = JsonObjects.createObjectBuilder()
                 .add("status", "REFERRED_FOR_COURT_HEARING")
                 .add("completed", true)
                 .build();
@@ -404,7 +404,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     private <T> Envelope<T> envelope(final String name, final T t) {
         final String USER_ID = "726b6391-7bc2-445a-8a0c-9bcfd963703e";
-        JsonObject jsonObject = Json.createObjectBuilder()
+        JsonObject jsonObject = JsonObjects.createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("name", name)
                 .add("userId", USER_ID)
@@ -416,7 +416,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     private <T> Envelope<T> envelopeWithNoSubmissionId(final String name, final T t) {
         final String USER_ID = "726b6391-7bc2-445a-8a0c-9bcfd963703e";
-        JsonObject jsonObject = Json.createObjectBuilder()
+        JsonObject jsonObject = JsonObjects.createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("name", name)
                 .add("userId", USER_ID)

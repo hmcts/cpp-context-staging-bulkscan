@@ -38,7 +38,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
@@ -103,9 +103,9 @@ public class PoliceEmailExtractorFunctionTest {
         when(request.createResponseBuilder(HttpStatus.OK)).thenReturn(responseBuilder);
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
 
-        JsonObject jsonObject = Json.createObjectBuilder().add("emailDomain", "").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("emailDomain", "").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
 
         functionToTest.processEmail(request, context);
 
@@ -125,9 +125,9 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setNotificationEmailHelper(notificationEmailHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "OUCODE").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "OUCODE").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.ok().build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
@@ -155,9 +155,9 @@ public class PoliceEmailExtractorFunctionTest {
         when(request.getBody()).thenReturn(emailDetails);
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());
@@ -184,9 +184,9 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
         functionToTest.setNotificationEmailHelper(notificationEmailHelper);
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.ok().build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
@@ -213,11 +213,11 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setNotificationEmailHelper(notificationEmailHelper);
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.ok().build());
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "OUCODE").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "OUCODE").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());
@@ -242,11 +242,11 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setNotificationEmailHelper(notificationEmailHelper);
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.ok().build());
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "OUCODE").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "OUCODE").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());
@@ -278,11 +278,11 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.accepted().build());
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());
@@ -311,11 +311,11 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.accepted().build());
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());
@@ -337,11 +337,11 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.accepted().build());
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());
@@ -365,9 +365,9 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setBlobCloudStorage(blobCloudStorage);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.accepted().build());
 
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0420000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0420000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
         assertEquals(HttpStatus.OK, response.getStatus());
 
@@ -392,9 +392,9 @@ public class PoliceEmailExtractorFunctionTest {
         when(request.getBody()).thenReturn(emailDetails);
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setNotificationEmailHelper(notificationEmailHelper);
-        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = JsonObjects.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
+                .thenReturn(JsonObjects.createArrayBuilder().add(jsonObject).build());
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.accepted().build());
         functionToTest.setBlobCloudStorage(blobCloudStorage);
 

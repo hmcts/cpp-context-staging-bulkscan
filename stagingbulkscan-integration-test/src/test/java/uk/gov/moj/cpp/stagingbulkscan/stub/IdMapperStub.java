@@ -13,7 +13,7 @@ import static uk.gov.moj.cpp.stagingbulkscan.utils.StubHelper.waitForPostStubToB
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpHeaders;
@@ -22,7 +22,7 @@ public class IdMapperStub {
 
     public static void stubGetFromIdMapper(final String sourceType, final String sourceId, final String targetType, final String targetId) {
 
-        final String responseBody = Json.createObjectBuilder()
+        final String responseBody = JsonObjects.createObjectBuilder()
                 .add("mappingId", UUID.randomUUID().toString())
                 .add("sourceId", sourceId)
                 .add("sourceType", sourceType)
@@ -52,7 +52,7 @@ public class IdMapperStub {
                 .withHeader(HttpHeaders.CONTENT_TYPE, equalTo(mime))
                 .willReturn(aResponse()
                         .withStatus(status.getStatusCode())
-                        .withBody(Json.createObjectBuilder().add("id", id.toString()).build().toString())
+                        .withBody(JsonObjects.createObjectBuilder().add("id", id.toString()).build().toString())
                 )
         );
 
