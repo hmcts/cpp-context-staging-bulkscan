@@ -23,6 +23,7 @@ public class TemplateValidationHelper {
     public static final String SJP_PLEA = "SJP.PLEA";
     public static final String SJP_MC100 = "SJP.MC100";
     public static final String ENG = "ENG";
+    public static final String WEL = "WEL";
     public static final String MULT_ENG = "MULT.ENG";
     public static final String MULT_WEL = "MULT.WEL";
     public static final String ENGLISH_COVER_FOOTER = "SJP.LETT.MULT.ENG";
