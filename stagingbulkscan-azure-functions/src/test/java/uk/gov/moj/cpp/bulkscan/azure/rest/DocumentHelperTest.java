@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import javax.json.Json;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,7 @@ public class DocumentHelperTest {
         final String casePTIUrn = "123456";
         final String prosecutorId = null;
         final String documentName = "SJPMC100";
-        when(referenceDataQueryHelper.getOuCodeByPtiUrn(any(String.class))).thenReturn(Json.createObjectBuilder().add("oucode", "2345").build());
+        when(referenceDataQueryHelper.getOuCodeByPtiUrn(any(String.class))).thenReturn(createObjectBuilder().add("oucode", "2345").build());
         final String status = documentHelper.determineDocumentStatus(caseUrn, casePTIUrn, prosecutorId, documentName);
         assertEquals("PENDING", status);
     }

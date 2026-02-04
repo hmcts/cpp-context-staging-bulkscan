@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.random.RandomGenerator.STRING;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
@@ -33,7 +34,6 @@ import java.io.File;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -126,7 +126,7 @@ public class StagingBulkScanEventProcessorTest {
 
         final ScanDocumentFollowedUp scanDocumentFollowedUp = new ScanDocumentFollowedUp(SCAN_ENVELOPE_ID, DOCUMENT_ID, ACTIONED_BY, STATUS_UPDATED_DATE);
 
-        final JsonObject scanDocument = Json.createObjectBuilder()
+        final JsonObject scanDocument = createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("scanEnvelopeId", SCAN_ENVELOPE_ID.toString())
                 .add("scanDocumentId", DOCUMENT_ID.toString())
@@ -153,7 +153,7 @@ public class StagingBulkScanEventProcessorTest {
 
         final ScanDocumentFollowedUp scanDocumentFollowedUp = new ScanDocumentFollowedUp(SCAN_ENVELOPE_ID, DOCUMENT_ID, ACTIONED_BY, STATUS_UPDATED_DATE);
 
-        final JsonObject scanDocument = Json.createObjectBuilder()
+        final JsonObject scanDocument = createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("scanEnvelopeId", SCAN_ENVELOPE_ID.toString())
                 .add("scanDocumentId", DOCUMENT_ID.toString())

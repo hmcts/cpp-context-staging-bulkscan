@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
@@ -42,7 +43,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -94,11 +94,11 @@ public class UpdateDefendantFinancialMeansProcessorTest {
         final DefendantFinancialMeansUpdateRequested defendantFinancialMeansUpdateRequested = new DefendantFinancialMeansUpdateRequested(scanEnvelopeId, scanDocumentId, caseUrn);
         final JsonEnvelope event = envelopeFrom(metadataWithRandomUUID(DefendantFinancialMeansUpdateRequested.EVENT_NAME),
                 this.objectToJsonObjectConverter.convert(defendantFinancialMeansUpdateRequested));
-        final JsonObject sjpCaseJson = Json.createObjectBuilder().add("id", caseId.toString())
+        final JsonObject sjpCaseJson = createObjectBuilder().add("id", caseId.toString())
                 .add("scanEnvelopeId", scanEnvelopeId.toString())
                 .add("scanDocumentId", scanDocumentId.toString())
-                .add("defendant", Json.createObjectBuilder().add("id", defendantId.toString())
-                        .add("personalDetails", Json.createObjectBuilder().build())
+                .add("defendant", createObjectBuilder().add("id", defendantId.toString())
+                        .add("personalDetails", createObjectBuilder().build())
                 ).build();
         when(sjpService.getCaseDetails(caseUrn, event)).thenReturn(sjpCaseJson);
         final FinancialMeans.Builder fiBuilder = new FinancialMeans.Builder();
