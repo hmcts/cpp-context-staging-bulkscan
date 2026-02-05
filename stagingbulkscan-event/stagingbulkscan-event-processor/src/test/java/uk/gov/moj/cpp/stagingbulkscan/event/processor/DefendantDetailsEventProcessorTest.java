@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -146,7 +146,7 @@ public class DefendantDetailsEventProcessorTest {
         final JsonEnvelope event = envelopeFrom(metadataWithRandomUUID(DEFENDANT_PLEA_DETAILS_UPDATED_EVENT),
                 this.objectToJsonObjectConverter.convert(pleaDetailsUpdated));
 
-        final JsonObject fakePayload = Json.createObjectBuilder().add("caseId", caseId.toString()).build();
+        final JsonObject fakePayload = createObjectBuilder().add("caseId", caseId.toString()).build();
 
         when(sjpService.updateDefendantPlea(event)).thenReturn(fakePayload);
 

@@ -1,5 +1,7 @@
 package uk.gov.moj.cpp.bulkscan.azure.zip;
 
+import static uk.gov.justice.services.messaging.JsonObjects.createReader;
+
 import uk.gov.moj.cpp.bulkscan.azure.exception.BulkScanProcessorException;
 import uk.gov.moj.cpp.bulkscan.azure.exception.InvalidZipPayloadException;
 
@@ -11,7 +13,6 @@ import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
@@ -43,7 +44,7 @@ public class BlobZipStream implements AutoCloseable {
             ZipEntry nextEntry = this.zipFileInputStream.getNextEntry();
             while (nextEntry != null) {
                 if (nextEntry.getName().endsWith("json")) {
-                    reader = Json.createReader(this.zipFileInputStream);
+                    reader = createReader(this.zipFileInputStream);
                     final JsonObject jsonObject = reader.readObject();
                     return Optional.of(jsonObject);
                 }

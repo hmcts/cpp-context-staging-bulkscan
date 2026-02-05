@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.messaging.JsonObjects.createReader;
 
 import uk.gov.moj.cpp.bulkscan.azure.event.EventGridSchema;
 import uk.gov.moj.cpp.bulkscan.azure.exception.BulkScanProcessorException;
@@ -23,7 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
@@ -72,7 +72,7 @@ public class BulkScanInboxProcessorTest {
     public void processValidZipCorrectly() throws IOException, BulkScanProcessorException {
         providerJsonInputStream = BulkScanInboxProcessorTest.class.getResourceAsStream("/scanProviderPayloadWithResponse.json");
         givenTheEnvironmentIsSetCorrectly();
-        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(Json.createReader(providerJsonInputStream).readObject());
+        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(createReader(providerJsonInputStream).readObject());
         Response materialResponse = Mockito.mock(Response.class);
         when(stagingProsecutorCommandHelper.addMaterial(any(JsonObject.class), anyString(), any(InputStream.class))).thenReturn(materialResponse);
         whenBulkScanProcessorIsInvokedWithPayload("valid_scan_documents");
@@ -111,7 +111,7 @@ public class BulkScanInboxProcessorTest {
     public void stagingBulkHandlerReturnsError() throws IOException {
         providerJsonInputStream = BulkScanInboxProcessorTest.class.getResourceAsStream("/scanProviderPayloadWithErrorResponse.json");
         givenTheEnvironmentIsSetCorrectly();
-        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(Json.createReader(providerJsonInputStream).readObject());
+        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(createReader(providerJsonInputStream).readObject());
         when(executionContext.getLogger()).thenReturn(logger);
 
         assertThrows(BulkScanProcessorException.class, () -> whenBulkScanProcessorIsInvokedWithPayload("valid_scan_documents"));
@@ -129,7 +129,7 @@ public class BulkScanInboxProcessorTest {
     public void shouldNotGenerateImageIfZipHasOnePdfDocument() throws IOException, BulkScanProcessorException {
         providerJsonInputStream = BulkScanInboxProcessorTest.class.getResourceAsStream("/scanProviderPayloadWithResponse_one_pdf.json");
         givenTheEnvironmentIsSetCorrectly();
-        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(Json.createReader(providerJsonInputStream).readObject());
+        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(createReader(providerJsonInputStream).readObject());
         whenBulkScanProcessorIsInvokedWithPayload("valid_scan_documents_with_one_pdf");
         verify(stagingBulkScanHandler).registerEnvelope(any(JsonObject.class));
         verify(blobCloudStorage).uploadToStorage(any(InputStream.class), any(Long.class), eq("valid_scan_documents_with_one_pdf/file-sample_150kB.pdf"));
@@ -141,7 +141,7 @@ public class BulkScanInboxProcessorTest {
         givenTheEnvironmentIsSetCorrectly();
         Response materialResponse = Mockito.mock(Response.class);
         when(stagingProsecutorCommandHelper.addMaterial(any(JsonObject.class), anyString(), any(InputStream.class))).thenReturn(materialResponse);
-        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(Json.createReader(providerJsonInputStream).readObject());
+        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(createReader(providerJsonInputStream).readObject());
         whenBulkScanProcessorIsInvokedWithPayload("valid_scan_document_with_no_case_urn");
         verify(stagingBulkScanHandler).registerEnvelope(any(JsonObject.class));
         verify(blobCloudStorage).uploadToStorage(any(InputStream.class), any(Long.class), eq("valid_scan_document_with_no_case_urn/CrownCourtExtract.pdf"));
@@ -152,7 +152,7 @@ public class BulkScanInboxProcessorTest {
     public void shouldThrowInvalidZipExceptionThenMoveZipToFailedContainer() throws IOException {
         providerJsonInputStream = BulkScanInboxProcessorTest.class.getResourceAsStream("/scanProviderPayloadWithNoScannableItems.json");
         givenTheEnvironmentIsSetCorrectly();
-        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(Json.createReader(providerJsonInputStream).readObject());
+        when(stagingBulkScanHandler.registerEnvelope(any(JsonObject.class))).thenReturn(createReader(providerJsonInputStream).readObject());
         when(executionContext.getLogger()).thenReturn(logger);
         whenBulkScanProcessorIsInvokedWithPayload("no_scannable_items");
         verify(stagingBulkScanHandler, never()).registerEnvelope(any(JsonObject.class));

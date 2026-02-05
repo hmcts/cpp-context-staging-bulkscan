@@ -1,6 +1,6 @@
 package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import javax.inject.Inject;
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
@@ -175,7 +175,7 @@ public class StagingBulkScanEventProcessor {
     }
 
     private JsonObject enrich(JsonObject source, String key, String value) {
-        final JsonObjectBuilder builder = Json.createObjectBuilder();
+        final JsonObjectBuilder builder = createObjectBuilder();
         source.entrySet().
                 forEach(e -> builder.add(e.getKey(), e.getValue()));
         if (StringUtils.isNotBlank(value)) {

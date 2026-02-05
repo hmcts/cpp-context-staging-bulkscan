@@ -2,7 +2,6 @@ package uk.gov.moj.cpp.bulkscan.azure.rest;
 
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
@@ -11,6 +10,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import static java.lang.System.getenv;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 
 public class ReferenceDataQueryHelper {
 
@@ -29,10 +30,10 @@ public class ReferenceDataQueryHelper {
         headers.add(CJSCPPUID, getCPPUID());
         final Response response = client.target(getReferenceDataPtiApiUrl()).queryParam("ptiurn", ptiUrn).request().headers(headers).get();
         if (response.getStatus() == 404) {
-            return Json.createObjectBuilder().add("oucode", EMPTY).build();
+            return createObjectBuilder().add("oucode", EMPTY).build();
         }
         final String responseStr = response.readEntity(String.class);
-        return EMPTY.equals(responseStr) ? Json.createObjectBuilder().add("oucode", EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
+        return EMPTY.equals(responseStr) ? createObjectBuilder().add("oucode", EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
     }
 
     public JsonObject getProsecutorsByOuCode(final String oucode) {
@@ -42,10 +43,10 @@ public class ReferenceDataQueryHelper {
         headers.add(CJSCPPUID, getCPPUID());
         final Response response = client.target(getReferenceDataProsecutorApiUrl()).queryParam("oucode", oucode).request().headers(headers).get();
         if (response.getStatus() == 404) {
-            return Json.createObjectBuilder().add("oucode", EMPTY).build();
+            return createObjectBuilder().add("oucode", EMPTY).build();
         }
         final String responseStr = response.readEntity(String.class);
-        return EMPTY.equals(responseStr) ? Json.createObjectBuilder().add("shortName", EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
+        return EMPTY.equals(responseStr) ? createObjectBuilder().add("shortName", EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
     }
 
     public JsonArray getProsecutorByEmailDomain(final String email) {
@@ -56,7 +57,7 @@ public class ReferenceDataQueryHelper {
         headers.add(CJSCPPUID, getCPPUID());
         final Response response = client.target(getReferenceDataProsecutorApiUrl()).queryParam(EMAIL_DOMAIN, emailDomain).request().headers(headers).get();
         if (response.getStatus() == 404) {
-            return Json.createArrayBuilder().build();
+            return createArrayBuilder().build();
         }
         final String responseStr = response.readEntity(String.class);
         final JsonObject responseJsonObject = stringToJsonObjectConverter.convert(responseStr);
@@ -64,8 +65,8 @@ public class ReferenceDataQueryHelper {
         if (!prosecutors.isEmpty() && !EMPTY.equals(responseStr)) {
             return responseJsonObject.getJsonArray("prosecutors");
         } else {
-            final JsonObject jsonObject = Json.createObjectBuilder().add(EMAIL_DOMAIN, EMPTY).build();
-            return Json.createArrayBuilder().add(jsonObject).build();
+            final JsonObject jsonObject = createObjectBuilder().add(EMAIL_DOMAIN, EMPTY).build();
+            return createArrayBuilder().add(jsonObject).build();
         }
     }
 

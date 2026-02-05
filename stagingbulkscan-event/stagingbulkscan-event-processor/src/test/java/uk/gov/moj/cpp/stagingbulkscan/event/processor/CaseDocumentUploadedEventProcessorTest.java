@@ -2,8 +2,6 @@ package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
 import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createArrayBuilder;
-import static javax.json.Json.createObjectBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.never;
@@ -11,6 +9,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
@@ -20,7 +20,6 @@ import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-import uk.gov.justice.services.messaging.JsonObjects;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.MetadataBuilder;
 import uk.gov.justice.stagingbulkscan.command.ExpireDocument;
@@ -38,7 +37,6 @@ import uk.gov.moj.cpp.json.schemas.prosecutioncasefile.events.MaterialRejected;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -98,7 +96,7 @@ public class CaseDocumentUploadedEventProcessorTest {
     @Test
     public void shouldHandleCaseDocumentUploadedCommandForAPendingCase() {
         final String caseUrn = "12345";
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                         metadataWithRandomUUID(STAGINGBULKSCAN_EVENTS_DOCUMENT_NEXT_STEP_DECIDED)
                                 .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .build())
@@ -111,7 +109,7 @@ public class CaseDocumentUploadedEventProcessorTest {
                         .add("scanDocumentId", SCAN_DOCUMENT_ID.toString())
                         .build());
 
-        final JsonObject caseDetails = Json.createObjectBuilder()
+        final JsonObject caseDetails = createObjectBuilder()
                 .add("status", "PENDING")
                 .add("completed", false)
                 .build();
@@ -130,7 +128,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     @Test
     public void shouldHandleCaseDocumentUploadedCommandForCompletedCase() {
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                 metadataWithRandomUUID(SJP_DOCUMENT_ADDED_EVENT)
                         .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .add("submissionId", SUBMISSION_ID.toString()).build()).build();
@@ -154,7 +152,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     @Test
     void shouldHandleCaseDocumentUploadedCommandForProgressionCase() {
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                 metadataWithRandomUUID(SJP_DOCUMENT_ADDED_EVENT)
                         .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .add("submissionId", SUBMISSION_ID.toString()).build()).build();
@@ -181,7 +179,7 @@ public class CaseDocumentUploadedEventProcessorTest {
     @Test
     public void shouldHandleCaseDocumentUploadedCommandForCompletedCaseAndReferredToCC() {
         final String caseUrn = "12345";
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                 metadataWithRandomUUID(STAGINGBULKSCAN_EVENTS_DOCUMENT_NEXT_STEP_DECIDED)
                         .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .add("submissionId", SUBMISSION_ID.toString()).build()).build();
@@ -193,7 +191,7 @@ public class CaseDocumentUploadedEventProcessorTest {
                         .add("scanDocumentId", SCAN_DOCUMENT_ID.toString())
                         .build());
 
-        final JsonObject caseDetails = Json.createObjectBuilder()
+        final JsonObject caseDetails = createObjectBuilder()
                 .add("status", "REFERRED_FOR_COURT_HEARING")
                 .add("completed", true)
                 .build();
@@ -214,7 +212,7 @@ public class CaseDocumentUploadedEventProcessorTest {
     @Test
     public void shouldHandleProgressionCourtDocumentAddedEvent() {
         final String caseUrn = "12345";
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                 metadataWithRandomUUID(STAGINGBULKSCAN_EVENTS_DOCUMENT_NEXT_STEP_DECIDED)
                         .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .add("submissionId", SUBMISSION_ID.toString()).build()).build();
@@ -240,7 +238,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     @Test
     public void shouldHandleProgressionCourtDocumentAddedWhenNoDocumentReferenceExists() {
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                 metadataWithRandomUUID(PUBLIC_EVENT_PROGRESSION_COURT_DOCUMENT_ADDED)
                         .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .add("submissionId", SUBMISSION_ID.toString()).build()).build();
@@ -255,7 +253,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     @Test
     public void shouldHandleProgressionCourtDocumentAddedWhenSubmissionIdAvailable() {
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
                 metadataWithRandomUUID(PUBLIC_EVENT_PROGRESSION_COURT_DOCUMENT_ADDED)
                         .withUserId(ADDED_BY.toString()).build().asJsonObject())
                 .build()).build();
@@ -404,7 +402,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     private <T> Envelope<T> envelope(final String name, final T t) {
         final String USER_ID = "726b6391-7bc2-445a-8a0c-9bcfd963703e";
-        JsonObject jsonObject = Json.createObjectBuilder()
+        JsonObject jsonObject = createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("name", name)
                 .add("userId", USER_ID)
@@ -416,7 +414,7 @@ public class CaseDocumentUploadedEventProcessorTest {
 
     private <T> Envelope<T> envelopeWithNoSubmissionId(final String name, final T t) {
         final String USER_ID = "726b6391-7bc2-445a-8a0c-9bcfd963703e";
-        JsonObject jsonObject = Json.createObjectBuilder()
+        JsonObject jsonObject = createObjectBuilder()
                 .add("id", randomUUID().toString())
                 .add("name", name)
                 .add("userId", USER_ID)

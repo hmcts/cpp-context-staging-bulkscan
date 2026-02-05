@@ -2,9 +2,9 @@ package uk.gov.moj.cpp.bulkscan.azure.rest;
 
 import static java.lang.System.getenv;
 import static java.time.ZonedDateTime.now;
-import static javax.json.Json.createArrayBuilder;
-import static javax.json.Json.createObjectBuilder;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilderWithFilter;
 import static uk.gov.moj.cpp.bulkscan.azure.rest.AssociatedScanDocument.AssociatedScanDocumentBuilder;
 import static uk.gov.moj.cpp.bulkscan.azure.rest.DocumentMapper.getDocumentMapper;

@@ -13,8 +13,8 @@ import javax.ws.rs.core.Response;
 import java.util.logging.Logger;
 
 import static java.lang.System.getenv;
-import static javax.json.Json.createObjectBuilder;
 import static javax.ws.rs.client.Entity.entity;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 public class NotificationEmailHelper {
 
