@@ -3,7 +3,7 @@
     <parent>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
         <artifactId>stagingbulkscan-domain</artifactId>
-        <version>17.103.42-SNAPSHOT</version>
+        <version>17.103.41</version>
     </parent>
     <artifactId>stagingbulkscan-domain-aggregate</artifactId>
 
