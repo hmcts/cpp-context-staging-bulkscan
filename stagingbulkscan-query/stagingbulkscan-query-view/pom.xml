@@ -3,7 +3,7 @@
     <parent>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
         <artifactId>stagingbulkscan-query</artifactId>
-        <version>17.103.41-PEG-2848-SNAPSHOT</version>
+        <version>17.103.42-PEG-2848-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
