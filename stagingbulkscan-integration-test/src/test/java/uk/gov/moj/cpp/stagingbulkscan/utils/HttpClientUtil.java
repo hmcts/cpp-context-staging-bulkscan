@@ -4,6 +4,7 @@ import static java.lang.String.format;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.jupiter.api.Assertions;
 import uk.gov.justice.services.common.http.HeaderConstants;
 import uk.gov.justice.services.test.utils.core.rest.RestClient;
 
@@ -40,8 +41,13 @@ public class HttpClientUtil {
         final Response response = restClient.postCommand(writeUrl, mediaType, payload, map);
         LOGGER.info("Post call made: \n\tURL = {} \n\tMedia type = {} \n\tPayload = {}\n\tUser = {}\n",
                 writeUrl, mediaType, payload, userId);
-
-        assertThat(format("Post returned not expected status code with body: %s", response.readEntity(String.class)),
+        String value = null;
+        try {
+            value = response.readEntity(String.class);
+        } catch (Exception e) {
+            // ignore
+        }
+        assertThat(format("Post returned not expected status code with body: %s", value),
                 response.getStatus(), is(expectedStatus.getStatusCode()));
 
         return correlationId;
