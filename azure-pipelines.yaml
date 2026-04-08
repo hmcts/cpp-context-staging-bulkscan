@@ -21,7 +21,7 @@ resources:
       type: github
       name: hmcts/cpp-azure-devops-templates
       endpoint: 'hmcts'
-      ref: 'DTSPO-30616'
+      ref: 'DTSPO-30616' # Testing
 
 pool:
   name: "MDV-ADO-AGENT-AKS-01"
