@@ -22,6 +22,7 @@ public class ReferenceDataQueryHelper {
     public static final String ACCEPT = "Accept";
     public static final String CJSCPPUID = "CJSCPPUID";
     public static final String EMAIL_DOMAIN = "emailDomain";
+    public static final String OUCODE = "oucode";
 
     public JsonObject getOuCodeByPtiUrn(final String ptiUrn) {
         final Client client = getClient();
@@ -30,10 +31,10 @@ public class ReferenceDataQueryHelper {
         headers.add(CJSCPPUID, getCPPUID());
         final Response response = client.target(getReferenceDataPtiApiUrl()).queryParam("ptiurn", ptiUrn).request().headers(headers).get();
         if (response.getStatus() == 404) {
-            return createObjectBuilder().add("oucode", EMPTY).build();
+            return createObjectBuilder().add(OUCODE, EMPTY).build();
         }
         final String responseStr = response.readEntity(String.class);
-        return EMPTY.equals(responseStr) ? createObjectBuilder().add("oucode", EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
+        return EMPTY.equals(responseStr) ? createObjectBuilder().add(OUCODE, EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
     }
 
     public JsonObject getProsecutorsByOuCode(final String oucode) {
@@ -41,9 +42,9 @@ public class ReferenceDataQueryHelper {
         final MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
         headers.add(ACCEPT, "application/vnd.referencedata.query.get.prosecutor+json");
         headers.add(CJSCPPUID, getCPPUID());
-        final Response response = client.target(getReferenceDataProsecutorApiUrl()).queryParam("oucode", oucode).request().headers(headers).get();
+        final Response response = client.target(getReferenceDataProsecutorApiUrl()).queryParam(OUCODE, oucode).request().headers(headers).get();
         if (response.getStatus() == 404) {
-            return createObjectBuilder().add("oucode", EMPTY).build();
+            return createObjectBuilder().add(OUCODE, EMPTY).build();
         }
         final String responseStr = response.readEntity(String.class);
         return EMPTY.equals(responseStr) ? createObjectBuilder().add("shortName", EMPTY).build() : stringToJsonObjectConverter.convert(responseStr);
