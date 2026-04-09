@@ -33,10 +33,8 @@ import uk.gov.justice.services.core.enveloper.Enveloper;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.test.utils.core.matchers.JsonEnvelopePayloadMatcher;
-import uk.gov.justice.stagingbulkscan.domain.DocumentStatus;
 import uk.gov.justice.stagingbulkscan.domain.ScanEnvelopeDocument;
 import uk.gov.justice.stagingbulkscan.domain.StatusCode;
-import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanEnvelope;
 import uk.gov.moj.cpp.stagingbulkscan.query.view.response.GetDocumentResponse;
 import uk.gov.moj.cpp.stagingbulkscan.query.view.response.GetThumbnailResponse;
 import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocument;
@@ -45,7 +43,6 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.Thumbnail;
 import uk.gov.moj.cpp.stagingbulkscan.query.view.service.StagingBulkScanService;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +50,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import javax.json.JsonObject;
 import javax.json.JsonValue;
 
 import org.hamcrest.CoreMatchers;
@@ -164,13 +160,6 @@ public class StagingBulkScanQueryViewTest {
         final List<uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanDocument> scanDocumentList = Collections.singletonList(scanDocument);
 
         when(scanDocumentRepository.findScanDocumentStatus(anyString(),anyString())).thenReturn(scanDocumentList);
-
-
-        final JsonObject jsonObject = createObjectBuilder()
-                .add("DocumentFileName", scanDocument.getDocumentFileName())
-                .add("status", scanDocument.getStatus().toString())
-                .add("statusCode", scanDocument.getStatusCode().toString())
-                .build();
 
         final JsonEnvelope query = envelopeFrom(
                 metadataWithRandomUUIDAndName(),
