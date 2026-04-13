@@ -1,11 +1,9 @@
 package uk.gov.moj.cpp.stagingbulkscan.query.view;
 
 import static java.util.Optional.ofNullable;
-import static javax.json.Json.createArrayBuilder;
-import static uk.gov.justice.services.core.enveloper.Enveloper.envelop;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.messaging.JsonObjects.getJsonString;
-import static uk.gov.justice.services.messaging.JsonObjects.getString;
 import static uk.gov.justice.services.messaging.JsonObjects.getUUID;
 
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
@@ -27,7 +25,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -148,7 +145,7 @@ public class StagingBulkScanQueryView {
         final JsonArrayBuilder arrayBuilder = createArrayBuilder();
         for (final uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanDocument scanDocument : scanDocumentStatusList) {
 
-            final JsonObjectBuilder builder = Json.createObjectBuilder();
+            final JsonObjectBuilder builder = createObjectBuilder();
 
             ofNullable(scanDocument.getId()).ifPresent(id ->
                     builder.add(FIELD_SCAN_ENVELOPE_ID, String.valueOf(id)));
@@ -165,7 +162,7 @@ public class StagingBulkScanQueryView {
             arrayBuilder.add(builder);
         }
 
-        return Json.createObjectBuilder()
+        return createObjectBuilder()
                 .add(SCAN_DOCUMENT_STATUSES, arrayBuilder.build())
                 .build();
     }

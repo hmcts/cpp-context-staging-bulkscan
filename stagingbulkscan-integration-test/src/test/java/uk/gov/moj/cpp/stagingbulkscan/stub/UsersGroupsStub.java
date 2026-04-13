@@ -10,11 +10,11 @@ import static java.util.Objects.nonNull;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.apache.http.HttpStatus.SC_OK;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.moj.cpp.stagingbulkscan.utils.WiremockTestHelper.waitForStubToBeReady;
 
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
@@ -34,7 +34,7 @@ public class UsersGroupsStub {
     }
 
     public static JsonObject stubForUserDetails(final UUID userId, final String firstName, final String lastName, final String prosecutingAuthority) {
-        final JsonObjectBuilder userDetailsBuilder = Json.createObjectBuilder()
+        final JsonObjectBuilder userDetailsBuilder = createObjectBuilder()
                 .add("userId", userId.toString())
                 .add("firstName", firstName)
                 .add("lastName", lastName)

@@ -3,11 +3,11 @@ package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 import static java.util.Objects.nonNull;
 import static java.util.UUID.fromString;
 import static java.util.stream.Collectors.toList;
-import static javax.json.Json.createObjectBuilder;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.stagingbulkscan.command.RejectDocument.rejectDocument;
 
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;

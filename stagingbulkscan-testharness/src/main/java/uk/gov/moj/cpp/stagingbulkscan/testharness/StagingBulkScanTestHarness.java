@@ -1,6 +1,7 @@
 package uk.gov.moj.cpp.stagingbulkscan.testharness;
 
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +22,6 @@ import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -95,7 +95,7 @@ public class StagingBulkScanTestHarness {
                 .add("delivery_date", deliveryDate)
                 .add("zip_file_name", zipFileName);
 
-        final JsonArrayBuilder builder = Json.createArrayBuilder();
+        final JsonArrayBuilder builder = createArrayBuilder();
 
         for (final File file : Objects.requireNonNull(listFiles)) {
             builder.add(createObjectBuilder()
