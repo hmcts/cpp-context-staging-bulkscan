@@ -9,6 +9,8 @@ import static uk.gov.justice.json.schemas.domains.sjp.command.PleaType.GUILTY_RE
 import static uk.gov.justice.json.schemas.domains.sjp.command.PleaType.NOT_GUILTY;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 
 import uk.gov.justice.json.schemas.domains.sjp.command.Interpreter;
 import uk.gov.justice.json.schemas.domains.sjp.command.Plea;
@@ -23,7 +25,6 @@ import uk.gov.justice.services.core.requester.Requester;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-import uk.gov.justice.services.messaging.JsonObjects;
 import uk.gov.justice.stagingbulkscan.domain.Address;
 import uk.gov.justice.stagingbulkscan.domain.ContactDetails;
 import uk.gov.justice.stagingbulkscan.domain.Defendant;
@@ -35,7 +36,6 @@ import uk.gov.justice.stagingbulkscan.domain.Title;
 import uk.gov.moj.cpp.core.sjp.DefendantCourtOptions;
 
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
@@ -66,14 +66,14 @@ public class SJPService {
     private static final String CASE_ID = "caseId";
 
     public JsonObject getCaseDetails(final String caseUrn, final JsonEnvelope envelope) {
-        final JsonObject payload = Json.createObjectBuilder().add("urn", caseUrn).build();
+        final JsonObject payload = createObjectBuilder().add("urn", caseUrn).build();
         final JsonEnvelope requestEnvelope = envelopeFrom(metadataFrom(envelope.metadata()).withName("sjp.query.case-by-urn"), payload);
         final Envelope<JsonObject> response = requester.requestAsAdmin(requestEnvelope, JsonObject.class);
         return response.payload();
     }
 
     public JsonObject getCaseResults(final String caseId, final JsonEnvelope envelope) {
-        final JsonObject payload = Json.createObjectBuilder().add(CASE_ID, caseId).build();
+        final JsonObject payload = createObjectBuilder().add(CASE_ID, caseId).build();
         final JsonEnvelope requestEnvelope = envelopeFrom(metadataFrom(envelope.metadata()).withName("sjp.query.case-results"), payload);
         final Envelope<JsonObject> response = requester.requestAsAdmin(requestEnvelope, JsonObject.class);
         return response.payload();
@@ -158,7 +158,7 @@ public class SJPService {
     public boolean caseHasOffencesWithVerdicts(final JsonEnvelope envelope) {
         final String caseId = envelope.payloadAsJsonObject().getString(CASE_ID);
         final JsonObject results = getCaseResults(caseId, envelope);
-        final JsonArray caseDecisions = results != null ? results.getJsonArray("caseDecisions"): Json.createArrayBuilder().build();
+        final JsonArray caseDecisions = results != null ? results.getJsonArray("caseDecisions"): createArrayBuilder().build();
 
         for (final JsonValue caseDecision : caseDecisions) {
             if (caseDecisionHasVerdict((JsonObject) caseDecision)) {
@@ -194,7 +194,7 @@ public class SJPService {
 
         final SetPleas setPleas = new SetPleas(defendantCourtOptions, pleas);
         final JsonObject payload = objectToJsonObjectConverter.convert(setPleas);
-        return JsonObjects.createObjectBuilder(payload).add(CASE_ID, jsonObject.getString(CASE_ID)).build();
+        return createObjectBuilder(payload).add(CASE_ID, jsonObject.getString(CASE_ID)).build();
     }
 
     private List<Offence> buildOffences(final JsonArray offences) {
@@ -234,7 +234,7 @@ public class SJPService {
     }
 
     public FinancialMeans getDefendantFinancialMeans(final UUID defendantId, final JsonEnvelope envelope) {
-        final JsonObject payload = Json.createObjectBuilder().add("defendantId", defendantId.toString()).build();
+        final JsonObject payload = createObjectBuilder().add("defendantId", defendantId.toString()).build();
         final JsonEnvelope request = enveloper.withMetadataFrom(envelope, "sjp.query.all-financial-means").apply(payload);
         final JsonEnvelope response = requester.requestAsAdmin(request);
 
@@ -242,7 +242,7 @@ public class SJPService {
     }
 
     public JsonObject getFullCaseDetails(final UUID caseId, final JsonEnvelope envelope) {
-        final JsonObject payload = Json.createObjectBuilder().add(CASE_ID, caseId.toString()).build();
+        final JsonObject payload = createObjectBuilder().add(CASE_ID, caseId.toString()).build();
         final JsonEnvelope request = enveloper.withMetadataFrom(envelope, "sjp.query.case").apply(payload);
         final JsonEnvelope response = requester.requestAsAdmin(request);
         return response.payloadAsJsonObject();

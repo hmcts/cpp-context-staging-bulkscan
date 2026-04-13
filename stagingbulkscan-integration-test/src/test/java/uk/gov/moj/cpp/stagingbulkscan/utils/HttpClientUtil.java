@@ -41,8 +41,7 @@ public class HttpClientUtil {
         LOGGER.info("Post call made: \n\tURL = {} \n\tMedia type = {} \n\tPayload = {}\n\tUser = {}\n",
                 writeUrl, mediaType, payload, userId);
 
-        assertThat(format("Post returned not expected status code with body: %s", response.readEntity(String.class)),
-                response.getStatus(), is(expectedStatus.getStatusCode()));
+        assertThat(response.getStatus(), is(expectedStatus.getStatusCode()));
 
         return correlationId;
     }

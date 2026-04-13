@@ -2,13 +2,13 @@ package uk.gov.moj.cpp.stagingbulkscan.event.listener;
 
 import static java.time.ZoneOffset.UTC;
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.metadataBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.AUTO_ACTIONED;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.FOLLOW_UP;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.MANUALLY_ACTIONED;
@@ -156,6 +156,7 @@ public class ScanDocumentEventListenerTest {
                 .build();
         return envelopeFrom(getMetadata(), payload);
     }
+
 
     private JsonEnvelope getDocumentActionedJsonEnvelope() {
         final JsonObject payload = createObjectBuilder()
