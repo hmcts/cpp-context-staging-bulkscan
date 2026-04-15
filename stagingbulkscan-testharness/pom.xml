@@ -5,7 +5,7 @@
     <parent>
         <artifactId>stagingbulkscan-parent</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>17.104.45-SNAPSHOT</version>
+        <version>17.104.46-SNAPSHOT</version>
     </parent>
 
     <artifactId>stagingbulkscan-testharness</artifactId>
