@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingbulkscan-command</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>17.103.43-RBSD-2609-SNAPSHOT</version>
+        <version>17.103.44-RBSD-2609-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
