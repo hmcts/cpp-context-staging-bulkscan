@@ -36,7 +36,7 @@ public abstract class ScanDocumentRepository extends AbstractEntityRepository<Sc
 
     @Query("from ScanDocument doc where doc.status in :statuses " +
             "and doc.deleted is false " +
-            "and doc.statusUpdatedDate <= :cutoffDate " +
+            "and doc.statusUpdatedDate < :cutoffDate " +
             "order by doc.statusUpdatedDate asc")
     public abstract List<ScanDocument> findDocumentsEligibleForDeletion(
             @QueryParam("statuses") List<DocumentStatus> statuses,

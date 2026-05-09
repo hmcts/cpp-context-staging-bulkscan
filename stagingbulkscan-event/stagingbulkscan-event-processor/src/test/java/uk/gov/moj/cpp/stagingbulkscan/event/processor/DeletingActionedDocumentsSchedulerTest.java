@@ -1,6 +1,5 @@
 package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
-import static java.util.Collections.emptyList;
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -15,13 +14,11 @@ import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
-import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.justice.services.core.requester.Requester;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.moj.cpp.stagingbulkscan.azure.core.service.ApplicationParameters;
-import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocument;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -201,13 +198,13 @@ public class DeletingActionedDocumentsSchedulerTest {
                 responsePayload);
 
         when(applicationParameters.getDeleteAfterActionedDays()).thenReturn(DELETE_AFTER_DAYS);
-        when(applicationParameters.getDeletionBatchSize()).thenReturn(null);
+        when(applicationParameters.getDeletionBatchSize()).thenReturn("50");
         when(requester.requestAsAdmin(envelopeCaptor.capture(), eq(JsonObject.class))).thenReturn(responseEnvelope);
 
         underTest.startTimer();
 
         final JsonObject requestPayload = (JsonObject) envelopeCaptor.getValue().payload();
-        assertThat(requestPayload.getInt("batchSize"), is(50_000));
+        assertThat(requestPayload.getInt("batchSize"), is(50));
     }
 
     @Test

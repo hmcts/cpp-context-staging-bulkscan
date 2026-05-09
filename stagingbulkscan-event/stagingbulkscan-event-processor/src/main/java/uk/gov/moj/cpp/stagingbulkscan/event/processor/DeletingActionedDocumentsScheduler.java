@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
+import static java.time.ZoneOffset.UTC;
 import static java.util.UUID.randomUUID;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.envelopeFrom;
@@ -47,7 +48,6 @@ public class DeletingActionedDocumentsScheduler {
     private static final String TIMER_TIMEOUT_INFO = "StagingBulkScanEventProcessorScheduler timer triggered.";
     private static final String DELETE_ACTIONED_DOCUMENTS = "stagingbulkscan.command.delete-actioned-document";
     private static final String QUERY_GET_DOCUMENTS_FOR_DELETION = "stagingbulkscan.get-documents-for-deletion";
-    private static final int DEFAULT_DELETION_BATCH_SIZE = 50_000;
 
     @Inject
     private ApplicationParameters applicationParameters;
@@ -82,8 +82,8 @@ public class DeletingActionedDocumentsScheduler {
         LOGGER.info("DeletingActionedDocumentsScheduler triggers.");
 
         final int deleteAfterDays = Integer.parseInt(applicationParameters.getDeleteAfterActionedDays());
-        final ZonedDateTime cutoffDate = ZonedDateTime.now().minusDays(deleteAfterDays);
-        final int batchSize = resolveBatchSize();
+        final ZonedDateTime cutoffDate = ZonedDateTime.now(UTC).minusDays(deleteAfterDays);
+        final int batchSize = Integer.parseInt(applicationParameters.getDeletionBatchSize());
 
         final Envelope<JsonValue> requestEnvelope = envelopeFrom(
                 metadataBuilder().withId(randomUUID()).withName(QUERY_GET_DOCUMENTS_FOR_DELETION).build(),
@@ -107,14 +107,6 @@ public class DeletingActionedDocumentsScheduler {
     @PreDestroy
     public void cleanup() {
         timerService.getTimers().forEach(Timer::cancel);
-    }
-
-    private int resolveBatchSize() {
-        final String configured = applicationParameters.getDeletionBatchSize();
-        if (configured != null && !configured.isBlank()) {
-            return Integer.parseInt(configured);
-        }
-        return DEFAULT_DELETION_BATCH_SIZE;
     }
 
     private JsonObject buildPayload(final ScanDocument document) {

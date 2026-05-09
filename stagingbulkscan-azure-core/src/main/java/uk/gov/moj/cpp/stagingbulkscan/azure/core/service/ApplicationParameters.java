@@ -33,7 +33,7 @@ public class ApplicationParameters {
     private String deleteAfterActionedDays;
 
     @Inject
-    @Value(key = "deletionBatchSize")
+    @Value(key = "deletionBatchSize", defaultValue = "50000")
     private String deletionBatchSize;
 
     public String getStorageConnectionString() {
