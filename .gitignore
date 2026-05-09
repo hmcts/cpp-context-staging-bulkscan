@@ -59,3 +59,12 @@ buildContexts.sh
 
 lightning-jenkins.properties
 **/.DS_Store
+
+# Track shared spec-kit files under .claude/{agents,skills,rules,context}
+# only; everything else under .claude/ is local-only state and must not
+# be committed.
+.claude/*
+!.claude/agents/
+!.claude/skills/
+!.claude/rules/
+!.claude/context/
