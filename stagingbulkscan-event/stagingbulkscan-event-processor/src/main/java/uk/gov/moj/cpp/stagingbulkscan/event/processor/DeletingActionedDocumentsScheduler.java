@@ -1,6 +1,5 @@
 package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.UUID.randomUUID;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.envelopeFrom;
@@ -20,7 +19,6 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocument;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -47,8 +45,9 @@ public class DeletingActionedDocumentsScheduler {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeletingActionedDocumentsScheduler.class);
 
     private static final String TIMER_TIMEOUT_INFO = "StagingBulkScanEventProcessorScheduler timer triggered.";
-    private static final String STAGING_BULK_SCAN_QUERY_GET_DOCUMENTS_BY_STATUSES = "stagingbulkscan.get-all-documents-by-status";
     private static final String DELETE_ACTIONED_DOCUMENTS = "stagingbulkscan.command.delete-actioned-document";
+    private static final String QUERY_GET_DOCUMENTS_FOR_DELETION = "stagingbulkscan.get-documents-for-deletion";
+    private static final int DEFAULT_DELETION_BATCH_SIZE = 50_000;
 
     @Inject
     private ApplicationParameters applicationParameters;
@@ -72,31 +71,37 @@ public class DeletingActionedDocumentsScheduler {
 
     @PostConstruct
     public void init() {
-
         timerService.createIntervalTimer(
-            30000L,
-            Long.parseLong(applicationParameters.getStagingBulkScanEventProcessorSchedulerIntervalMillis()),
-            new TimerConfig(TIMER_TIMEOUT_INFO, false));
+                30000L,
+                Long.parseLong(applicationParameters.getStagingBulkScanEventProcessorSchedulerIntervalMillis()),
+                new TimerConfig(TIMER_TIMEOUT_INFO, false));
     }
 
     @Timeout
     public void startTimer() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("StagingBulkScan scheduler triggers.");
-        }
-
         LOGGER.info("DeletingActionedDocumentsScheduler triggers.");
 
-        final List<ScanDocument> actionedDocuments = getAllActionedDocuments();
+        final int deleteAfterDays = Integer.parseInt(applicationParameters.getDeleteAfterActionedDays());
+        final ZonedDateTime cutoffDate = ZonedDateTime.now().minusDays(deleteAfterDays);
+        final int batchSize = resolveBatchSize();
 
-        final List<ScanDocument> documentsTobeDeleted = actionedDocuments.stream()
-                .filter(document -> DAYS.between(document.getStatusUpdatedDate(), ZonedDateTime.now()) > Integer.parseInt(applicationParameters.getDeleteAfterActionedDays()))
-                .collect(Collectors.toList());
+        final Envelope<JsonValue> requestEnvelope = envelopeFrom(
+                metadataBuilder().withId(randomUUID()).withName(QUERY_GET_DOCUMENTS_FOR_DELETION).build(),
+                createObjectBuilder()
+                        .add("cutoffDate", cutoffDate.toString())
+                        .add("batchSize", batchSize)
+                        .build());
 
-        LOGGER.info("number of documents to be deleted are {}", documentsTobeDeleted.size());
+        final Envelope<JsonObject> response = requester.requestAsAdmin(requestEnvelope, JsonObject.class);
+        final List<ScanDocument> documentsToDelete =
+                convertToList(response.payload().getJsonArray("scanDocuments"), ScanDocument.class);
 
-        documentsTobeDeleted.forEach(document ->
-                sender.send(envelopeFrom(metadataBuilder().withId(randomUUID()).withName(DELETE_ACTIONED_DOCUMENTS).build(), buildPayload(document))));
+        LOGGER.info("Number of documents to be deleted: {}", documentsToDelete.size());
+
+        documentsToDelete.forEach(document ->
+                sender.send(envelopeFrom(
+                        metadataBuilder().withId(randomUUID()).withName(DELETE_ACTIONED_DOCUMENTS).build(),
+                        buildPayload(document))));
     }
 
     @PreDestroy
@@ -104,14 +109,12 @@ public class DeletingActionedDocumentsScheduler {
         timerService.getTimers().forEach(Timer::cancel);
     }
 
-    private List<ScanDocument> getAllActionedDocuments() {
-
-        final Envelope<JsonValue> requestEnvelope = envelopeFrom(metadataBuilder().withId(randomUUID()).withName(STAGING_BULK_SCAN_QUERY_GET_DOCUMENTS_BY_STATUSES).build(),
-                createObjectBuilder().add("status","MANUALLY_ACTIONED,AUTO_ACTIONED").build());
-
-        //get all the actioned documents from query
-        final Envelope<JsonObject>  actionedDocuments = requester.requestAsAdmin(requestEnvelope, JsonObject.class);
-        return convertToList(actionedDocuments.payload().getJsonArray("scanDocuments"), ScanDocument.class);
+    private int resolveBatchSize() {
+        final String configured = applicationParameters.getDeletionBatchSize();
+        if (configured != null && !configured.isBlank()) {
+            return Integer.parseInt(configured);
+        }
+        return DEFAULT_DELETION_BATCH_SIZE;
     }
 
     private JsonObject buildPayload(final ScanDocument document) {
@@ -124,7 +127,7 @@ public class DeletingActionedDocumentsScheduler {
     private <T> List<T> convertToList(final JsonArray jsonArray, final Class<T> clazz) {
         final List<T> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.size(); i++) {
-            list.add(this.jsonObjectToObjectConverter.convert(jsonArray.getJsonObject(i), clazz));
+            list.add(jsonObjectToObjectConverter.convert(jsonArray.getJsonObject(i), clazz));
         }
         return list;
     }

@@ -20,6 +20,13 @@ WILDFLY_DEPLOYMENT_DIR="$CPP_DOCKER_DIR/containers/wildfly/deployments"
 source $CPP_DOCKER_DIR/docker-utility-functions.sh
 source $CPP_DOCKER_DIR/build-scripts/integration-test-scipt-functions.sh
 
+buildWars() {
+  mvn -f ${CONTEXT_NAME}-service/pom.xml clean
+  echo "Building wars..."
+  mvn install -nsu -Denforcer.fail=false
+  echo "Finished building wars"
+}
+
 runLiquibase() {
    runEventLogLiquibase
    runEventBufferLiquibase
