@@ -20,6 +20,11 @@ public class StagingBulkScanQueryApi {
     @Inject
     private StagingBulkScanQueryView stagingBulkScanQueryView;
 
+    @Handles("stagingbulkscan.get-documents-eligible-for-deletion")
+    public JsonEnvelope findDocumentsEligibleForDeletion(final JsonEnvelope query) {
+        return this.stagingBulkScanQueryView.findDocumentsEligibleForDeletion(query);
+    }
+
     @Handles("stagingbulkscan.get-all-documents-by-status")
     public JsonEnvelope findAllDocumentsByStatus(final JsonEnvelope query) {
         return this.stagingBulkScanQueryView.findAllDocumentsByStatus(query);

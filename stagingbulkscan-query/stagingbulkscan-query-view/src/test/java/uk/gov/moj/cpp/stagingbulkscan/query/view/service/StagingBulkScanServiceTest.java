@@ -1,12 +1,18 @@
 package uk.gov.moj.cpp.stagingbulkscan.query.view.service;
 
+import static java.time.ZoneOffset.UTC;
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.AUTO_ACTIONED;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.FOLLOW_UP;
@@ -23,6 +29,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocumentsResponse;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanEnvelopeRepository;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -316,6 +323,46 @@ public class StagingBulkScanServiceTest {
         scanEnvelope.setAssociatedScanDocuments(documents);
 
         return scanEnvelope;
+    }
+
+    @Test
+    public void getDocumentsEligibleForDeletion_shouldDelegateToRepositoryWithCorrectStatuses() {
+        final ZonedDateTime cutoffDate = ZonedDateTime.now(UTC);
+        when(scanDocumentRepository.findDocumentsEligibleForDeletion(
+                asList(MANUALLY_ACTIONED, AUTO_ACTIONED), cutoffDate, 100))
+                .thenReturn(new ArrayList<>());
+
+        stagingBulkScanService.getDocumentsEligibleForDeletion(cutoffDate, 100);
+
+        verify(scanDocumentRepository).findDocumentsEligibleForDeletion(
+                eq(asList(MANUALLY_ACTIONED, AUTO_ACTIONED)), eq(cutoffDate), eq(100));
+    }
+
+    @Test
+    public void getDocumentsEligibleForDeletion_shouldMapRepositoryResultsToResponse() {
+        final ZonedDateTime cutoffDate = ZonedDateTime.now(UTC);
+        final UUID envelopeId = UUID.randomUUID();
+
+        final ScanDocument doc1 = new ScanDocument();
+        doc1.setId(new ScanSnapshotKey(UUID.randomUUID(), envelopeId));
+        doc1.setStatus(MANUALLY_ACTIONED);
+        doc1.setDocumentFileName("doc1.pdf");
+
+        final ScanDocument doc2 = new ScanDocument();
+        doc2.setId(new ScanSnapshotKey(UUID.randomUUID(), envelopeId));
+        doc2.setStatus(AUTO_ACTIONED);
+        doc2.setDocumentFileName("doc2.pdf");
+
+        when(scanDocumentRepository.findDocumentsEligibleForDeletion(
+                anyList(), eq(cutoffDate), eq(50)))
+                .thenReturn(asList(doc1, doc2));
+
+        final ScanDocumentsResponse response = stagingBulkScanService.getDocumentsEligibleForDeletion(cutoffDate, 50);
+
+        assertNotNull(response.getScanDocuments());
+        assertEquals(2, response.getScanDocuments().size());
+        assertEquals(MANUALLY_ACTIONED, response.getScanDocuments().get(0).getStatus());
+        assertEquals(AUTO_ACTIONED, response.getScanDocuments().get(1).getStatus());
     }
 
     private List<ScanDocument> buildScanDocuments(final UUID scanEnvelopeId,

@@ -8,6 +8,9 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class ApplicationParameters {
 
+    public static final String DEFAULT_DELETE_AFTER_ACTINED_DAYS = "30";
+    public static final String DEFAULT_DELETION_BATCH_SIZE = "50000";
+
     @Inject
     @Value(key = "storageConnectionString")
     private String storageConnectionString;
@@ -29,8 +32,12 @@ public class ApplicationParameters {
     private String stagingBulkScanEventProcessorSchedulerIntervalMillis;
 
     @Inject
-    @Value(key = "deleteAfterActionedDays")
+    @Value(key = "deleteAfterActionedDays", defaultValue = DEFAULT_DELETE_AFTER_ACTINED_DAYS)
     private String deleteAfterActionedDays;
+
+    @Inject
+    @Value(key = "deletionBatchSize", defaultValue = DEFAULT_DELETION_BATCH_SIZE)
+    private String deletionBatchSize;
 
     public String getStorageConnectionString() {
         return storageConnectionString;
@@ -54,6 +61,10 @@ public class ApplicationParameters {
 
     public String getScanManagerContainerName() {
         return scanManagerContainerName;
+    }
+
+    public String getDeletionBatchSize() {
+        return deletionBatchSize;
     }
 
 }

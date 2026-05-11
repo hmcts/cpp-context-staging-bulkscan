@@ -81,6 +81,33 @@ protocols: [ HTTP, HTTPS ]
                     example: !include json/stagingbulkscan.get-thumbnail-content.json
                     schema: !include json/schema/stagingbulkscan.get-thumbnail-content.json
 
+/scan-documents/eligible-for-deletion:
+  get:
+    description: |
+      Returns actioned scan documents eligible for deletion (past the retention window),
+      up to a configurable limit. Used internally by the deletion scheduler.
+      ...
+      (mapping):
+          responseType: application/vnd.stagingbulkscan.get-documents-eligible-for-deletion+json
+          name: stagingbulkscan.get-documents-eligible-for-deletion
+      ...
+    queryParameters:
+      cutoffDate:
+        description: ISO-8601 date-time; documents with statusUpdatedDate before this are eligible
+        type: string
+        required: true
+      maxResults:
+        description: Maximum records to return (default 50000)
+        type: integer
+        required: false
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.stagingbulkscan.get-documents-eligible-for-deletion+json:
+            example: !include json/stagingbulkscan.get-documents-eligible-for-deletion.json
+            schema:  !include json/schema/stagingbulkscan.get-documents-eligible-for-deletion.json
+
 /scan-document:
   get:
     description: |

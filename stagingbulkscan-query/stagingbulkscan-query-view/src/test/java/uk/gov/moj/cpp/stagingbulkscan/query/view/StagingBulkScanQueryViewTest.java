@@ -10,7 +10,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
@@ -51,6 +54,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.json.JsonValue;
+
+import org.mockito.ArgumentCaptor;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -318,6 +323,77 @@ public class StagingBulkScanQueryViewTest {
                         withJsonPath(format("$.%s", FIELD_STATUS_UPDATED_DATE), equalTo(ZonedDateTimes.toString(STATUS_UPDATED_DATE)))
                 )))
         ));
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_shouldCallServiceWithParsedCutoffDateAndMaxResults() {
+        final ZonedDateTime cutoffDate = ZonedDateTime.parse("2026-01-01T00:00:00Z");
+        final ScanDocumentsResponse emptyResponse = new ScanDocumentsResponse();
+        emptyResponse.setScanDocuments(new ArrayList<>());
+
+        when(stagingBulkScanService.getDocumentsEligibleForDeletion(any(ZonedDateTime.class), eq(1000)))
+                .thenReturn(emptyResponse);
+
+        final JsonEnvelope query = envelopeFrom(
+                metadataWithRandomUUIDAndName(),
+                createObjectBuilder()
+                        .add("cutoffDate", cutoffDate.toString())
+                        .add("maxResults", 1000)
+                        .build());
+
+        stagingBulkScanQueryView.findDocumentsEligibleForDeletion(query);
+
+        final ArgumentCaptor<ZonedDateTime> cutoffCaptor = ArgumentCaptor.forClass(ZonedDateTime.class);
+        final ArgumentCaptor<Integer> maxResultsCaptor = ArgumentCaptor.forClass(Integer.class);
+        verify(stagingBulkScanService).getDocumentsEligibleForDeletion(
+                cutoffCaptor.capture(), maxResultsCaptor.capture());
+        assertThat(cutoffCaptor.getValue().toInstant(), is(cutoffDate.toInstant()));
+        assertThat(maxResultsCaptor.getValue(), is(1000));
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_whenMaxResultsAbsent_shouldUseDefault50000() {
+        final ZonedDateTime cutoffDate = ZonedDateTime.parse("2026-01-01T00:00:00Z");
+        final ScanDocumentsResponse emptyResponse = new ScanDocumentsResponse();
+        emptyResponse.setScanDocuments(new ArrayList<>());
+
+        when(stagingBulkScanService.getDocumentsEligibleForDeletion(any(ZonedDateTime.class), eq(50_000)))
+                .thenReturn(emptyResponse);
+
+        final JsonEnvelope query = envelopeFrom(
+                metadataWithRandomUUIDAndName(),
+                createObjectBuilder()
+                        .add("cutoffDate", cutoffDate.toString())
+                        .build());
+
+        stagingBulkScanQueryView.findDocumentsEligibleForDeletion(query);
+
+        verify(stagingBulkScanService).getDocumentsEligibleForDeletion(
+                any(ZonedDateTime.class), eq(50_000));
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_shouldReturnEnvelopeWithCorrectName() {
+        final ZonedDateTime cutoffDate = ZonedDateTime.parse("2026-01-01T00:00:00Z");
+        final ScanDocumentsResponse emptyResponse = new ScanDocumentsResponse();
+        emptyResponse.setScanDocuments(new ArrayList<>());
+
+        when(stagingBulkScanService.getDocumentsEligibleForDeletion(any(ZonedDateTime.class), eq(50_000)))
+                .thenReturn(emptyResponse);
+
+        final JsonEnvelope query = envelopeFrom(
+                metadataWithRandomUUIDAndName(),
+                createObjectBuilder()
+                        .add("cutoffDate", cutoffDate.toString())
+                        .build());
+
+        final JsonEnvelope result = stagingBulkScanQueryView.findDocumentsEligibleForDeletion(query);
+
+        assertThat(result, is(jsonEnvelope(
+                withMetadataEnvelopedFrom(query)
+                        .withName("stagingbulkscan.get-documents-eligible-for-deletion"),
+                payloadIsJson(withJsonPath("$.scanDocuments"))
+        )));
     }
 
     private List<ScanDocument> getScanDocuments() {

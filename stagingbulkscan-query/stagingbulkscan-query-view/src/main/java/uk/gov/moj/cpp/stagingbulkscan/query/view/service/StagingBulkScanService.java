@@ -1,6 +1,8 @@
 package uk.gov.moj.cpp.stagingbulkscan.query.view.service;
 
+import static java.util.Arrays.asList;
 import static java.util.Optional.ofNullable;
+import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.AUTO_ACTIONED;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.MANUALLY_ACTIONED;
 
 import uk.gov.justice.stagingbulkscan.domain.DocumentStatus;
@@ -16,6 +18,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.Thumbnail;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanEnvelopeRepository;
 
+import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +30,9 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class StagingBulkScanService {
+
+    private static final List<DocumentStatus> DELETION_ELIGIBLE_STATUSES =
+            asList(MANUALLY_ACTIONED, AUTO_ACTIONED);
 
     @Inject
     private ScanDocumentRepository scanDocumentRepository;
@@ -55,6 +61,16 @@ public class StagingBulkScanService {
         documents.setScanDocuments(documentsByStatus.stream().map(populateDocument()).collect(Collectors.toList()));
 
         return documents;
+    }
+
+    public ScanDocumentsResponse getDocumentsEligibleForDeletion(
+            final ZonedDateTime cutoffDate,
+            final int maxResults) {
+        final List<ScanDocument> documents = scanDocumentRepository
+                .findDocumentsEligibleForDeletion(DELETION_ELIGIBLE_STATUSES, cutoffDate, maxResults);
+        final ScanDocumentsResponse response = new ScanDocumentsResponse();
+        response.setScanDocuments(documents.stream().map(populateDocument()).collect(Collectors.toList()));
+        return response;
     }
 
     public GetDocumentResponse getDocumentResponse(final UUID scanEnvelopeId, final UUID scanDocumentId) {

@@ -2,8 +2,10 @@ package uk.gov.moj.cpp.stagingbulkscan.repository;
 
 import static java.time.ZoneOffset.UTC;
 import static java.time.ZonedDateTime.now;
+import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.AUTO_ACTIONED;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.FOLLOW_UP;
@@ -14,6 +16,7 @@ import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanDocument;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanEnvelope;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanSnapshotKey;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -95,6 +98,81 @@ public class ScanDocumentRepositoryTest extends BaseTransactionalJunit4Test {
         scanDocumentSet.add(scanDocumentTwo);
         scanEnvelope.setAssociatedScanDocuments(scanDocumentSet);
         return scanEnvelope;
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_shouldReturnOnlyEligibleDocuments() {
+        final ZonedDateTime cutoffDate = now(UTC);
+        final ScanDocument eligible = buildDocument(randomUUID(), MANUALLY_ACTIONED, false, now(UTC).minusDays(10));
+        final ScanDocument wrongStatus = buildDocument(randomUUID(), FOLLOW_UP, false, now(UTC).minusDays(10));
+        scanEnvelope.getAssociatedScanDocuments().add(eligible);
+        scanEnvelope.getAssociatedScanDocuments().add(wrongStatus);
+        scanEnvelopeRepository.save(scanEnvelope);
+
+        final List<ScanDocument> result = scanDocumentRepository.findDocumentsEligibleForDeletion(
+                asList(MANUALLY_ACTIONED, AUTO_ACTIONED), cutoffDate, 100);
+
+        assertThat(result, hasSize(1));
+        assertThat(result.get(0).getStatus(), is(MANUALLY_ACTIONED));
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_shouldRespectMaxResultsLimit() {
+        final ZonedDateTime cutoffDate = now(UTC);
+        scanEnvelope.getAssociatedScanDocuments().add(buildDocument(randomUUID(), MANUALLY_ACTIONED, false, now(UTC).minusDays(3)));
+        scanEnvelope.getAssociatedScanDocuments().add(buildDocument(randomUUID(), AUTO_ACTIONED, false, now(UTC).minusDays(2)));
+        scanEnvelope.getAssociatedScanDocuments().add(buildDocument(randomUUID(), MANUALLY_ACTIONED, false, now(UTC).minusDays(1)));
+        scanEnvelopeRepository.save(scanEnvelope);
+
+        final List<ScanDocument> result = scanDocumentRepository.findDocumentsEligibleForDeletion(
+                asList(MANUALLY_ACTIONED, AUTO_ACTIONED), cutoffDate, 2);
+
+        assertThat(result, hasSize(2));
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_shouldOrderByStatusUpdatedDateAscending() {
+        final ZonedDateTime cutoffDate = now(UTC);
+        final ZonedDateTime olderDate = now(UTC).minusDays(10);
+        final ZonedDateTime newerDate = now(UTC).minusDays(5);
+        final ScanDocument newerDoc = buildDocument(randomUUID(), MANUALLY_ACTIONED, false, newerDate);
+        final ScanDocument olderDoc = buildDocument(randomUUID(), AUTO_ACTIONED, false, olderDate);
+        scanEnvelope.getAssociatedScanDocuments().add(newerDoc);
+        scanEnvelope.getAssociatedScanDocuments().add(olderDoc);
+        scanEnvelopeRepository.save(scanEnvelope);
+
+        final List<ScanDocument> result = scanDocumentRepository.findDocumentsEligibleForDeletion(
+                asList(MANUALLY_ACTIONED, AUTO_ACTIONED), cutoffDate, 100);
+
+        assertThat(result, hasSize(2));
+        assertThat(result.get(0).getStatusUpdatedDate().toInstant(), is(olderDate.toInstant()));
+        assertThat(result.get(1).getStatusUpdatedDate().toInstant(), is(newerDate.toInstant()));
+    }
+
+    @Test
+    public void findDocumentsEligibleForDeletion_shouldExcludeDeletedDocuments() {
+        final ZonedDateTime cutoffDate = now(UTC);
+        scanEnvelope.getAssociatedScanDocuments().add(
+                buildDocument(randomUUID(), MANUALLY_ACTIONED, true, now(UTC).minusDays(10)));
+        scanEnvelopeRepository.save(scanEnvelope);
+
+        final List<ScanDocument> result = scanDocumentRepository.findDocumentsEligibleForDeletion(
+                asList(MANUALLY_ACTIONED, AUTO_ACTIONED), cutoffDate, 100);
+
+        assertThat(result, hasSize(0));
+    }
+
+    private ScanDocument buildDocument(final UUID docId, final uk.gov.justice.stagingbulkscan.domain.DocumentStatus status,
+                                       final boolean deleted, final ZonedDateTime statusUpdatedDate) {
+        final ScanDocument doc = new ScanDocument();
+        doc.setId(new ScanSnapshotKey(docId, scanEnvelope.getId()));
+        doc.setDocumentFileName(docId + ".pdf");
+        doc.setVendorReceivedDate(now(UTC));
+        doc.setStatus(status);
+        doc.setDeleted(deleted);
+        doc.setStatusUpdatedDate(statusUpdatedDate);
+        doc.setActionedBy(randomUUID());
+        return doc;
     }
 
     private void buildActionedDocuments() {
