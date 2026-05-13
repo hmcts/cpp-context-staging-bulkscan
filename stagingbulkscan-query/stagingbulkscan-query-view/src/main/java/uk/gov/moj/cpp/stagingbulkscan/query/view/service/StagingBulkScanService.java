@@ -16,6 +16,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.Thumbnail;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanEnvelopeRepository;
 
+import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -171,6 +172,18 @@ public class StagingBulkScanService {
         document.setStatusCode(doc.getStatusCode());
 
         return document;
+    }
+
+    public ScanDocumentsResponse getDocumentsForDeletion(final ZonedDateTime cutoffDate, final int batchSize) {
+        final List<DocumentStatus> statuses =
+                List.of(DocumentStatus.MANUALLY_ACTIONED, DocumentStatus.AUTO_ACTIONED);
+
+        final List<ScanDocument> docs =
+                scanDocumentRepository.findDocumentsEligibleForDeletion(statuses, cutoffDate, batchSize);
+
+        final ScanDocumentsResponse response = new ScanDocumentsResponse();
+        response.setScanDocuments(docs.stream().map(populateDocument()).collect(Collectors.toList()));
+        return response;
     }
 
     public ScanEnvelopeDocument getScanEnvelopeDocumentById(final UUID documentId, final UUID envelopeId) {
