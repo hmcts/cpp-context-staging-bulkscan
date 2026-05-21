@@ -167,6 +167,33 @@ public class StagingBulkScanServiceTest {
     }
 
     @Test
+    public void getDocumentResponse_whenScanEnvelopeNotFoundInViewstore_shouldReturnEmptyResponse() {
+        final UUID scanEnvelopeId = UUID.randomUUID();
+        final UUID scanDocumentId = UUID.randomUUID();
+
+        when(scanEnvelopeRepository.findBy(scanEnvelopeId)).thenReturn(null);
+
+        final GetDocumentResponse response = stagingBulkScanService.getDocumentResponse(scanEnvelopeId, scanDocumentId);
+
+        assertNotNull(response);
+        assertNull(response.getId());
+        assertNull(response.getStatus());
+    }
+
+    @Test
+    public void getThumbnailResponse_whenScanEnvelopeNotFoundInViewstore_shouldReturnEmptyResponse() {
+        final UUID scanEnvelopeId = UUID.randomUUID();
+        final UUID scanDocumentId = UUID.randomUUID();
+
+        when(scanEnvelopeRepository.findBy(scanEnvelopeId)).thenReturn(null);
+
+        final GetThumbnailResponse response = stagingBulkScanService.getThumbnailResponse(scanEnvelopeId, scanDocumentId);
+
+        assertNotNull(response);
+        assertNull(response.getId());
+    }
+
+    @Test
     public void getDocumentsByStatuses() {
         final UUID scanEnvelopeId = UUID.randomUUID();
         final UUID scanDocumentId1 = UUID.randomUUID();

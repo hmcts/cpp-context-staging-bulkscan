@@ -3,6 +3,9 @@ package uk.gov.moj.cpp.stagingbulkscan.query.view.service;
 import static java.util.Optional.ofNullable;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.MANUALLY_ACTIONED;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.gov.justice.stagingbulkscan.domain.DocumentStatus;
 import uk.gov.justice.stagingbulkscan.domain.ScanEnvelopeDocument;
 import uk.gov.moj.cpp.stagingbulkscan.azure.core.service.BlobClientProvider;
@@ -27,6 +30,8 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class StagingBulkScanService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StagingBulkScanService.class);
 
     @Inject
     private ScanDocumentRepository scanDocumentRepository;
@@ -59,6 +64,12 @@ public class StagingBulkScanService {
 
     public GetDocumentResponse getDocumentResponse(final UUID scanEnvelopeId, final UUID scanDocumentId) {
         final ScanEnvelope scanEnvelope = scanEnvelopeRepository.findBy(scanEnvelopeId);
+
+        if (scanEnvelope == null) {
+            LOGGER.warn("ScanEnvelope not found in viewstore for id: {}", scanEnvelopeId);
+            return new GetDocumentResponse();
+        }
+
         final Set<ScanDocument> scanDocuments = scanEnvelope.getAssociatedScanDocuments();
 
         final List<Thumbnail> thumbnailList = scanDocuments.stream()
@@ -96,6 +107,11 @@ public class StagingBulkScanService {
 
     public GetThumbnailResponse getThumbnailResponse(final UUID scanEnvelopeId, final UUID scanDocumentId) {
         final ScanEnvelope scanEnvelope = scanEnvelopeRepository.findBy(scanEnvelopeId);
+
+        if (scanEnvelope == null) {
+            LOGGER.warn("ScanEnvelope not found in viewstore for id: {}", scanEnvelopeId);
+            return new GetThumbnailResponse();
+        }
 
         final Optional<ScanDocument> scanDocument = scanEnvelope.getAssociatedScanDocuments()
                 .stream()
