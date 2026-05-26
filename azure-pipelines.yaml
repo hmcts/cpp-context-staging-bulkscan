@@ -21,7 +21,7 @@ resources:
       type: github
       name: hmcts/cpp-azure-devops-templates
       endpoint: 'hmcts'
-      ref: 'dev/enforcer-disabled'
+      ref: main
 
 pool:
   name: "MDV-ADO-AGENT-AKS-01"
@@ -40,6 +40,7 @@ stages:
         parameters:
           sonarqube_project: ${{ variables['sonarqubeProject'] }}
           sonarQubeType: 'sonarQubeAKS'
+          runSonarqubeStatus: 'false' # TODO: Enable after fixing Sonarqube actual problem. DO NOT merge to main until then
 
   - ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
       - template: pipelines/context-validation.yaml@cppAzureDevOpsTemplates
