@@ -4,9 +4,11 @@ import uk.gov.justice.stagingbulkscan.domain.DocumentStatus;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanDocument;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanSnapshotKey;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.apache.deltaspike.data.api.AbstractEntityRepository;
+import org.apache.deltaspike.data.api.MaxResults;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.Repository;
@@ -31,4 +33,13 @@ public abstract class ScanDocumentRepository extends AbstractEntityRepository<Sc
             " doc.casePTIUrn is not null and doc.casePTIUrn=:casePtiUrn ")
     public abstract List<ScanDocument> findScanDocumentStatus(@QueryParam("caseUrn") final String
                                                                           caseUrn,@QueryParam("casePtiUrn") final String casePtiUrn);
+
+    @Query("from ScanDocument doc where doc.status in :statuses " +
+            "and doc.deleted is false " +
+            "and doc.statusUpdatedDate < :cutoffDate " +
+            "order by doc.statusUpdatedDate asc")
+    public abstract List<ScanDocument> findDocumentsEligibleForDeletion(
+            @QueryParam("statuses") List<DocumentStatus> statuses,
+            @QueryParam("cutoffDate") ZonedDateTime cutoffDate,
+            @MaxResults int maxResults);
 }

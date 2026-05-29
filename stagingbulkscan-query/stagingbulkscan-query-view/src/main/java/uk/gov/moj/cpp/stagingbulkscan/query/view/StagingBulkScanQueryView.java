@@ -18,6 +18,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocument;
 import uk.gov.moj.cpp.stagingbulkscan.query.view.service.StagingBulkScanService;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class StagingBulkScanQueryView {
     private static final String QUERY_GET_THUMBNAIL_CONTENT = "stagingbulkscan.get-thumbnail-content";
     private static final String QUERY_GET_DOCUMENT_BY_ID = "stagingbulkscan.get-scan-document-by-id";
     private static final String QUERY_GET_SCAN_ENVELOPE_DOCUMENT_BY_ID = "stagingbulkscan.get-scan-envelope-document-by-ids";
+    private static final String QUERY_GET_DOCUMENTS_FOR_DELETION = "stagingbulkscan.get-documents-for-deletion";
 
     private static final String CASE_URN = "caseUrn";
     private static final String CASE_PTI_URN = "casePtiUrn";
@@ -121,6 +123,15 @@ public class StagingBulkScanQueryView {
         }
 
         return enveloper.withMetadataFrom(envelope, QUERY_GET_SCAN_ENVELOPE_DOCUMENT_BY_ID).apply(envelopeDocument);
+    }
+
+    public JsonEnvelope getDocumentsForDeletion(final JsonEnvelope envelope) {
+        final JsonObject payload = envelope.payloadAsJsonObject();
+        final ZonedDateTime cutoffDate = ZonedDateTime.parse(payload.getString("cutoffDate"));
+        final int batchSize = payload.getInt("batchSize");
+        return enveloper.withMetadataFrom(envelope, QUERY_GET_DOCUMENTS_FOR_DELETION)
+                .apply(objectToJsonObjectConverter.convert(
+                        stagingBulkScanService.getDocumentsForDeletion(cutoffDate, batchSize)));
     }
 
     public Envelope getScanDocumentStatusByCaseUrn(final JsonEnvelope envelope) {

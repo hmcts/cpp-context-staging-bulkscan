@@ -45,6 +45,11 @@ public class StagingBulkScanQueryApi {
         return this.stagingBulkScanQueryView.getThumbnailContent(query);
     }
 
+    @Handles("stagingbulkscan.get-documents-for-deletion")
+    public JsonEnvelope getDocumentsForDeletion(final JsonEnvelope query) {
+        return this.stagingBulkScanQueryView.getDocumentsForDeletion(query);
+    }
+
     @Handles("stagingbulkscan.get-scan-document-status")
     public Envelope getScanDocumentStatusByCaseUrn(final JsonEnvelope query) {
         validateParams(query);

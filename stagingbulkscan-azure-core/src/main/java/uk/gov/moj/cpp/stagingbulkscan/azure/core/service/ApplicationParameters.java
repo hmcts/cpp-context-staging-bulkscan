@@ -32,6 +32,10 @@ public class ApplicationParameters {
     @Value(key = "deleteAfterActionedDays")
     private String deleteAfterActionedDays;
 
+    @Inject
+    @Value(key = "deletionBatchSize", defaultValue = "50000")
+    private String deletionBatchSize;
+
     public String getStorageConnectionString() {
         return storageConnectionString;
     }
@@ -46,6 +50,10 @@ public class ApplicationParameters {
 
     public String getDeleteAfterActionedDays() {
         return deleteAfterActionedDays;
+    }
+
+    public String getDeletionBatchSize() {
+        return deletionBatchSize;
     }
 
     public String getScanManagerStorageConnectionString() {
