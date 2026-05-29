@@ -3,6 +3,7 @@ package uk.gov.moj.cpp.stagingbulkscan.utils;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
 import static java.lang.String.format;
+import static java.time.ZoneOffset.UTC;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -28,6 +29,7 @@ import uk.gov.justice.services.common.http.HeaderConstants;
 import uk.gov.justice.services.test.utils.core.http.ResponseData;
 import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocumentsResponse;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import javax.json.JsonObject;
@@ -41,6 +43,8 @@ public class QueryUtil {
     public static final String QUERY_SCAN_DOCUMENT_REQUEST_TYPE = "application/vnd.stagingbulkscan.get-all-documents-by-status+json";
     public static final String QUERY_SCAN_GET_DOCUMENT_URL = "/stagingbulkscan-query-api/query/api/rest/stagingbulkscan/scan-envelope/%s/scan-documents/%s";
     public static final String QUERY_SCAN_GET_DOCUMENT_REQUEST_TYPE = "application/vnd.stagingbulkscan.get-scan-document+json";
+    public static final String QUERY_DOCUMENTS_FOR_DELETION_URL = "/stagingbulkscan-query-api/query/api/rest/stagingbulkscan/scan-documents-for-deletion";
+    public static final String QUERY_DOCUMENTS_FOR_DELETION_REQUEST_TYPE = "application/vnd.stagingbulkscan.get-documents-for-deletion+json";
     private static final String FIELD_ID = "id";
     private static final long POLL_INTERVAL_IN_SECONDS = 5;
     private static final long POLL_TIMEOUT_IN_SECONDS = 120;
@@ -124,5 +128,47 @@ public class QueryUtil {
 
         setField(jsonObjectToObjectConverter, "mapper", new ObjectMapperProducer().objectMapper());
         return new JsonPath(responseData.getPayload());
+    }
+
+    public static ScanDocumentsResponse fetchDocumentsForDeletion(final ZonedDateTime cutoffDate, final int batchSize) {
+        setupAsSystemUser(USER_ID_CROWN_COURT_USER);
+        stubForUserDetails(USER_ID_CROWN_COURT_USER, "ALL");
+
+        final String url = format("%s?cutoffDate=%s&batchSize=%d",
+                QUERY_DOCUMENTS_FOR_DELETION_URL,
+                cutoffDate.withZoneSameInstant(UTC).toString(),
+                batchSize);
+
+        final ResponseData responseData =
+                poll(requestParams(getReadUrl(url), QUERY_DOCUMENTS_FOR_DELETION_REQUEST_TYPE)
+                        .withHeader(HeaderConstants.USER_ID, USER_ID_CROWN_COURT_USER))
+                        .timeout(20, SECONDS)
+                        .until(status().is(OK));
+
+        setField(jsonObjectToObjectConverter, "objectMapper", new ObjectMapperProducer().objectMapper());
+        final JsonObject jsonObject = new StringToJsonObjectConverter().convert(responseData.getPayload());
+        return jsonObjectToObjectConverter.convert(jsonObject, ScanDocumentsResponse.class);
+    }
+
+    public static ScanDocumentsResponse fetchDocumentsForDeletionContaining(final UUID documentId, final ZonedDateTime cutoffDate, final int batchSize) {
+        setupAsSystemUser(USER_ID_CROWN_COURT_USER);
+        stubForUserDetails(USER_ID_CROWN_COURT_USER, "ALL");
+
+        final String url = format("%s?cutoffDate=%s&batchSize=%d",
+                QUERY_DOCUMENTS_FOR_DELETION_URL,
+                cutoffDate.withZoneSameInstant(UTC).toString(),
+                batchSize);
+
+        final ResponseData responseData =
+                poll(requestParams(getReadUrl(url), QUERY_DOCUMENTS_FOR_DELETION_REQUEST_TYPE)
+                        .withHeader(HeaderConstants.USER_ID, USER_ID_CROWN_COURT_USER))
+                        .timeout(20, SECONDS)
+                        .until(status().is(OK),
+                                payload().isJson(withJsonPath("$.scanDocuments[*]",
+                                        hasItem(isJson(withJsonPath("id", equalTo(documentId.toString())))))));
+
+        setField(jsonObjectToObjectConverter, "objectMapper", new ObjectMapperProducer().objectMapper());
+        final JsonObject jsonObject = new StringToJsonObjectConverter().convert(responseData.getPayload());
+        return jsonObjectToObjectConverter.convert(jsonObject, ScanDocumentsResponse.class);
     }
 }

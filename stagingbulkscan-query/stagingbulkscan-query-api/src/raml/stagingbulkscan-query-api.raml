@@ -109,3 +109,28 @@ protocols: [ HTTP, HTTPS ]
            application/vnd.referencedata.query.scan-document-status+json:
               schema: !include json/stagingbulkscan.get-scan-document-status.json
               example: !include json/schema/stagingbulkscan.get-scan-document-status.json
+
+/scan-documents-for-deletion:
+  get:
+    description: |
+      Returns actioned documents eligible for deletion (status updated before cutoffDate).
+      ...
+      (mapping):
+          responseType: application/vnd.stagingbulkscan.get-documents-for-deletion+json
+          name: stagingbulkscan.get-documents-for-deletion
+      ...
+    queryParameters:
+      cutoffDate:
+        description: ISO-8601 date-time; documents with statusUpdatedDate on or before this are eligible
+        type: string
+      batchSize:
+        description: Maximum number of records to return
+        type: integer
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.stagingbulkscan.get-documents-for-deletion+json:
+            example: !include json/stagingbulkscan.get-documents-for-deletion.json
+            schema:  !include json/schema/stagingbulkscan.get-documents-for-deletion.json
+

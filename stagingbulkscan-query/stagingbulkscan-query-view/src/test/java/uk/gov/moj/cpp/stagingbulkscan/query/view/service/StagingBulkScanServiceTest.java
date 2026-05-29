@@ -1,5 +1,7 @@
 package uk.gov.moj.cpp.stagingbulkscan.query.view.service;
 
+import static java.time.ZoneOffset.UTC;
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -7,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.AUTO_ACTIONED;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.FOLLOW_UP;
@@ -23,6 +26,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocumentsResponse;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanEnvelopeRepository;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -217,6 +221,30 @@ public class StagingBulkScanServiceTest {
         assertEquals(scanEnvelopeId, scanDocumentResponse.getScanEnvelopeId());
         assertEquals(MANUALLY_ACTIONED, scanDocumentResponse.getStatus());
         assertEquals("test.pdf", scanDocumentResponse.getDocumentFileName());
+    }
+
+    @Test
+    public void shouldGetDocumentsForDeletion() {
+        final UUID scanEnvelopeId = UUID.randomUUID();
+        final UUID scanDocumentId = UUID.randomUUID();
+        final ZonedDateTime cutoffDate = ZonedDateTime.now(UTC).minusDays(30);
+        final int batchSize = 100;
+
+        final ScanDocument scanDocument = new ScanDocument();
+        scanDocument.setId(new ScanSnapshotKey(scanDocumentId, scanEnvelopeId));
+        scanDocument.setDocumentFileName("test.pdf");
+        scanDocument.setStatus(MANUALLY_ACTIONED);
+
+        when(scanDocumentRepository.findDocumentsEligibleForDeletion(
+                eq(asList(MANUALLY_ACTIONED, AUTO_ACTIONED)), eq(cutoffDate), eq(batchSize)))
+                .thenReturn(singletonList(scanDocument));
+
+        final ScanDocumentsResponse response = stagingBulkScanService.getDocumentsForDeletion(cutoffDate, batchSize);
+
+        assertNotNull(response.getScanDocuments());
+        assertEquals(1, response.getScanDocuments().size());
+        assertEquals(scanDocumentId, response.getScanDocuments().get(0).getId());
+        assertEquals(MANUALLY_ACTIONED, response.getScanDocuments().get(0).getStatus());
     }
 
     @Test
