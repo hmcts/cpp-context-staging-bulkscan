@@ -59,3 +59,12 @@ rule "Query - API - stagingbulkscan.get-scan-document-status"
   then
     $outcome.setSuccess(true);
 end
+
+rule "Query - API - stagingbulkscan.get-documents-for-deletion"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingbulkscan.get-documents-for-deletion");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action,"System Users"));
+  then
+    $outcome.setSuccess(true);
+end

@@ -79,6 +79,7 @@ public class StagingBulkScanQueryViewTest {
     private static final String RESPONSE_NAME_GENERATE_THUMBNAIL_CONTENT = "stagingbulkscan.get-thumbnail-content";
     private static final String RESPONSE_NAME_GET_DOCUMENTS_BY_STATUS = "stagingbulkscan.get-all-documents-by-status";
     private static final String RESPONSE_NAME_GET_DOCUMENTS_BY_ID = "stagingbulkscan.get-scan-document-by-id";
+    private static final String RESPONSE_NAME_GET_DOCUMENTS_FOR_DELETION = "stagingbulkscan.get-documents-for-deletion";
     private static final String GET_SCAN_ENVELOPE_DOCUMENTS_BY_ID = "stagingbulkscan.get-scan-envelope-document-by-ids";
     private static final String FIELD_SCAN_DOCUMENTS = "scanDocuments";
     private static final String FIELD_ID = "id";
@@ -280,6 +281,44 @@ public class StagingBulkScanQueryViewTest {
                         withJsonPath(format("$.%s", FIELD_SCAN_ENVELOPE_ID), equalTo(scanEnvelopeId.toString())),
                         withJsonPath(format("$.%s", FIELD_STATUS), equalTo(FOLLOW_UP.toString())),
                         withJsonPath(format("$.%s", FIELD_DOCUMENT_FILE_NAME), equalTo("fileName"))
+                )))
+        ));
+    }
+
+    @Test
+    public void shouldGetDocumentsForDeletion() {
+        final UUID scanDocumentId = UUID.randomUUID();
+        final ZonedDateTime cutoffDate = ZonedDateTime.now(UTC).minusDays(30);
+        final int batchSize = 50;
+
+        final ScanDocumentsResponse documentsResponse = new ScanDocumentsResponse();
+        final ScanDocument doc = new ScanDocument();
+        doc.setId(scanDocumentId);
+        doc.setScanEnvelopeId(ENVELOPE_ID);
+        doc.setStatus(MANUALLY_ACTIONED);
+        doc.setDocumentFileName(DOCUMENT_FILE_NAME);
+        doc.setVendorReceivedDate(VENDOR_RECEIVED_DATE);
+        doc.setStatusUpdatedDate(STATUS_UPDATED_DATE);
+        documentsResponse.setScanDocuments(List.of(doc));
+
+        when(stagingBulkScanService.getDocumentsForDeletion(cutoffDate, batchSize)).thenReturn(documentsResponse);
+
+        final JsonEnvelope query = envelopeFrom(
+                metadataWithRandomUUIDAndName(),
+                createObjectBuilder()
+                        .add("cutoffDate", cutoffDate.toString())
+                        .add("batchSize", batchSize)
+                        .build());
+
+        final JsonEnvelope result = stagingBulkScanQueryView.getDocumentsForDeletion(query);
+
+        assertThat(result, is(jsonEnvelope(
+                withMetadataEnvelopedFrom(query)
+                        .withName(RESPONSE_NAME_GET_DOCUMENTS_FOR_DELETION),
+                payloadIsJson(allOf(
+                        withJsonPath(format("$.%s[0].%s", FIELD_SCAN_DOCUMENTS, FIELD_ID), equalTo(scanDocumentId.toString())),
+                        withJsonPath(format("$.%s[0].%s", FIELD_SCAN_DOCUMENTS, FIELD_SCAN_ENVELOPE_ID), equalTo(ENVELOPE_ID.toString())),
+                        withJsonPath(format("$.%s[0].%s", FIELD_SCAN_DOCUMENTS, FIELD_STATUS), equalTo(MANUALLY_ACTIONED.toString()))
                 )))
         ));
     }
