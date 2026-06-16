@@ -40,6 +40,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
@@ -312,11 +313,11 @@ public class PoliceEmailExtractorFunctionTest {
         functionToTest.setReferenceDataQueryHelper(referenceDataQueryHelper);
         functionToTest.setBlobCloudStorage(blobCloudStorage);
         when(notificationEmailHelper.sendNotificationEmail(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(Response.accepted().build());
-        JsonObject jsonObject = createObjectBuilder().add("oucode", "0210000").build();
+        JsonObject jsonObject = Json.createObjectBuilder().add("oucode", "0210000").build();
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(createArrayBuilder().add(jsonObject).build());
+                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
         when(referenceDataQueryHelper.getProsecutorByEmailDomain("test@test.com"))
-                .thenReturn(createArrayBuilder().add(jsonObject).build());
+                .thenReturn(Json.createArrayBuilder().add(jsonObject).build());
         HttpResponseMessage response = functionToTest.processEmail(request, context);
 
         assertEquals(HttpStatus.OK, response.getStatus());

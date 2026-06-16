@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
@@ -44,7 +45,7 @@ public class BlobZipStream implements AutoCloseable {
             ZipEntry nextEntry = this.zipFileInputStream.getNextEntry();
             while (nextEntry != null) {
                 if (nextEntry.getName().endsWith("json")) {
-                    reader = createReader(this.zipFileInputStream);
+                    reader = JsonObjects.createReader(this.zipFileInputStream);
                     final JsonObject jsonObject = reader.readObject();
                     return Optional.of(jsonObject);
                 }

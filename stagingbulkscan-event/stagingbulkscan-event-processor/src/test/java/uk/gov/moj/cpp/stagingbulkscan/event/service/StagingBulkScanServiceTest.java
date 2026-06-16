@@ -1,6 +1,5 @@
 package uk.gov.moj.cpp.stagingbulkscan.event.service;
 
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -18,6 +17,7 @@ import uk.gov.justice.services.test.utils.core.enveloper.EnveloperFactory;
 
 import java.util.UUID;
 
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.hamcrest.CoreMatchers;
@@ -43,7 +43,7 @@ public class StagingBulkScanServiceTest {
     public void shouldGetScanDocumentById() {
         final UUID scanDocumentId = UUID.randomUUID();
         final UUID scanEnvelopeId = UUID.randomUUID();
-        final JsonObject scanDocument = createObjectBuilder()
+        final JsonObject scanDocument = JsonObjects.createObjectBuilder()
                 .add("status", "PENDING")
                 .add("caseUrn", "12345")
                 .add("statusCode", DEFENDANT_DETAILS_UPDATED.toString())
@@ -51,7 +51,7 @@ public class StagingBulkScanServiceTest {
         final Envelope responseEnvelope = envelopeFrom(
                 metadataWithRandomUUID("stagingbulkscan.get-scan-document-by-id"),
                 scanDocument);
-        final JsonObject payload = createObjectBuilder()
+        final JsonObject payload = JsonObjects.createObjectBuilder()
                 .add("scanEnvelopeId", scanEnvelopeId.toString())
                 .add("scanDocumentId", scanDocumentId.toString())
                 .build();

@@ -2,6 +2,8 @@ package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
 import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.never;
@@ -9,8 +11,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
-import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
@@ -37,6 +37,7 @@ import uk.gov.moj.cpp.json.schemas.prosecutioncasefile.events.MaterialRejected;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -109,7 +110,7 @@ public class CaseDocumentUploadedEventProcessorTest {
                         .add("scanDocumentId", SCAN_DOCUMENT_ID.toString())
                         .build());
 
-        final JsonObject caseDetails = createObjectBuilder()
+        final JsonObject caseDetails = JsonObjects.createObjectBuilder()
                 .add("status", "PENDING")
                 .add("completed", false)
                 .build();

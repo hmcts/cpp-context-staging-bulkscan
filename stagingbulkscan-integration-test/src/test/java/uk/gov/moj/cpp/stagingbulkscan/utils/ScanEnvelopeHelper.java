@@ -7,7 +7,10 @@ import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static java.time.ZoneOffset.UTC;
 import static java.util.Collections.emptyMap;
+import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -17,8 +20,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AnyOf.anyOf;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
-import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.http.RequestParamsBuilder.requestParams;
 import static uk.gov.justice.services.test.utils.core.http.RestPoller.poll;
 import static uk.gov.justice.services.test.utils.core.matchers.ResponsePayloadMatcher.payload;
@@ -36,6 +37,7 @@ import uk.gov.justice.services.common.converter.ZonedDateTimes;
 import uk.gov.justice.services.common.http.HeaderConstants;
 import uk.gov.justice.services.integrationtest.utils.jms.JmsMessageProducerClient;
 import uk.gov.justice.services.messaging.JsonEnvelope;
+import uk.gov.justice.services.messaging.JsonObjects;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.stagingbulkscan.domain.DocumentStatus;
 import uk.gov.justice.stagingbulkscan.domain.StatusCode;
@@ -278,7 +280,7 @@ public class ScanEnvelopeHelper {
     }
 
     public static void addSjpCaseMaterialEvent(final UUID submissionId) {
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
                 metadataWithRandomUUID(PUBLIC_SJP_DOCUMENT_ADDED_EVENT)
                         .withUserId(USER_ID.toString()).build().asJsonObject())
                 .add(FIELD_SUBMISSION_ID, submissionId.toString()).build()).build();
@@ -295,7 +297,7 @@ public class ScanEnvelopeHelper {
     }
 
     public static void addCcCaseMaterialEvent(final UUID submissionId) {
-        final Metadata enrichedMaterialAddedMetadata = metadataFrom(createObjectBuilder(
+        final Metadata enrichedMaterialAddedMetadata = metadataFrom(JsonObjects.createObjectBuilder(
                 metadataWithRandomUUID(PUBLIC_CC_DOCUMENT_ADDED_EVENT)
                         .withUserId(USER_ID.toString()).build().asJsonObject())
                 .add(FIELD_SUBMISSION_ID, submissionId.toString()).build()).build();
@@ -308,7 +310,7 @@ public class ScanEnvelopeHelper {
     }
 
     public static void rejectDocument(final UUID submissionId) {
-        final Metadata materialRejectedEventMetadata = metadataFrom(createObjectBuilder(
+        final Metadata materialRejectedEventMetadata = metadataFrom(JsonObjects.createObjectBuilder(
                 metadataWithRandomUUID(PUBLIC_CASE_REJECTED)
                         .withUserId(USER_ID.toString()).build().asJsonObject())
                 .add(FIELD_SUBMISSION_ID, submissionId.toString()).build()).build();
@@ -323,7 +325,7 @@ public class ScanEnvelopeHelper {
     }
 
     public static void expireDocument(final UUID submissionId) {
-        final Metadata bulkscanMaterialMetadata = metadataFrom(createObjectBuilder(
+        final Metadata bulkscanMaterialMetadata = metadataFrom(JsonObjects.createObjectBuilder(
                 metadataWithRandomUUID(PUBLIC_BULK_SCAN_MATERIAL_FOLLOWUP)
                         .withUserId(USER_ID.toString()).build().asJsonObject())
                 .add(FIELD_SUBMISSION_ID, submissionId.toString()).build()).build();
