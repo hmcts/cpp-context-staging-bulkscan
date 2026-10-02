@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Map;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 
 import com.google.common.io.Resources;
 import org.apache.commons.lang3.text.StrSubstitutor;

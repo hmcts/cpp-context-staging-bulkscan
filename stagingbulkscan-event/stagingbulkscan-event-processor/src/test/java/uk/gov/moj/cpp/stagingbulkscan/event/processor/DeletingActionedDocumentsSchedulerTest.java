@@ -25,13 +25,13 @@ import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.TimerConfig;
-import javax.ejb.TimerService;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.TimerConfig;
+import jakarta.ejb.TimerService;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
 
 import org.apache.openejb.core.timer.TimerImpl;
 import org.junit.jupiter.api.BeforeEach;

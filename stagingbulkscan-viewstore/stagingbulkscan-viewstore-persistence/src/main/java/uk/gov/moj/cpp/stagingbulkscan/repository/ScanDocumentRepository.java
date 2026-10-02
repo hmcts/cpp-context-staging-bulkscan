@@ -7,39 +7,78 @@ import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanSnapshotKey;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import org.apache.deltaspike.data.api.AbstractEntityRepository;
-import org.apache.deltaspike.data.api.MaxResults;
-import org.apache.deltaspike.data.api.Query;
-import org.apache.deltaspike.data.api.QueryParam;
-import org.apache.deltaspike.data.api.Repository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
-@SuppressWarnings("CdiManagedBeanInconsistencyInspection")
-@Repository
-public abstract class ScanDocumentRepository extends AbstractEntityRepository<ScanDocument, ScanSnapshotKey> {
+@ApplicationScoped
+public class ScanDocumentRepository {
 
-    @Query(value = "from ScanDocument doc where doc.status = :status and deleted is false order by doc.vendorReceivedDate asc")
-    public abstract List<ScanDocument> findAllDocumentsByStatusByAsc(@QueryParam("status") final DocumentStatus status);
+    @PersistenceContext(unitName = "stagingbulkscan")
+    EntityManager entityManager;
 
-    @Query(value = "from ScanDocument doc where doc.status = :statuses and deleted is false order by doc.vendorReceivedDate desc")
-    public abstract List<ScanDocument> findAllDocumentsByStatusByDesc(@QueryParam("statuses") final DocumentStatus status);
+    public ScanDocument findBy(final ScanSnapshotKey id) {
+        return entityManager.find(ScanDocument.class, id);
+    }
 
-    @Query(value = "from ScanDocument doc where doc.status in :statuses and deleted is false order by doc.vendorReceivedDate asc")
-    public abstract List<ScanDocument> findAllDocumentsByStatusByAsc(@QueryParam("statuses") final List<DocumentStatus> statuses);
+    public ScanDocument save(final ScanDocument scanDocument) {
+        return entityManager.merge(scanDocument);
+    }
 
-    @Query(value = "from ScanDocument doc where doc.status in :statuses and deleted is false order by doc.vendorReceivedDate desc")
-    public abstract List<ScanDocument> findAllDocumentsByStatusByDesc(@QueryParam("statuses") final List<DocumentStatus> statuses);
+    public List<ScanDocument> findAllDocumentsByStatusByAsc(final DocumentStatus status) {
+        return entityManager.createQuery(
+                        "select doc from ScanDocument doc where doc.status = :status and deleted is false order by doc.vendorReceivedDate asc",
+                        ScanDocument.class)
+                .setParameter("status", status)
+                .getResultList();
+    }
 
-    @Query(value = "from ScanDocument doc where doc.caseUrn is not null and doc.caseUrn =:caseUrn or" +
-            " doc.casePTIUrn is not null and doc.casePTIUrn=:casePtiUrn ")
-    public abstract List<ScanDocument> findScanDocumentStatus(@QueryParam("caseUrn") final String
-                                                                          caseUrn,@QueryParam("casePtiUrn") final String casePtiUrn);
+    public List<ScanDocument> findAllDocumentsByStatusByDesc(final DocumentStatus status) {
+        return entityManager.createQuery(
+                        "select doc from ScanDocument doc where doc.status = :statuses and deleted is false order by doc.vendorReceivedDate desc",
+                        ScanDocument.class)
+                .setParameter("statuses", status)
+                .getResultList();
+    }
 
-    @Query("from ScanDocument doc where doc.status in :statuses " +
-            "and doc.deleted is false " +
-            "and doc.statusUpdatedDate < :cutoffDate " +
-            "order by doc.statusUpdatedDate asc")
-    public abstract List<ScanDocument> findDocumentsEligibleForDeletion(
-            @QueryParam("statuses") List<DocumentStatus> statuses,
-            @QueryParam("cutoffDate") ZonedDateTime cutoffDate,
-            @MaxResults int maxResults);
+    public List<ScanDocument> findAllDocumentsByStatusByAsc(final List<DocumentStatus> statuses) {
+        return entityManager.createQuery(
+                        "select doc from ScanDocument doc where doc.status in (:statuses) and deleted is false order by doc.vendorReceivedDate asc",
+                        ScanDocument.class)
+                .setParameter("statuses", statuses)
+                .getResultList();
+    }
+
+    public List<ScanDocument> findAllDocumentsByStatusByDesc(final List<DocumentStatus> statuses) {
+        return entityManager.createQuery(
+                        "select doc from ScanDocument doc where doc.status in (:statuses) and deleted is false order by doc.vendorReceivedDate desc",
+                        ScanDocument.class)
+                .setParameter("statuses", statuses)
+                .getResultList();
+    }
+
+    public List<ScanDocument> findScanDocumentStatus(final String caseUrn, final String casePtiUrn) {
+        return entityManager.createQuery(
+                        "select doc from ScanDocument doc where doc.caseUrn is not null and doc.caseUrn =:caseUrn or" +
+                                " doc.casePTIUrn is not null and doc.casePTIUrn=:casePtiUrn ",
+                        ScanDocument.class)
+                .setParameter("caseUrn", caseUrn)
+                .setParameter("casePtiUrn", casePtiUrn)
+                .getResultList();
+    }
+
+    public List<ScanDocument> findDocumentsEligibleForDeletion(final List<DocumentStatus> statuses,
+                                                               final ZonedDateTime cutoffDate,
+                                                               final int maxResults) {
+        return entityManager.createQuery(
+                        "select doc from ScanDocument doc where doc.status in (:statuses) " +
+                                "and doc.deleted is false " +
+                                "and doc.statusUpdatedDate < :cutoffDate " +
+                                "order by doc.statusUpdatedDate asc",
+                        ScanDocument.class)
+                .setParameter("statuses", statuses)
+                .setParameter("cutoffDate", cutoffDate)
+                .setMaxResults(maxResults)
+                .getResultList();
+    }
 }

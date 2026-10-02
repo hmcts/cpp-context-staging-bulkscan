@@ -5,7 +5,7 @@
     <parent>
         <artifactId>stagingbulkscan-parent</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>17.104.49-SNAPSHOT</version>
+        <version>25.104.0-M1-SNAPSHOT</version>
     </parent>
 
     <artifactId>stagingbulkscan-testharness</artifactId>
@@ -21,8 +21,8 @@
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure</artifactId>
-            <version>${bulkscan-azure.version}</version>
+            <artifactId>azure-storage</artifactId>
+            <version>${azure-storage-version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

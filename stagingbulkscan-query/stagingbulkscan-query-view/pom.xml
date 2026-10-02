@@ -3,7 +3,7 @@
     <parent>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
         <artifactId>stagingbulkscan-query</artifactId>
-        <version>17.104.49-SNAPSHOT</version>
+        <version>25.104.0-M1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -11,8 +11,8 @@
     <artifactId>stagingbulkscan-query-view</artifactId>
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-storage</artifactId>
-            <version>${bulkscan-azure-storage.version}</version>
+            <version>${azure-storage-version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
