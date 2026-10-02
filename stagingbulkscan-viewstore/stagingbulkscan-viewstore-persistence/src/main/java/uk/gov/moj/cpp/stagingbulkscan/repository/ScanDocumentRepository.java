@@ -14,6 +14,8 @@ import jakarta.persistence.PersistenceContext;
 @ApplicationScoped
 public class ScanDocumentRepository {
 
+    private static final String STATUSES = "statuses";
+
     @PersistenceContext(unitName = "stagingbulkscan")
     EntityManager entityManager;
 
@@ -37,7 +39,7 @@ public class ScanDocumentRepository {
         return entityManager.createQuery(
                         "select doc from ScanDocument doc where doc.status = :statuses and deleted is false order by doc.vendorReceivedDate desc",
                         ScanDocument.class)
-                .setParameter("statuses", status)
+                .setParameter(STATUSES, status)
                 .getResultList();
     }
 
@@ -45,7 +47,7 @@ public class ScanDocumentRepository {
         return entityManager.createQuery(
                         "select doc from ScanDocument doc where doc.status in (:statuses) and deleted is false order by doc.vendorReceivedDate asc",
                         ScanDocument.class)
-                .setParameter("statuses", statuses)
+                .setParameter(STATUSES, statuses)
                 .getResultList();
     }
 
@@ -53,7 +55,7 @@ public class ScanDocumentRepository {
         return entityManager.createQuery(
                         "select doc from ScanDocument doc where doc.status in (:statuses) and deleted is false order by doc.vendorReceivedDate desc",
                         ScanDocument.class)
-                .setParameter("statuses", statuses)
+                .setParameter(STATUSES, statuses)
                 .getResultList();
     }
 
@@ -76,7 +78,7 @@ public class ScanDocumentRepository {
                                 "and doc.statusUpdatedDate < :cutoffDate " +
                                 "order by doc.statusUpdatedDate asc",
                         ScanDocument.class)
-                .setParameter("statuses", statuses)
+                .setParameter(STATUSES, statuses)
                 .setParameter("cutoffDate", cutoffDate)
                 .setMaxResults(maxResults)
                 .getResultList();
