@@ -5,12 +5,12 @@
     <parent>
         <groupId>uk.gov.moj.cpp.common</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>25.104.3</version>
+        <version>25.104.4</version>
     </parent>
 
     <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
     <artifactId>stagingbulkscan-parent</artifactId>
-    <version>25.104.0-M1-SNAPSHOT</version>
+    <version>25.104.49-CIMD-4077-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>StagingBulkScan Context - Parent Module</name>
@@ -20,7 +20,7 @@
         <sonar.report.export.path>sonar-report.json</sonar.report.export.path>
         <sonar.scm.provider>git</sonar.scm.provider>
         <mvn.site.url>file://${project.build.directory}/site</mvn.site.url>
-        <core-domain.version>25.104.3</core-domain.version>
+        <core-domain.version>25.104.4</core-domain.version>
         <prosecutioncasefile-version>17.0.11</prosecutioncasefile-version>
         <sjp-version>17.103.169</sjp-version>
         <azure.functions.maven.plugin.version>1.24.0</azure.functions.maven.plugin.version>
