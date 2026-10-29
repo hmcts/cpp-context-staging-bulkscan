@@ -22,7 +22,7 @@
         <mvn.site.url>file://${project.build.directory}/site</mvn.site.url>
         <core-domain.version>25.104.4</core-domain.version>
         <prosecutioncasefile-version>17.0.11</prosecutioncasefile-version>
-        <sjp-version>17.103.169</sjp-version>
+        <sjp-version>17.104.197</sjp-version>
         <azure.functions.maven.plugin.version>1.24.0</azure.functions.maven.plugin.version>
         <jgitflow.maven.developBranchName>main</jgitflow.maven.developBranchName>
     </properties>
