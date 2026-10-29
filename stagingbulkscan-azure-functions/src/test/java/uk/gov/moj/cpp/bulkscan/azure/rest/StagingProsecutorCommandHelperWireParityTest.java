@@ -29,10 +29,13 @@ import static uk.gov.moj.cpp.bulkscan.azure.rest.DocumentMapper.getDocumentMappe
  * Captures the multipart request that StagingProsecutorCommandHelper.addMaterial actually sends, using a local HTTP
  * server. The helper code is unchanged by the J25 upgrade, but the RESTEasy multipart provider moves from 3.15 to
  * 7.0: on J17 the material part's filename is written as UTF-8, on J25 a non-ASCII character becomes '?'.
+ * The file name comes from the scanning vendor's metadata and is normally ASCII, which is sent unchanged, so the J25
+ * behaviour is accepted and pinned here.
  * The existing StagingProsecutorCommandHelperTest mocks the Client, so it cannot see the wire format.
  */
 class StagingProsecutorCommandHelperWireParityTest {
 
+    private static final String ASCII_FILE_NAME = "fe 1.pdf";
     private static final String NON_ASCII_FILE_NAME = "fé 1.pdf";
 
     private final AtomicReference<byte[]> capturedBody = new AtomicReference<>();
@@ -57,10 +60,33 @@ class StagingProsecutorCommandHelperWireParityTest {
     }
 
     @Test
-    void bscM02_materialPartShouldCarryTheNonAsciiFileNameAsUtf8() {
+    void bscM02_materialPartShouldCarryAnAsciiFileNameUnchanged() {
+        final String body = addMaterialWithFileName(ASCII_FILE_NAME);
+
+        assertThat(body, containsString("name=\"material\"; filename=\"" + ASCII_FILE_NAME + "\""));
+        assertThat(body, containsString("name=\"materialType\""));
+        assertThat(body, containsString("name=\"prosecutingAuthority\""));
+        assertThat(body, containsString("name=\"srcDocumentReference\""));
+        assertThat(body, containsString("name=\"defendantId\""));
+    }
+
+    // BSC-M02: J17 (RESTEasy 3.15) wrote "fé 1.pdf" as UTF-8; J25 (RESTEasy 7.0) replaces the non-ASCII character
+    // with '?'. Accepted, because vendor file names are normally ASCII.
+    @Test
+    void bscM02_materialPartShouldReplaceANonAsciiFileNameCharacterWithAQuestionMark() {
+        final String body = addMaterialWithFileName(NON_ASCII_FILE_NAME);
+
+        assertThat(body, containsString("name=\"material\"; filename=\"f? 1.pdf\""));
+        assertThat(body, containsString("name=\"materialType\""));
+        assertThat(body, containsString("name=\"prosecutingAuthority\""));
+        assertThat(body, containsString("name=\"srcDocumentReference\""));
+        assertThat(body, containsString("name=\"defendantId\""));
+    }
+
+    private String addMaterialWithFileName(final String fileName) {
         final JsonObject material = createObjectBuilder()
                 .add("document_name", getDocumentMapper().getSinglePlea())
-                .add("file_name", NON_ASCII_FILE_NAME)
+                .add("file_name", fileName)
                 .add("asn", "defendantId1")
                 .add("case_urn", "TVL1234556")
                 .add("prosecutor_ID", "GA0001")
@@ -71,12 +97,7 @@ class StagingProsecutorCommandHelperWireParityTest {
                 .addMaterial(material, "ENVELOPE_ID", new ByteArrayInputStream("%PDF-1.4".getBytes(UTF_8)));
 
         assertThat(response.getStatus(), is(200));
-        final String body = new String(capturedBody.get(), UTF_8);
-        assertThat(body, containsString("name=\"material\"; filename=\"" + NON_ASCII_FILE_NAME + "\""));
-        assertThat(body, containsString("name=\"materialType\""));
-        assertThat(body, containsString("name=\"prosecutingAuthority\""));
-        assertThat(body, containsString("name=\"srcDocumentReference\""));
-        assertThat(body, containsString("name=\"defendantId\""));
+        return new String(capturedBody.get(), UTF_8);
     }
 
     private static class LocalStagingProsecutorCommandHelper extends StagingProsecutorCommandHelper {

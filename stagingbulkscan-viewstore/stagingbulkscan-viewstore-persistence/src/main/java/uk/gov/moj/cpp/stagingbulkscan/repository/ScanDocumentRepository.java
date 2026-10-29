@@ -10,6 +10,7 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 @ApplicationScoped
 public class ScanDocumentRepository {
@@ -72,15 +73,18 @@ public class ScanDocumentRepository {
     public List<ScanDocument> findDocumentsEligibleForDeletion(final List<DocumentStatus> statuses,
                                                                final ZonedDateTime cutoffDate,
                                                                final int maxResults) {
-        return entityManager.createQuery(
+        final TypedQuery<ScanDocument> query = entityManager.createQuery(
                         "select doc from ScanDocument doc where doc.status in (:statuses) " +
                                 "and doc.deleted is false " +
                                 "and doc.statusUpdatedDate < :cutoffDate " +
                                 "order by doc.statusUpdatedDate asc",
                         ScanDocument.class)
                 .setParameter(STATUSES, statuses)
-                .setParameter("cutoffDate", cutoffDate)
-                .setMaxResults(maxResults)
-                .getResultList();
+                .setParameter("cutoffDate", cutoffDate);
+        // As DeltaSpike @MaxResults: only limit the query when the value is greater than 0
+        if (maxResults > 0) {
+            query.setMaxResults(maxResults);
+        }
+        return query.getResultList();
     }
 }

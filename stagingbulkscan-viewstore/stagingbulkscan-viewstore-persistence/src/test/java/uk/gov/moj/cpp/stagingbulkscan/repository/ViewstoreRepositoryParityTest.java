@@ -14,7 +14,6 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.AUTO_ACTIONED;
 import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.MANUALLY_ACTIONED;
 
@@ -36,7 +35,9 @@ import static uk.gov.justice.stagingbulkscan.domain.DocumentStatus.MANUALLY_ACTI
  *
  * The same scenarios exist on the J17 copy (main, DeltaSpike repositories, CdiTestRunner). Here the hand-written J25
  * repositories run on the shared test persistence unit with the EntityManager injected directly. Every assertion
- * encodes the J17 result, so a red test is a behaviour change introduced by the upgrade.
+ * encodes the J17 result, so a red test is a behaviour change introduced by the upgrade. Where J25 differs by design
+ * (the JVM default time zone, the identity returned by save(), the exception for a duplicate key), the test pins the
+ * accepted J25 behaviour and says why.
  */
 class ViewstoreRepositoryParityTest {
 
@@ -69,7 +70,7 @@ class ViewstoreRepositoryParityTest {
     }
 
     // BSC-P01: on J17 DeltaSpike @MaxResults only limits the query when the value is greater than 0. The J25 repository
-    // passes it to setMaxResults: 0 returns no rows, a negative value throws IllegalArgumentException.
+    // keeps that: a deletionBatchSize of 0 or less must not stop deletions (setMaxResults(0) returns no rows).
     @Test
     void bscP01_findDocumentsEligibleForDeletionShouldIgnoreAMaxResultsOfZeroOrLess() {
         final ScanEnvelope envelope = envelopeWith(actionedDocument(), actionedDocument());
@@ -82,34 +83,36 @@ class ViewstoreRepositoryParityTest {
         assertThat(eligibleForDeletion(envelope, cutoff, 1), hasSize(1));
     }
 
-    // BSC-P02: on J17 the framework EntityManagerProducer sets the JVM default time zone to UTC when it creates the
-    // EntityManager the repositories use. J25 repositories no longer go through that producer.
+    // BSC-P02: on J17 the framework EntityManagerProducer set the JVM default time zone to UTC when it created the
+    // EntityManager the repositories used. J25 repositories no longer go through that producer, so using them leaves
+    // the JVM default time zone unchanged and the server must run in UTC itself.
     @Test
-    void bscP02_shouldSetJvmDefaultTimeZoneToUtcWhenRepositoryIsUsed() {
+    void bscP02_repositoryUseShouldLeaveTheJvmDefaultTimeZoneUnchanged() {
         TimeZone.setDefault(TimeZone.getTimeZone(LONDON));
 
         scanEnvelopeRepository.findBy(randomUUID());
 
-        assertThat(TimeZone.getDefault().getID(), is("UTC"));
+        assertThat(TimeZone.getDefault().getID(), is("Europe/London"));
     }
 
-    // BSC-P03: on J17 DeltaSpike save() persists a new entity and returns the same, now managed, instance.
-    // The J25 save() always merges, which returns a managed copy and leaves the argument detached.
+    // BSC-P03: save() of a new envelope returns a managed entity with the same field values. DeltaSpike (J17) returned
+    // the same instance; the J25 merge() returns a managed copy. No caller relies on the identity.
     @Test
-    void bscP03_saveOfNewEnvelopeShouldReturnTheSameManagedInstance() {
+    void bscP03_saveOfNewEnvelopeShouldReturnAManagedEntityWithTheSameFields() {
         final ScanEnvelope envelope = envelopeWith(actionedDocument());
 
         final ScanEnvelope saved = scanEnvelopeRepository.save(envelope);
 
-        assertThat(saved, sameInstance(envelope));
-        assertThat(entityManager.contains(envelope), is(true));
+        assertThat(saved, samePropertyValuesAs(envelope, "associatedScanDocuments"));
+        assertThat(saved.getAssociatedScanDocuments(), hasSize(1));
+        assertThat(entityManager.contains(saved), is(true));
     }
 
-    // BSC-P04: two documents with the same key in one envelope fail on J17 with a JPA PersistenceException
-    // (EntityExistsException). J25 merges instead and fails with IllegalStateException
-    // ("Multiple representations of the same entity"), which is not a PersistenceException.
+    // BSC-P04: two documents with the same key in one envelope still fail. J17 threw a JPA PersistenceException
+    // (EntityExistsException); the J25 merge() fails with IllegalStateException ("Multiple representations of the same
+    // entity"), which is not a PersistenceException. Both fail loudly, so the J25 exception is accepted.
     @Test
-    void bscP04_duplicateDocumentKeyInOneEnvelopeShouldFailWithAPersistenceException() {
+    void bscP04_duplicateDocumentKeyInOneEnvelopeShouldFailWithAnIllegalStateException() {
         final UUID envelopeId = randomUUID();
         final UUID documentId = randomUUID();
         final ScanEnvelope envelope = envelope(envelopeId);
@@ -124,7 +127,7 @@ class ViewstoreRepositoryParityTest {
             thrown = e;
         }
 
-        assertThat(thrown, instanceOf(PersistenceException.class));
+        assertThat(thrown, instanceOf(IllegalStateException.class));
     }
 
     private List<ScanDocument> eligibleForDeletion(final ScanEnvelope envelope, final ZonedDateTime cutoff, final int maxResults) {
