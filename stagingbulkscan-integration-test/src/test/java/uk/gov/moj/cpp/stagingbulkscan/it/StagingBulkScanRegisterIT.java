@@ -62,7 +62,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 
 import com.google.common.collect.ImmutableMap;
 import io.restassured.path.json.JsonPath;

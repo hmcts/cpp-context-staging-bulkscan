@@ -3,15 +3,15 @@
     <parent>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
         <artifactId>stagingbulkscan-domain</artifactId>
-        <version>17.104.49-SNAPSHOT</version>
+        <version>25.104.49-CIMD-4077-SNAPSHOT</version>
     </parent>
     <artifactId>stagingbulkscan-domain-common</artifactId>
 
     <dependencies>
 
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

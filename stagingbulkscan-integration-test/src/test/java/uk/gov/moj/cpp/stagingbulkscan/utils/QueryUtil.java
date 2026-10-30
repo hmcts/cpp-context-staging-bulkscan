@@ -6,7 +6,7 @@ import static java.lang.String.format;
 import static java.time.ZoneOffset.UTC;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static javax.ws.rs.core.Response.Status.OK;
+import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsString;
@@ -32,7 +32,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.response.ScanDocumentsResponse;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 
 import io.restassured.path.json.JsonPath;
 

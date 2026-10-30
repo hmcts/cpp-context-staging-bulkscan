@@ -21,8 +21,8 @@ import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanDocument;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanSnapshotKey;
 import uk.gov.moj.cpp.stagingbulkscan.repository.ScanDocumentRepository;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

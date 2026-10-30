@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingbulkscan-parent</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>17.104.49-SNAPSHOT</version>
+        <version>25.104.49-CIMD-4077-SNAPSHOT</version>
     </parent>
     <artifactId>stagingbulkscan-azure-functions</artifactId>
     <packaging>jar</packaging>
@@ -29,7 +29,6 @@
         <dependency>
             <groupId>uk.gov.justice.services</groupId>
             <artifactId>messaging-core</artifactId>
-            <version>8.0.4</version>
             <scope>compile</scope>
         </dependency>
 
@@ -46,13 +45,8 @@
             <artifactId>azure-functions-java-library</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure</artifactId>
-            <version>${bulkscan-azure.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -68,8 +62,8 @@
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
