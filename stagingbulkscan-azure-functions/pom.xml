@@ -12,6 +12,7 @@
         <azureEnv>ste</azureEnv>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>${java.se.version}</java.version>
+        <azure.functions.java.version>25.0</azure.functions.java.version>
         <functionAppName>fa-${azureEnv}-scan-processor</functionAppName>
         <functionAppRegion>uksouth</functionAppRegion>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}
@@ -211,7 +212,7 @@
                     <region>${functionAppRegion}</region>
                     <runtime>
                         <os>windows</os>
-                        <javaVersion>${java.version}</javaVersion>
+                        <javaVersion>${azure.functions.java.version}</javaVersion>
                     </runtime>
                     <appSettings>
                         <!-- Run Azure Function from package file by default -->
@@ -229,7 +230,7 @@
                         </property>
                         <property>
                             <name>JAVA_VERSION</name>
-                            <value>${java.version}</value>
+                            <value>${azure.functions.java.version}</value>
                         </property>
                     </appSettings>
                 </configuration>
