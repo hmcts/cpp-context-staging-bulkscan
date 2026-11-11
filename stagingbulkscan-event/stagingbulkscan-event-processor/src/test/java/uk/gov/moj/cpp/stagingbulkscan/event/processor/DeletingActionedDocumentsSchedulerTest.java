@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingbulkscan.event.processor;
 
+import static java.time.ZoneOffset.UTC;
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -176,9 +177,9 @@ public class DeletingActionedDocumentsSchedulerTest {
         when(applicationParameters.getDeletionBatchSize()).thenReturn("50000");
         when(requester.requestAsAdmin(envelopeCaptor.capture(), eq(JsonObject.class))).thenReturn(responseEnvelope);
 
-        final ZonedDateTime before = ZonedDateTime.now().minusDays(10);
+        final ZonedDateTime before = ZonedDateTime.now(UTC).minusDays(10);
         underTest.startTimer();
-        final ZonedDateTime after = ZonedDateTime.now().minusDays(10);
+        final ZonedDateTime after = ZonedDateTime.now(UTC).minusDays(10);
 
         final JsonObject requestPayload = (JsonObject) envelopeCaptor.getValue().payload();
         final ZonedDateTime captured = ZonedDateTime.parse(requestPayload.getString("cutoffDate"));
