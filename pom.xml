@@ -10,7 +10,7 @@
 
     <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
     <artifactId>stagingbulkscan-parent</artifactId>
-    <version>17.104.51-SNAPSHOT</version>
+    <version>17.104.51-CHD-2786-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>StagingBulkScan Context - Parent Module</name>
@@ -20,7 +20,7 @@
         <sonar.report.export.path>sonar-report.json</sonar.report.export.path>
         <sonar.scm.provider>git</sonar.scm.provider>
         <mvn.site.url>file://${project.build.directory}/site</mvn.site.url>
-        <core-domain.version>17.104.6</core-domain.version>
+        <core-domain.version>17.104.6-CHD-2786-SNAPSHOT</core-domain.version>
         <prosecutioncasefile-version>17.0.11</prosecutioncasefile-version>
         <sjp-version>17.104.197</sjp-version>
         <stream-transformation-tool-anonymise.version>7.0.0</stream-transformation-tool-anonymise.version>
