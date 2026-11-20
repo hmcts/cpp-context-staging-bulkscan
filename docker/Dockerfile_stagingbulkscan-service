@@ -7,6 +7,7 @@ ARG mavenArtifactBaseUrl
 ARG framework_libraries_version
 ARG framework_version
 ARG eventstore_version
+ARG fileservice_version
 ARG wildfly_home=/opt/jboss/wildfly
 ARG wildfly_user=jboss
 ARG context_group_name=stagingbulkscan
@@ -25,7 +26,7 @@ ADD ${mavenArtifactBaseUrl}/uk/gov/justice/event-store/aggregate-snapshot-reposi
 ADD ${mavenArtifactBaseUrl}/uk/gov/justice/event-store/event-buffer-liquibase/${eventstore_version}/event-buffer-liquibase-${eventstore_version}.jar  /tmp/liquibase/event-buffer-liquibase.jar
 ADD ${mavenArtifactBaseUrl}/uk/gov/justice/event-store/event-tracking-liquibase/${eventstore_version}/event-tracking-liquibase-${eventstore_version}.jar  /tmp/liquibase/event-tracking-liquibase.jar
 ADD ${mavenArtifactBaseUrl}/uk/gov/justice/services/framework-system-liquibase/${framework_version}/framework-system-liquibase-${framework_version}.jar  /tmp/liquibase/framework-system-liquibase.jar
-ADD ${mavenArtifactBaseUrl}/uk/gov/justice/services/file-service-liquibase/${framework_libraries_version}/file-service-liquibase-${framework_libraries_version}.jar  /tmp/liquibase/file-service-liquibase.jar
+ADD ${mavenArtifactBaseUrl}/uk/gov/justice/services/file-service-liquibase/${fileservice_version}/file-service-liquibase-${fileservice_version}.jar  /tmp/liquibase/file-service-liquibase.jar
 RUN chmod -R 755 /tmp/liquibase
 COPY scripts/liquibase.sh /tmp/liquibase/liquibase.sh
 RUN chown ${wildfly_user}:${wildfly_user} /tmp/liquibase/liquibase.sh && chmod 755 /tmp/liquibase/liquibase.sh

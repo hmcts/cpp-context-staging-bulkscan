@@ -12,7 +12,7 @@ import uk.gov.moj.cpp.stagingbulkscan.query.view.StagingBulkScanQueryView;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @ServiceComponent(Component.QUERY_API)
 public class StagingBulkScanQueryApi {

@@ -1,7 +1,7 @@
 package uk.gov.moj.cpp.bulkscan.azure.function;
 
 import static java.lang.System.getenv;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static uk.gov.moj.cpp.bulkscan.azure.function.FunctionConstants.APPLICATION_PDF;
 import static uk.gov.moj.cpp.bulkscan.azure.function.FunctionConstants.ENVIRONMENT;
 import static uk.gov.moj.cpp.bulkscan.azure.function.FunctionConstants.JSON_EXTENSION;
@@ -50,10 +50,10 @@ import java.util.stream.IntStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
-import javax.ws.rs.core.Response;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
+import jakarta.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.functions.ExecutionContext;

@@ -29,8 +29,8 @@ import uk.gov.moj.cpp.stagingbulkscan.json.schemas.Problem;
 import uk.gov.moj.cpp.stagingbulkscan.json.schemas.ProblemValue;
 import uk.gov.moj.cps.prosecutioncasefile.domain.event.BulkscanMaterialFollowup;
 
-import javax.inject.Inject;
-import javax.json.JsonObject;
+import jakarta.inject.Inject;
+import jakarta.json.JsonObject;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
