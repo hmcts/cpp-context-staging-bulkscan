@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingbulkscan-parent</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>17.104.51-SNAPSHOT</version>
+        <version>25.104.51-SNAPSHOT</version>
     </parent>
     <artifactId>stagingbulkscan-azure-functions</artifactId>
     <packaging>jar</packaging>
@@ -12,6 +12,7 @@
         <azureEnv>ste</azureEnv>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>${java.se.version}</java.version>
+        <azure.functions.java.version>25.0</azure.functions.java.version>
         <functionAppName>fa-${azureEnv}-scan-processor</functionAppName>
         <functionAppRegion>uksouth</functionAppRegion>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}
@@ -29,7 +30,6 @@
         <dependency>
             <groupId>uk.gov.justice.services</groupId>
             <artifactId>messaging-core</artifactId>
-            <version>8.0.4</version>
             <scope>compile</scope>
         </dependency>
 
@@ -46,13 +46,8 @@
             <artifactId>azure-functions-java-library</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure</artifactId>
-            <version>${bulkscan-azure.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -68,8 +63,8 @@
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
@@ -217,7 +212,7 @@
                     <region>${functionAppRegion}</region>
                     <runtime>
                         <os>windows</os>
-                        <javaVersion>${java.version}</javaVersion>
+                        <javaVersion>${azure.functions.java.version}</javaVersion>
                     </runtime>
                     <appSettings>
                         <!-- Run Azure Function from package file by default -->
@@ -235,7 +230,7 @@
                         </property>
                         <property>
                             <name>JAVA_VERSION</name>
-                            <value>${java.version}</value>
+                            <value>${azure.functions.java.version}</value>
                         </property>
                     </appSettings>
                 </configuration>

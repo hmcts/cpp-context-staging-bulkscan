@@ -3,17 +3,17 @@ package uk.gov.moj.cpp.bulkscan.azure.rest;
 import org.apache.commons.lang3.StringUtils;
 import uk.gov.moj.cpp.bulkscan.azure.exception.BulkScanConfigurationMissingException;
 
-import javax.json.JsonObject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 import java.util.logging.Logger;
 
 import static java.lang.System.getenv;
-import static javax.ws.rs.client.Entity.entity;
+import static jakarta.ws.rs.client.Entity.entity;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 public class NotificationEmailHelper {

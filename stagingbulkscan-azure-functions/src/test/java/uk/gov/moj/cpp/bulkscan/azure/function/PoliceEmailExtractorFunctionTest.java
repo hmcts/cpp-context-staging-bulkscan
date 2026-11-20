@@ -40,8 +40,8 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.json.JsonObject;
-import javax.ws.rs.core.Response;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.core.Response;
 
 import com.google.common.collect.Lists;
 import com.microsoft.azure.functions.ExecutionContext;
