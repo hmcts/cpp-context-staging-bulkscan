@@ -3,7 +3,7 @@ package uk.gov.moj.cpp.stagingbulkscan.utils;
 
 import static java.time.Duration.ofSeconds;
 import static org.awaitility.Awaitility.waitAtMost;
-import static javax.ws.rs.client.Entity.entity;
+import static jakarta.ws.rs.client.Entity.entity;
 import static uk.gov.justice.services.test.utils.core.rest.ResteasyClientBuilderFactory.clientBuilder;
 import static uk.gov.moj.cpp.stagingbulkscan.utils.WiremockTestHelper.getBaseUri;
 
@@ -11,8 +11,8 @@ import uk.gov.justice.services.test.utils.core.rest.RestClient;
 
 import java.time.Duration;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 public class StubHelper {
 

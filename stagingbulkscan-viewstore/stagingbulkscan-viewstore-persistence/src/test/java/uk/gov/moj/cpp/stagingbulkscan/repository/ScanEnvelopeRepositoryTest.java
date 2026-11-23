@@ -1,50 +1,65 @@
 package uk.gov.moj.cpp.stagingbulkscan.repository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
-import uk.gov.justice.services.test.utils.persistence.BaseTransactionalJunit4Test;
+import uk.gov.justice.services.test.utils.persistence.HibernateTestEntityManagerProvider;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanDocument;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanEnvelope;
 import uk.gov.moj.cpp.stagingbulkscan.persist.entity.ScanSnapshotKey;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.inject.Inject;
+import jakarta.persistence.EntityManager;
 
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-@RunWith(CdiTestRunner.class)
-public class ScanEnvelopeRepositoryTest extends BaseTransactionalJunit4Test {
+public class ScanEnvelopeRepositoryTest {
 
-    @Inject
+    private static final String PERSISTENCE_UNIT = "stagingbulkscan-test-persistence-unit";
+
+    @RegisterExtension
+    static HibernateTestEntityManagerProvider hibernateTestEntityManagerProvider =
+            new HibernateTestEntityManagerProvider(PERSISTENCE_UNIT);
+
     private ScanEnvelopeRepository scanEnvelopeRepository;
 
     private ScanEnvelope scanEnvelope;
 
-    @Before
+    @BeforeEach
     public void setUp() {
+        scanEnvelopeRepository = new ScanEnvelopeRepository();
+        hibernateTestEntityManagerProvider.injectEntityManagerInto(scanEnvelopeRepository);
         scanEnvelope = buildScanEnvelope();
-    }
-
-    @After
-    public void destroy() {
-        scanEnvelope = null;
     }
 
     @Test
     public void shouldSaveScanEnvelope() {
         scanEnvelopeRepository.save(scanEnvelope);
-        final List<ScanEnvelope> scanEnvelopeList = scanEnvelopeRepository.findAll();
-        assertThat(scanEnvelopeList.size(), is(1));
+        flushAndClear();
+
+        final ScanEnvelope found = scanEnvelopeRepository.findBy(scanEnvelope.getId());
+        assertThat(found.getZipFileName(), is("test.zip"));
+        assertThat(found.getNotes(), is("Sample Notes"));
+        assertThat(found.getAssociatedScanDocuments().size(), is(1));
+        assertThat(found.getAssociatedScanDocuments().iterator().next().getDocumentFileName(), is("TestDocument.pdf"));
+    }
+
+    @Test
+    public void shouldReturnNullWhenScanEnvelopeNotFound() {
+        assertThat(scanEnvelopeRepository.findBy(UUID.randomUUID()), is(nullValue()));
+    }
+
+    private void flushAndClear() {
+        final EntityManager entityManager = hibernateTestEntityManagerProvider.getEntityManager();
+        entityManager.flush();
+        entityManager.clear();
     }
 
     private ScanEnvelope buildScanEnvelope() {

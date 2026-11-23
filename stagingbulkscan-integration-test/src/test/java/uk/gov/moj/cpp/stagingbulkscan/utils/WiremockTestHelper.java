@@ -7,7 +7,7 @@ import static uk.gov.moj.cpp.stagingbulkscan.utils.RestPollerWithDefaults.pollWi
 
 import uk.gov.justice.services.test.utils.core.http.RequestParams;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 
 /**
