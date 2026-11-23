@@ -10,7 +10,7 @@
 
     <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
     <artifactId>stagingbulkscan-parent</artifactId>
-    <version>25.104.53</version>
+    <version>25.104.54-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>StagingBulkScan Context - Parent Module</name>
