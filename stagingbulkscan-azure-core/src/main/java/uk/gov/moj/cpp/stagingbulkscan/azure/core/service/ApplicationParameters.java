@@ -2,8 +2,8 @@ package uk.gov.moj.cpp.stagingbulkscan.azure.core.service;
 
 import uk.gov.justice.services.common.configuration.Value;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 @ApplicationScoped
 public class ApplicationParameters {
