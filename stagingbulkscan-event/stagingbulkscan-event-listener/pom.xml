@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingbulkscan-event</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>25.104.54-SNAPSHOT</version>
+        <version>17.104.51-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,8 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -79,8 +79,6 @@
                             <goal>unpack</goal>
                         </goals>
                         <configuration>
-                            <!-- mireportdata-stagingbulkscan-event-listener:RELEASE:tests is still a javax jar; skip until a Jakarta release exists -->
-                            <skip>true</skip>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>uk.gov.moj.cpp.mi.reportdata</groupId>

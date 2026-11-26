@@ -13,8 +13,8 @@ import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 public class BlobZipStream implements AutoCloseable {
 

@@ -26,8 +26,8 @@ import uk.gov.moj.cpp.stagingbulkscan.domain.event.DefendantDetailsUpdated;
 import uk.gov.moj.cpp.stagingbulkscan.domain.event.PleaDetailsUpdated;
 import uk.gov.moj.cpp.stagingbulkscan.event.service.SJPService;
 
-import jakarta.inject.Inject;
-import jakarta.json.JsonObject;
+import javax.inject.Inject;
+import javax.json.JsonObject;
 import java.util.UUID;
 import java.util.function.Function;
 

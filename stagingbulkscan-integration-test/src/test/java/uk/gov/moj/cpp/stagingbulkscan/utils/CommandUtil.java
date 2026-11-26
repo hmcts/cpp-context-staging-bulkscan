@@ -17,7 +17,7 @@ import uk.gov.moj.cpp.stagingbulkscan.stub.IdMapperStub;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.json.JsonObject;
+import javax.json.JsonObject;
 
 public class CommandUtil {
 

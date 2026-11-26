@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingbulkscan-parent</artifactId>
         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>
-        <version>25.104.54-SNAPSHOT</version>
+        <version>17.104.51-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -36,15 +36,9 @@
                 <artifactId>messaging-client-generator-plugin</artifactId>
                 <dependencies>
                     <dependency>
-                        <groupId>jakarta.platform</groupId>
-                        <artifactId>jakarta.jakartaee-api</artifactId>
+                        <groupId>javax</groupId>
+                        <artifactId>javaee-api</artifactId>
                         <version>${javaee-api.version}</version>
-                    </dependency>
-                    <!-- generator needs javax.xml.bind.*; jakartaee-api 11 no longer bundles it (parent pins 2.3.2 for this) -->
-                    <dependency>
-                        <groupId>jakarta.xml.bind</groupId>
-                        <artifactId>jakarta.xml.bind-api</artifactId>
-                        <version>${jakarta.xml.bind-api.raml.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>uk.gov.moj.cpp.stagingbulkscan</groupId>

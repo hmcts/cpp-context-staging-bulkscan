@@ -37,7 +37,7 @@ import uk.gov.moj.cpp.json.schemas.prosecutioncasefile.events.MaterialRejected;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import jakarta.json.JsonObject;
+import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
